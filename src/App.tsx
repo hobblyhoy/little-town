@@ -2,10 +2,8 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import GrassTile from './features/tiles/GrassTile';
 
 const baseCss = css`
    color: blue;
@@ -14,52 +12,20 @@ const baseCss = css`
 function App() {
    return (
       <div className="App" css={baseCss}>
-         <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="text-3xl font-bold underline">Hello world!</h1>
-            <Counter />
-            <p>
-               Edit <code>src/App.tsx</code> and save to reload.
-            </p>
-            <span>
-               <span>Learn </span>
-               <a
-                  className="App-link"
-                  href="https://reactjs.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-               >
-                  React
-               </a>
-               <span>, </span>
-               <a
-                  className="App-link"
-                  href="https://redux.js.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-               >
-                  Redux
-               </a>
-               <span>, </span>
-               <a
-                  className="App-link"
-                  href="https://redux-toolkit.js.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-               >
-                  Redux Toolkit
-               </a>
-               ,<span> and </span>
-               <a
-                  className="App-link"
-                  href="https://react-redux.js.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-               >
-                  React Redux
-               </a>
-            </span>
-         </header>
+         {/* <img src={logo} className="App-logo" alt="logo" /> */}
+         <GrassTile isoX={0} isoY={0} />
+         <GrassTile isoX={1} isoY={0} />
+         <GrassTile isoX={0} isoY={1} />
+         <GrassTile isoX={1} isoY={1} />
+         <GrassTile isoX={2} isoY={1} />
+
+
+
+
+
+
+
+         
       </div>
    );
 }

@@ -1,0 +1,2 @@
+Regular build: npm start 
+gh pages build: npm run deploy
