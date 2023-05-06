@@ -2,9 +2,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-import grassTile from '../../assets/isopack/land/spring/grass.png';
-import { useState } from 'react';
-
 interface IsometricCoordinates {
    isoX: number;
    isoY: number;
@@ -38,14 +35,12 @@ function GrassTile(isoProps: IsometricCoordinates) {
       left: ${coords.cartX}px;
       width: 95px;
       height: 97px;
-   `;
-   const baseCss2 = css`
-      position: fixed;
-      top: ${coords.cartY}px;
-      left: ${coords.cartX}px;
+      pointer-events: none;
    `;
 
-   const opac = css`
+   const gCss = css`
+      pointer-events: visiblePainted;
+
       opacity: 1;
       transition: opacity 0.3s ease-in-out;
 
@@ -53,12 +48,6 @@ function GrassTile(isoProps: IsometricCoordinates) {
          opacity: 0.75;
       }
    `;
-
-   const [isHovered, setIsHovered] = useState(false);
-
-   //return <img css={baseCss} className="fixed hover:opacity-75" src={grassTile} />;
-   // Problem! These are rendering down at the bottom of the page where they exist on
-   // the asset sheet rather than where they should be on the page. Might be resolvable idk
    return (
       <svg
          version="1.1"
@@ -69,11 +58,10 @@ function GrassTile(isoProps: IsometricCoordinates) {
          width="93.5"
          height="95.669823"
          xmlns="http://www.w3.org/2000/svg"
-         css={baseCss2}
-         // className={isHovered ? "opacity-75" : ""}
+         css={baseCss}
       >
-         <g id="g8066" transform="translate(-363.2,-1437.64)">
-            <g id="g6066"  >
+         <g css={gCss} id="g8066" transform="translate(-363.2,-1437.64)">
+            <g id="g6066">
                <polygon
                   className="st3"
                   points="409.95,1531.31 409.95,1511.31 365.2,1485.47 365.2,1505.47 "
@@ -86,9 +74,6 @@ function GrassTile(isoProps: IsometricCoordinates) {
                />
                <polygon
                   className="st40"
-                  // onMouseEnter={() => setIsHovered(true)}
-                  // onMouseLeave={() => setIsHovered(false)}
-                  css={opac}
                   points="449.1,1462.24 454.7,1465.46 409.95,1491.31 404.35,1488.08 370.79,1468.7 365.2,1465.47 409.95,1439.64 415.54,1442.86 "
                   id="polygon6060"
                />
