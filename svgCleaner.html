@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Cleaner</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>SVG Cleaner</h1>
+    <label for="inputText">Input Text:</label>
+    <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+    <button id="cleanupButton">Cleanup</button>
+    <button id="clearButton">Clear</button>
+    <label for="outputText">Output Text:</label>
+    <textarea id="outputText" readonly placeholder="Cleaned up text will appear here..."></textarea>
+
+    <script>
+        document.getElementById("cleanupButton").addEventListener("click", function() {
+            let inputText = document.getElementById("inputText").value;
+            let outputText = document.getElementById("outputText");
+            outputText.value = cleanSVG(inputText);
+        });
+
+        document.getElementById("clearButton").addEventListener("click", function() {
+            document.getElementById("inputText").value = "";
+            document.getElementById("outputText").value = "";
+        });
+
+        function cleanSVG(svgString) {
+            const parser = new DOMParser();
+            const serializer = new XMLSerializer();
+
+            // Parse the SVG string to a DOM object
+            const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+
+            // Remove unnecessary tags and attributes
+            svgDoc.querySelector('style').remove();
+            svgDoc.querySelector('defs').remove();
+            svgDoc.querySelector('svg').removeAttribute('xmlns');
+            svgDoc.querySelector('svg').removeAttribute('xmlns:svg');
+            svgDoc.querySelector('svg').removeAttribute('xml:space');
+            svgDoc.querySelector('svg').removeAttribute('version');
+            svgDoc.querySelector('svg').removeAttribute('id');
+            svgDoc.querySelector('svg').removeAttribute('x');
+            svgDoc.querySelector('svg').removeAttribute('y');
+
+            // Serialize the cleaned SVG back to a string
+            let cleanedSVGString = serializer.serializeToString(svgDoc.documentElement);
+
+            // Remove empty lines
+            cleanedSVGString = cleanedSVGString.replace(/^\s*\n/gm, '').replace(/class="/g, 'className="');
+
+            return cleanedSVGString;
+        }
+    </script>
+</body>
+</html>
