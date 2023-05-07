@@ -10,9 +10,9 @@ interface IProps extends IsometricCoordinates, Sizeable {}
 function TreeTopper(isoProps: IProps) {
    const smallOffset = { offsetX: 30, offsetY: 30 };
    const bigOffset = { offsetY: -14 };
-   const currentOffset = isoProps.size === 'small' ? smallOffset : bigOffset;
+   const currentOffset = isoProps.topperSize === 'small' ? smallOffset : bigOffset;
    let cartProps = isometricToCartesian({ ...isoProps, type: 'topper', ...currentOffset });
-   return isoProps.size === 'small' ? <TreeSmallA {...cartProps} /> : <TreeBigA {...cartProps} />;
+   return isoProps.topperSize === 'small' ? <TreeSmallA {...cartProps} /> : <TreeBigA {...cartProps} />;
 }
 
 export default TreeTopper;

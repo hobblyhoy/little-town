@@ -11,7 +11,7 @@ export interface IsometricCoordinatesWithType extends IsometricCoordinates {
 }
 
 export interface Sizeable {
-   size: 'small' | 'big'
+   topperSize: 'small' | 'big'
 }
 
 export interface CartesianCoordinates {
