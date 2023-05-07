@@ -1,13 +1,12 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, css } from '@emotion/react';
+
 
 import './App.css';
 import GameStateRenderer from './features/game-state/GameStateRenderer';
 import { useEffect } from 'react';
 import { useAppDispatch } from './app/hooks';
 import { addTopper, initializeBoardTiles } from './features/game-state/GameStateSlice';
-import { generateInternalKey } from './app/utils';
+import SelectionBar from './features/selection-bar/SelectionBar';
+import ClickAndDragManager from './features/click-and-drag/ClickAndDragManager';
 
 function App() {
    const dispatch = useAppDispatch();
@@ -27,13 +26,9 @@ function App() {
 
    return (
       <div className="App">
-         {/* {displaySet.map(x => (
-            <GrassTile {...x} isoZ={0} />
-         ))}
-         <TreeTopper isoX={0} isoY={0} isoZ={1} size="big" /> */}
-
-         {/* <GrassTile isoX={2} isoY={2} isoZ={1} /> */}
          <GameStateRenderer />
+         <SelectionBar />
+         <ClickAndDragManager />
       </div>
    );
 }

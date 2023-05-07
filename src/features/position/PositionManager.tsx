@@ -1,7 +1,6 @@
 import { ICartesianCoordinates, IIsometricCoordinatesWithType } from '../../types/BoardTypes';
 
 function PositionManager() {
-   //return <React.Fragment></React.Fragment>;
    return <></>;
 }
 
@@ -25,12 +24,13 @@ export const isometricToCartesian = ({
    const tileWidth = 88;
    const tileTopHeight = 51;
    const tileBottomHeight = 41;
-   const topperSetback = 15;
 
    const screenXBasePoint = 500; // TODO key off window.innerWidth (once!)
    const screenYBasePoint = 60;
 
    if (type !== 'tile' && isoZ === 0) throw 'Only tiles can be at the 0th isoZ layer';
+   if (type !== 'topper' && isoZ === 1) throw 'only toppers can be at the first layer';
+   if (isoZ > 1) throw 'may change this later but rn only doing layers 0 and 1';
 
    let returnX = screenXBasePoint + isoX * tileWidth * 0.5 + -1 * isoY * tileWidth * 0.5;
    let returnY =

@@ -1,8 +1,6 @@
-import { useSelector } from 'react-redux';
 import { useAppSelector } from '../../app/hooks';
 import { selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useEffect } from 'react';
-import { isIBoardStateTile } from '../../app/utils';
 import GrassTile from '../tiles/GrassTile';
 import TreeTopper from '../toppers/TreeTopper';
 import { IBoardStateTile, IBoardStateTopper, IIsometricCoordinates } from '../../types/BoardTypes';
@@ -20,18 +18,25 @@ const sortIntoRenderOrder = <T extends IIsometricCoordinates>(inputDict: { [key:
 };
 
 function GameStateRenderer() {
-   //grab the current state from the slice, render it out
    const boardTiles = useAppSelector(selectBoardTiles);
    const boardToppers = useAppSelector(selectBoardToppers);
 
    useEffect(() => {
+      console.log({ boardTiles });
+   }, [boardTiles]);
+   useEffect(() => {
       console.log({ boardToppers });
    }, [boardToppers]);
+
+   const handleClick = (e: MouseEvent) => {
+
+   }
 
    return (
       <div>
          {sortIntoRenderOrder<IBoardStateTile>(boardTiles).map(item => {
-            return <GrassTile {...item} />;
+            // TODO maybe a wrapper for tiles for grabbing onclick instead of this..
+            return <div onClick={handleClick} key={item.key}><GrassTile {...item} /></div>;
          })}
 
          {sortIntoRenderOrder<IBoardStateTopper>(boardToppers).map(item => {

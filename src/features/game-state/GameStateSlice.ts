@@ -13,6 +13,7 @@ const initialState: IGameState = {
    boardToppers: {},
 };
 
+// TODO I want to add some references to each tiles 4 neighbors for easier road construction
 export const gameStateSlice = createSlice({
    name: 'gamestate',
    initialState,
@@ -40,7 +41,6 @@ export const gameStateSlice = createSlice({
          }
 
          state.boardTiles = tiles;
-         console.log({ tiles });
       },
 
       addTopper: (state, action: PayloadAction<IBoardStateTopper>) => {
