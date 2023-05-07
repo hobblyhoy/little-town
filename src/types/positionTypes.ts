@@ -2,11 +2,14 @@ export interface IsometricCoordinates {
    isoX: number;
    isoY: number;
    isoZ: number;
+}
+
+export interface IsometricCoordinatesWithOffset extends IsometricCoordinates {
    offsetX?: number;
    offsetY?: number;
 }
 
-export interface IsometricCoordinatesWithType extends IsometricCoordinates {
+export interface IsometricCoordinatesWithType extends IsometricCoordinatesWithOffset {
    type: 'tile' | 'topper';
 }
 

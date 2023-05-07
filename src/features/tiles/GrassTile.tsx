@@ -2,10 +2,10 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 import { isometricToCartesian } from '../position/PositionManager';
-import { IsometricCoordinates } from '../../types/positionTypes';
+import { IsometricCoordinatesWithOffset } from '../../types/positionTypes';
 import { standardBaseCss } from '../../app/constants';
 
-function GrassTile(isoProps: IsometricCoordinates) {
+function GrassTile(isoProps: IsometricCoordinatesWithOffset) {
    let cartProps = isometricToCartesian({ ...isoProps, type: 'tile' });
 
    const gCss = css`

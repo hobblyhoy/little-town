@@ -1,4 +1,4 @@
-import { CartesianCoordinates, IsometricCoordinates, Sizeable } from '../../types/positionTypes';
+import { CartesianCoordinates, IsometricCoordinatesWithOffset, Sizeable } from '../../types/positionTypes';
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
@@ -6,7 +6,7 @@ import { jsx, css } from '@emotion/react';
 import { isometricToCartesian } from '../position/PositionManager';
 import { customDimensions, standardBaseCss } from '../../app/constants';
 
-interface IProps extends IsometricCoordinates, Sizeable {}
+interface IProps extends IsometricCoordinatesWithOffset, Sizeable {}
 function TreeTopper(isoProps: IProps) {
    const smallOffset = { offsetX: 30, offsetY: 30 };
    const bigOffset = { offsetY: -14 };

@@ -7,6 +7,7 @@ import GameStateRenderer from './features/game-state/GameStateRenderer';
 import { useEffect } from 'react';
 import { useAppDispatch } from './app/hooks';
 import { addTopper, initializeBoardTiles } from './features/game-state/GameStateSlice';
+import { generateInternalKey } from './app/utils';
 
 function App() {
    const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ function App() {
             type: 'topper',
             topperType: 'tree',
             topperSize: 'small',
+            key: generateInternalKey({ isoX: 0, isoY: 0, isoZ: 1 }),
          })
       );
    }, []);

@@ -1,11 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import { generateInternalKey } from '../../app/utils';
 
 // TODO should proabbly move these out to their own types files
 export interface IBoardStateBase {
    isoX: number;
    isoY: number;
-   isoZ: number; // actually keep this for purposes of the react Keys
+   isoZ: number; // move to inherit from IsometricCooridatnes?
+   key: string;
    type: 'tile' | 'topper';
 }
 
@@ -19,13 +21,14 @@ export interface IBoardStateTopper extends IBoardStateBase {
 }
 
 export interface IGameState {
-   boardTiles: IBoardStateTile[]; //TODO these are probably better as dictionaries
-   boardToppers: IBoardStateTopper[];
+   boardTiles: { [key: string]: IBoardStateTile };
+   //boardToppers: IBoardStateTopper[];
+   boardToppers: { [key: string]: IBoardStateTopper };
 }
 
 const initialState: IGameState = {
-   boardTiles: [],
-   boardToppers: [],
+   boardTiles: {},
+   boardToppers: {},
 };
 
 export const gameStateSlice = createSlice({
@@ -35,20 +38,22 @@ export const gameStateSlice = createSlice({
       initializeBoardTiles: state => {
          const size = 3;
 
-         const tiles: IBoardStateTile[] = [];
-         for (let row = 0; row < size; row++) {
-            for (let col = 0; col <= row; col++) {
-               const isoX = col;
-               const isoY = row - col;
-               tiles.push({ isoX, isoY, isoZ: 0, type: 'tile', tileType: 'grass' });
-            }
-         }
+         const tiles: { [key: string]: IBoardStateTile } = {};
 
          for (let row = size; row < size * 2 - 1; row++) {
             for (let col = row - size + 1; col < size; col++) {
                const isoX = col;
                const isoY = row - col;
-               tiles.push({ isoX, isoY, isoZ: 0, type: 'tile', tileType: 'grass' });
+               const key = generateInternalKey({ isoX, isoY, isoZ: 0 });
+               tiles[key] = { isoX, isoY, isoZ: 0, type: 'tile', tileType: 'grass', key };
+            }
+         }
+         for (let row = 0; row < size; row++) {
+            for (let col = 0; col <= row; col++) {
+               const isoX = col;
+               const isoY = row - col;
+               const key = generateInternalKey({ isoX, isoY, isoZ: 0 });
+               tiles[key] = { isoX, isoY, isoZ: 0, type: 'tile', tileType: 'grass', key };
             }
          }
 
@@ -58,9 +63,9 @@ export const gameStateSlice = createSlice({
 
       addTopper: (state, action: PayloadAction<IBoardStateTopper>) => {
          //TODO handle logic for checks of existing stuff here or elsewhere?
-         state.boardToppers.push(action.payload);
-         console.log(action.payload);
-      }
+         const key = generateInternalKey(action.payload);
+         state.boardToppers[key] = ({...action.payload, key});
+      },
    },
 });
 
