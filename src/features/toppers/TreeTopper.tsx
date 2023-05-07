@@ -1,4 +1,4 @@
-import { CartesianCoordinates, IsometricCoordinatesWithOffset, Sizeable } from '../../types/positionTypes';
+import { ICartesianCoordinates, IIsometricCoordinatesWithOffset, ISizeable } from '../../types/BoardTypes';
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
@@ -6,7 +6,7 @@ import { jsx, css } from '@emotion/react';
 import { isometricToCartesian } from '../position/PositionManager';
 import { customDimensions, standardBaseCss } from '../../app/constants';
 
-interface IProps extends IsometricCoordinatesWithOffset, Sizeable {}
+interface IProps extends IIsometricCoordinatesWithOffset, ISizeable {}
 function TreeTopper(isoProps: IProps) {
    const smallOffset = { offsetX: 30, offsetY: 30 };
    const bigOffset = { offsetY: -14 };
@@ -17,7 +17,7 @@ function TreeTopper(isoProps: IProps) {
 
 export default TreeTopper;
 
-function TreeBigA(cartProps: CartesianCoordinates) {
+function TreeBigA(cartProps: ICartesianCoordinates) {
    return (
       <svg
          viewBox="0 0 52.970002 74.389994"
@@ -51,7 +51,7 @@ function TreeBigA(cartProps: CartesianCoordinates) {
    );
 }
 
-function TreeSmallA(cartProps: CartesianCoordinates) {
+function TreeSmallA(cartProps: ICartesianCoordinates) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"

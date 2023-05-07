@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
 import { useAppSelector } from '../../app/hooks';
-import { IBoardStateTile, IBoardStateTopper, selectBoardTiles, selectBoardToppers } from './GameStateSlice';
+import { selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useEffect } from 'react';
 import { isIBoardStateTile } from '../../app/utils';
 import GrassTile from '../tiles/GrassTile';
 import TreeTopper from '../toppers/TreeTopper';
-import { IsometricCoordinates } from '../../types/positionTypes';
+import { IBoardStateTile, IBoardStateTopper, IIsometricCoordinates } from '../../types/BoardTypes';
 
 // Take our dictionary of elements to render and produce a sorted array with them rendering back to front
-const sortIntoRenderOrder = <T extends IsometricCoordinates>(inputDict: { [key: string]: T }) => {
+const sortIntoRenderOrder = <T extends IIsometricCoordinates>(inputDict: { [key: string]: T }) => {
    const objectsArray = Object.keys(inputDict).map(key => inputDict[key]);
    return objectsArray.sort((a, b) => {
       if (a.isoY !== b.isoY) {

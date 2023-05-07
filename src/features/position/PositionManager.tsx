@@ -1,4 +1,4 @@
-import { CartesianCoordinates, IsometricCoordinatesWithType } from '../../types/positionTypes';
+import { ICartesianCoordinates, IIsometricCoordinatesWithType } from '../../types/BoardTypes';
 
 function PositionManager() {
    //return <React.Fragment></React.Fragment>;
@@ -21,7 +21,7 @@ export const isometricToCartesian = ({
    type,
    offsetX,
    offsetY,
-}: IsometricCoordinatesWithType): CartesianCoordinates => {
+}: IIsometricCoordinatesWithType): ICartesianCoordinates => {
    const tileWidth = 88;
    const tileTopHeight = 51;
    const tileBottomHeight = 41;

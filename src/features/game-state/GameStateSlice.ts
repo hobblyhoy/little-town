@@ -1,28 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { generateInternalKey } from '../../app/utils';
-
-// TODO should proabbly move these out to their own types files
-export interface IBoardStateBase {
-   isoX: number;
-   isoY: number;
-   isoZ: number; // move to inherit from IsometricCooridatnes?
-   key: string;
-   type: 'tile' | 'topper';
-}
-
-export interface IBoardStateTile extends IBoardStateBase {
-   tileType: 'grass' | 'dirt';
-}
-
-export interface IBoardStateTopper extends IBoardStateBase {
-   topperType: 'tree' | 'rock';
-   topperSize: 'big' | 'small';
-}
+import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 
 export interface IGameState {
    boardTiles: { [key: string]: IBoardStateTile };
-   //boardToppers: IBoardStateTopper[];
    boardToppers: { [key: string]: IBoardStateTopper };
 }
 

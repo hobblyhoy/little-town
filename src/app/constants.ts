@@ -1,9 +1,9 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import { CartesianCoordinates } from '../types/positionTypes';
+import { ICartesianCoordinates } from '../types/BoardTypes';
 
-export const standardBaseCss = (cartProps: CartesianCoordinates) => css`
+export const standardBaseCss = (cartProps: ICartesianCoordinates) => css`
    position: fixed;
    top: ${cartProps.cartY}px;
    left: ${cartProps.cartX}px;

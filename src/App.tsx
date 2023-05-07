@@ -21,7 +21,6 @@ function App() {
             type: 'topper',
             topperType: 'tree',
             topperSize: 'small',
-            key: generateInternalKey({ isoX: 0, isoY: 0, isoZ: 1 }),
          })
       );
    }, []);
