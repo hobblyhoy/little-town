@@ -6,26 +6,35 @@ import { RootState } from '../../app/store';
 
 export interface IClickAndDragState {
    mouseDownOn: IBoardStateTile | null;
+   mouseMoveOn: IBoardStateTile | null;
 }
 
 const initialState: IClickAndDragState = {
    mouseDownOn: null,
+   mouseMoveOn: null
 };
 
 export const clickAndDragSlice = createSlice({
    name: 'clickanddrag',
    initialState,
    reducers: {
-      setMouseDownOn: (state, action: PayloadAction<IBoardStateTile>) => {
+      setMouseDownOn: (state, action: PayloadAction<IBoardStateTile | null>) => {
          state.mouseDownOn = action.payload;
+         if (action.payload === null) {
+            state.mouseMoveOn = null;
+         }
       },
+      setMouseMoveOn: (state, action: PayloadAction<IBoardStateTile>) => {
+         state.mouseMoveOn = action.payload;
+      }
    },
 });
 
 // reducer export
-export const { setMouseDownOn } = clickAndDragSlice.actions;
+export const { setMouseDownOn, setMouseMoveOn } = clickAndDragSlice.actions;
 
 // selector export
 export const selectMouseDownOn = (state: RootState) => state.clickanddrag.mouseDownOn;
+export const selectMouseMoveOn = (state: RootState) => state.clickanddrag.mouseMoveOn;
 
 export default clickAndDragSlice.reducer;

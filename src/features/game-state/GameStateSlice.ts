@@ -1,7 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { generateInternalKey } from '../../app/utils';
-import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
+import { generateInternalKey, keysForRelativeItem } from '../../app/utils';
+import {
+   IBoardStateTile,
+   IBoardStateTopper,
+   IBoardStateTopperSetter,
+} from '../../types/BoardTypes';
 
 export interface IGameState {
    boardTiles: { [key: string]: IBoardStateTile };
@@ -28,7 +32,19 @@ export const gameStateSlice = createSlice({
                const isoX = col;
                const isoY = row - col;
                const key = generateInternalKey({ isoX, isoY, isoZ: 0 });
-               tiles[key] = { isoX, isoY, isoZ: 0, type: 'tile', tileType: 'grass', key };
+               tiles[key] = {
+                  isoX,
+                  isoY,
+                  isoZ: 0,
+                  type: 'tile',
+                  tileType: 'grass',
+                  key,
+                  cellUpperLeft: null,
+                  cellUpperRight: null,
+                  cellLowerLeft: null,
+                  cellLowerRight: null,
+                  cellAbove: null,
+               };
             }
          }
          for (let row = 0; row < size; row++) {
@@ -36,17 +52,60 @@ export const gameStateSlice = createSlice({
                const isoX = col;
                const isoY = row - col;
                const key = generateInternalKey({ isoX, isoY, isoZ: 0 });
-               tiles[key] = { isoX, isoY, isoZ: 0, type: 'tile', tileType: 'grass', key };
+               tiles[key] = {
+                  isoX,
+                  isoY,
+                  isoZ: 0,
+                  type: 'tile',
+                  tileType: 'grass',
+                  key,
+                  cellUpperLeft: null,
+                  cellUpperRight: null,
+                  cellLowerLeft: null,
+                  cellLowerRight: null,
+                  cellAbove: null,
+               };
             }
          }
+
+         // Apply our relative references
+         Object.keys(tiles)
+            .map(key => tiles[key])
+            .forEach(boardItem => {
+               // The original plan here was for these to be references to the board items instead of just the
+               // keys but thats making redux throw a fit. In theory that should work though, maybe revisit.
+               let relativeKeys = keysForRelativeItem(boardItem);
+               boardItem.cellUpperLeft = tiles[relativeKeys.upperLeft]
+                  ? tiles[relativeKeys.upperLeft].key
+                  : null;
+               boardItem.cellUpperRight = tiles[relativeKeys.upperRight]
+                  ? tiles[relativeKeys.upperRight].key
+                  : null;
+               boardItem.cellLowerLeft = tiles[relativeKeys.lowerLeft]
+                  ? tiles[relativeKeys.lowerLeft].key
+                  : null;
+               boardItem.cellLowerRight = tiles[relativeKeys.lowerRight]
+                  ? tiles[relativeKeys.lowerRight].key
+                  : null;
+            });
 
          state.boardTiles = tiles;
       },
 
-      addTopper: (state, action: PayloadAction<IBoardStateTopper>) => {
-         //TODO handle logic for checks of existing stuff here or elsewhere?
+      addTopper: (state, action: PayloadAction<IBoardStateTopperSetter>) => {
          const key = generateInternalKey(action.payload);
-         state.boardToppers[key] = ({...action.payload, key});
+         const newTopper: IBoardStateTopper = {
+            ...action.payload,
+            key,
+            cellBelow: null,
+         };
+
+         let relativeKeys = keysForRelativeItem(newTopper);
+         let baseTile = state.boardTiles[relativeKeys.below];
+         newTopper.cellBelow = baseTile.key;
+         baseTile.cellAbove = newTopper.key;
+
+         state.boardToppers[key] = newTopper;
       },
    },
 });

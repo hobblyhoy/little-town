@@ -1,5 +1,3 @@
-
-
 import './App.css';
 import GameStateRenderer from './features/game-state/GameStateRenderer';
 import { useEffect } from 'react';
