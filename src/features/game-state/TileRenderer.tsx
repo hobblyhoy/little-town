@@ -38,7 +38,6 @@ function TileRenderer(boardTile: IBoardStateTile) {
       }
 
       let isConnected = isConnectedNe || isConnectedSe || isConnectedSw || isConnectedNw;
-      console.log(boardTile.isoX,boardTile.isoY, isConnected);
       return isConnected ? (
          <RoadAllTile {...boardTile} {...positionCalc(boardTile)} />
       ) : (

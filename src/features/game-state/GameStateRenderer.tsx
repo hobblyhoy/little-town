@@ -48,7 +48,6 @@ function GameStateRenderer() {
                   onMouseMove={e => handleMouseMove(e, item)}
                   key={item.key}
                >
-                  {/* //TODO obviously will need somethign smarter here */}
                   <TileRenderer {...item} />
                </div>
             );
