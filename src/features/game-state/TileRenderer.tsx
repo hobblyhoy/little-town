@@ -16,26 +16,18 @@ function TileRenderer(boardTile: IBoardStateTile) {
    if (boardTile.tileType === 'road') {
       // Simple POC for now. Just check if theres any neighbors that are road
       // and if so do RoadAllTile instead
-      let isConnectedNe = false;
-      let isConnectedSe = false;
-      let isConnectedSw = false;
-      let isConnectedNw = false;
 
-      if (boardTile.cellUpperRight && boardTiles[boardTile.cellUpperRight]?.tileType === 'road') {
-         isConnectedNe = true;
-      }
+      let isConnectedNe =
+         boardTile.cellUpperRight && boardTiles[boardTile.cellUpperRight]?.tileType === 'road';
 
-      if (boardTile.cellLowerRight && boardTiles[boardTile.cellLowerRight]?.tileType === 'road') {
-         isConnectedSe = true;
-      }
+      let isConnectedSe =
+         boardTile.cellLowerRight && boardTiles[boardTile.cellLowerRight]?.tileType === 'road';
 
-      if (boardTile.cellLowerLeft && boardTiles[boardTile.cellLowerLeft]?.tileType === 'road') {
-         isConnectedSw = true;
-      }
+      let isConnectedSw =
+         boardTile.cellLowerLeft && boardTiles[boardTile.cellLowerLeft]?.tileType === 'road';
 
-      if (boardTile.cellUpperLeft && boardTiles[boardTile.cellUpperLeft]?.tileType === 'road') {
-         isConnectedNw = true;
-      }
+      let isConnectedNw =
+         boardTile.cellUpperLeft && boardTiles[boardTile.cellUpperLeft]?.tileType === 'road';
 
       let isConnected = isConnectedNe || isConnectedSe || isConnectedSw || isConnectedNw;
       return isConnected ? (
