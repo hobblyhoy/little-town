@@ -5,22 +5,19 @@ export interface IIsometricCoordinates {
    isoZ: number;
 }
 
-export interface IIsometricCoordinatesWithOffset extends IIsometricCoordinates {
-   offsetX?: number;
-   offsetY?: number;
-}
-
-export interface IIsometricCoordinatesWithType extends IIsometricCoordinatesWithOffset {
-   type: 'tile' | 'topper';
-}
-
-export interface ISizeable {
-   topperSize: 'big' | 'small'
-}
-
 export interface ICartesianCoordinates {
    cartX: number;
    cartY: number;
+}
+
+export interface ICartesianOffset {
+   offsetX: number;
+   offsetY: number;
+}
+
+// Sizing
+export interface ISizeable {
+   topperSize: 'big' | 'small' | 'init';
 }
 
 // Board Item setters (For use when setting or updating a board item)

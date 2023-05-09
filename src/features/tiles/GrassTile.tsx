@@ -1,23 +1,12 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import { isometricToCartesian } from '../position/PositionManager';
-import { IIsometricCoordinatesWithOffset } from '../../types/BoardTypes';
+import { ICartesianCoordinates } from '../../types/BoardTypes';
 import { standardBaseCss } from '../../app/constants';
 
-function GrassTile(isoProps: IIsometricCoordinatesWithOffset) {
-   let cartProps = isometricToCartesian({ ...isoProps, type: 'tile' });
-
+function GrassTile(cartProps: ICartesianCoordinates) {
    const gCss = css`
       pointer-events: visiblePainted;
-
-      opacity: 1;
-      transition: opacity 0.3s ease-in-out;
-
-      &:hover {
-         opacity: 0.75;
-         transition: none;
-      }
    `;
    return (
       <svg
@@ -33,9 +22,6 @@ function GrassTile(isoProps: IIsometricCoordinatesWithOffset) {
             css={gCss}
             id="g8066"
             transform="translate(-363.2,-1437.64)"
-            onClick={() => {
-               console.log(`${isoProps.isoX} - ${isoProps.isoY} - ${isoProps.isoZ}`);
-            }}
          >
             <g id="g6066">
                <polygon
@@ -52,42 +38,6 @@ function GrassTile(isoProps: IIsometricCoordinatesWithOffset) {
                   className="st40"
                   points="449.1,1462.24 454.7,1465.46 409.95,1491.31 404.35,1488.08 370.79,1468.7 365.2,1465.47 409.95,1439.64 415.54,1442.86 "
                   id="polygon6060"
-                  onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
-                     const svgElement = e.currentTarget as SVGGraphicsElement;
-                     // TODO will need to cache this somehow when this gets changed to a drag event
-                     const boundingRect = svgElement.getBoundingClientRect();
-
-                     const topLeft: { x: number; y: number } = {
-                        x: boundingRect.left,
-                        y: boundingRect.top,
-                     };
-
-                     const bottomRight: { x: number; y: number } = {
-                        x: boundingRect.right,
-                        y: boundingRect.bottom,
-                     };
-
-                     const mousePosition: { x: number; y: number } = {
-                        x: e.clientX,
-                        y: e.clientY,
-                     };
-
-                     // console.log('Mouse position:', mousePosition);
-                     // console.log('Top-left:', topLeft);
-                     // console.log('Bottom-right:', bottomRight);
-
-                     if (mousePosition.x < topLeft.x + boundingRect.width / 2) {
-                        console.log('left');
-                     } else {
-                        console.log('right');
-                     }
-
-                     if (mousePosition.y < topLeft.y + boundingRect.height / 2) {
-                        console.log('top');
-                     } else {
-                        console.log('bottom');
-                     }
-                  }}
                />
                <polygon
                   className="st12"

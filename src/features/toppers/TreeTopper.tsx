@@ -1,18 +1,18 @@
-import { ICartesianCoordinates, IIsometricCoordinatesWithOffset, ISizeable } from '../../types/BoardTypes';
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-import { isometricToCartesian } from '../position/PositionManager';
+import { ICartesianCoordinates, ISizeable } from '../../types/BoardTypes';
+
 import { customDimensions, standardBaseCss } from '../../app/constants';
 
-interface IProps extends IIsometricCoordinatesWithOffset, ISizeable {}
-function TreeTopper(isoProps: IProps) {
-   const smallOffset = { offsetX: 30, offsetY: 30 };
-   const bigOffset = { offsetY: -14 };
-   const currentOffset = isoProps.topperSize === 'small' ? smallOffset : bigOffset;
-   let cartProps = isometricToCartesian({ ...isoProps, type: 'topper', ...currentOffset });
-   return isoProps.topperSize === 'small' ? <TreeSmallA {...cartProps} /> : <TreeBigA {...cartProps} />;
+interface IProps extends ICartesianCoordinates, ISizeable {}
+function TreeTopper({ topperSize, cartX, cartY }: IProps) {
+   return topperSize === 'small' ? (
+      <TreeSmallA cartX={cartX} cartY={cartY} />
+   ) : (
+      <TreeBigA cartX={cartX} cartY={cartY} />
+   );
 }
 
 export default TreeTopper;

@@ -1,10 +1,13 @@
-import { IBoardStateBase, IBoardStateTile, IIsometricCoordinates } from '../types/BoardTypes';
+import { IBoardStateBase, IBoardStateTile, IBoardStateTopper, IIsometricCoordinates } from '../types/BoardTypes';
 
 // Guard functions
-// didnt end up using this but I might in the future so leaving for now
-export const isIBoardStateTile = (obj: IBoardStateBase): obj is IBoardStateTile => {
+export const isBoardStateTile = (obj: IBoardStateBase): obj is IBoardStateTile => {
    return 'tileType' in obj;
 };
+
+export const isBoardStateTopper = (obj: IBoardStateBase): obj is IBoardStateTopper => {
+   return 'topperType' in obj;
+}
 
 // Helpers
 export const generateInternalKey = (obj: IIsometricCoordinates): string => {

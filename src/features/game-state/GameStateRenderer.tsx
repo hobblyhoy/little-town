@@ -6,6 +6,7 @@ import TreeTopper from '../toppers/TreeTopper';
 import { IBoardStateTile, IBoardStateTopper, IIsometricCoordinates } from '../../types/BoardTypes';
 import { sortIntoRenderOrder } from '../../app/utils';
 import { setMouseDownOn, setMouseMoveOn } from '../click-and-drag/ClickAndDragSlice';
+import { positionCalc } from '../position/Positioner';
 
 function GameStateRenderer() {
    const boardTiles = useAppSelector(selectBoardTiles);
@@ -44,13 +45,13 @@ function GameStateRenderer() {
                   onMouseMove={e => handleMouseMove(e, item)}
                   key={item.key}
                >
-                  <GrassTile {...item} />
+                  <GrassTile {...item} {...positionCalc(item)} />
                </div>
             );
          })}
 
          {sortIntoRenderOrder<IBoardStateTopper>(boardToppers).map(item => {
-            return <TreeTopper {...item} />;
+            return <TreeTopper {...item} {...positionCalc(item)} />;
          })}
       </div>
    );
