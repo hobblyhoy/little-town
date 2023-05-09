@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectMouseDownOn, selectMouseMoveOn } from './ClickAndDragSlice';
 import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
-import { addTopper } from '../game-state/GameStateSlice';
+import { addTopper, updateTile } from '../game-state/GameStateSlice';
 
 // dont know how to do that yet tho lol
 
@@ -46,7 +46,15 @@ function ClickAndDragManager() {
             );
             break;
          case 'road':
-            // TODO
+            dispatch(
+               updateTile({
+                  tileType: 'road',
+                  type: 'tile',
+                  isoX: mouseDownOn.isoX,
+                  isoY: mouseDownOn.isoY,
+                  isoZ: 0,
+               })
+            );
             break;
          case 'house':
             //TODO
@@ -71,7 +79,15 @@ function ClickAndDragManager() {
             );
             break;
          case 'road':
-            // TODO
+            dispatch(
+               updateTile({
+                  tileType: 'road',
+                  type: 'tile',
+                  isoX: mouseMoveOn.isoX,
+                  isoY: mouseMoveOn.isoY,
+                  isoZ: 0,
+               })
+            );
             break;
          case 'house':
             //TODO

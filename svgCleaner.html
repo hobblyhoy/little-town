@@ -38,7 +38,7 @@
             const serializer = new XMLSerializer();
 
             // Parse the SVG string to a DOM object
-            const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+            let svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
 
             // Remove unnecessary tags and attributes
             svgDoc.querySelector('style').remove();

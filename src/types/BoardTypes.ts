@@ -20,6 +20,9 @@ export interface ISizeable {
    topperSize: 'big' | 'small' | 'init';
 }
 
+export type TopperType = 'tree' | 'rock';
+export type TileType = 'grass' | 'road';
+
 // Board Item setters (For use when setting or updating a board item)
 export interface IBoardStateBaseSetter extends IIsometricCoordinates {
    key?: never;
@@ -33,11 +36,11 @@ export interface IBoardStateBaseSetter extends IIsometricCoordinates {
 }
 
 export interface IBoardStateTileSetter extends IBoardStateBaseSetter {
-   tileType: 'grass' | 'dirt';
+   tileType: TileType;
 }
 
 export interface IBoardStateTopperSetter extends IBoardStateBaseSetter, ISizeable {
-   topperType: 'tree' | 'rock';
+   topperType: TopperType;
 }
 
 // Board Items (For use after the GameStateSlice has decorated with these fields)
@@ -47,7 +50,7 @@ export interface IBoardStateBase extends IIsometricCoordinates {
 }
 
 export interface IBoardStateTile extends IBoardStateBase {
-   tileType: 'grass' | 'dirt';
+   tileType: TileType;
    cellUpperLeft: string | null;
    cellUpperRight: string | null;
    cellLowerLeft: string | null;
@@ -56,6 +59,6 @@ export interface IBoardStateTile extends IBoardStateBase {
 }
 
 export interface IBoardStateTopper extends IBoardStateBase, ISizeable {
-   topperType: 'tree' | 'rock';
+   topperType: TopperType;
    cellBelow: string | null;
 }

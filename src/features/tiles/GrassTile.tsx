@@ -2,12 +2,9 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 import { ICartesianCoordinates } from '../../types/BoardTypes';
-import { standardBaseCss } from '../../app/constants';
+import { standardBaseCss, tileGCss } from '../../app/constants';
 
 function GrassTile(cartProps: ICartesianCoordinates) {
-   const gCss = css`
-      pointer-events: visiblePainted;
-   `;
    return (
       <svg
          x="0px"
@@ -19,7 +16,7 @@ function GrassTile(cartProps: ICartesianCoordinates) {
          css={standardBaseCss(cartProps)}
       >
          <g
-            css={gCss}
+            css={tileGCss}
             id="g8066"
             transform="translate(-363.2,-1437.64)"
          >

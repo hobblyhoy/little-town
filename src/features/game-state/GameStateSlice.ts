@@ -1,8 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { generateInternalKey, keysForRelativeItem } from '../../app/utils';
+import {
+   generateInternalKey,
+   keysForRelativeItem,
+   updateBoardTileWithCellNeighborData,
+} from '../../app/utils';
 import {
    IBoardStateTile,
+   IBoardStateTileSetter,
    IBoardStateTopper,
    IBoardStateTopperSetter,
 } from '../../types/BoardTypes';
@@ -71,23 +76,7 @@ export const gameStateSlice = createSlice({
          // Apply our relative references
          Object.keys(tiles)
             .map(key => tiles[key])
-            .forEach(boardItem => {
-               // The original plan here was for these to be references to the board items instead of just the
-               // keys but thats making redux throw a fit. In theory that should work though, maybe revisit.
-               let relativeKeys = keysForRelativeItem(boardItem);
-               boardItem.cellUpperLeft = tiles[relativeKeys.upperLeft]
-                  ? tiles[relativeKeys.upperLeft].key
-                  : null;
-               boardItem.cellUpperRight = tiles[relativeKeys.upperRight]
-                  ? tiles[relativeKeys.upperRight].key
-                  : null;
-               boardItem.cellLowerLeft = tiles[relativeKeys.lowerLeft]
-                  ? tiles[relativeKeys.lowerLeft].key
-                  : null;
-               boardItem.cellLowerRight = tiles[relativeKeys.lowerRight]
-                  ? tiles[relativeKeys.lowerRight].key
-                  : null;
-            });
+            .forEach(boardItem => updateBoardTileWithCellNeighborData(tiles, boardItem));
 
          state.boardTiles = tiles;
       },
@@ -107,11 +96,20 @@ export const gameStateSlice = createSlice({
 
          state.boardToppers[key] = newTopper;
       },
+
+      updateTile: (state, action: PayloadAction<IBoardStateTileSetter>) => {
+         const key = generateInternalKey({
+            isoX: action.payload.isoX,
+            isoY: action.payload.isoY,
+            isoZ: 0,
+         });
+         state.boardTiles[key] = { ...state.boardTiles[key], tileType: action.payload.tileType };
+      },
    },
 });
 
 // reducer export
-export const { initializeBoardTiles, addTopper } = gameStateSlice.actions;
+export const { initializeBoardTiles, addTopper, updateTile } = gameStateSlice.actions;
 
 // selector export
 export const selectBoardTiles = (state: RootState) => state.gamestate.boardTiles;
