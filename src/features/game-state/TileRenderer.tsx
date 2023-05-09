@@ -37,7 +37,7 @@ function TileRenderer(boardTile: IBoardStateTile) {
       );
    }
 
-   throw 'Invalid tileType in TileRenderer';
+   throw new Error('Invalid tileType in TileRenderer');
 }
 
 export default TileRenderer;

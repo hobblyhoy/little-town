@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { jsx } from '@emotion/react';
 
 import { standardBaseCss, tileGCss } from '../../../app/constants';
 import { ICartesianCoordinates } from '../../../types/BoardTypes';

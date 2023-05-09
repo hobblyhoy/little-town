@@ -1,14 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useEffect, MouseEvent } from 'react';
-import GrassTile from '../tiles/GrassTile';
 import TreeTopper from '../toppers/TreeTopper';
-import { IBoardStateTile, IBoardStateTopper, IIsometricCoordinates } from '../../types/BoardTypes';
+import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import { sortIntoRenderOrder } from '../../app/utils';
 import { setMouseDownOn, setMouseMoveOn } from '../click-and-drag/ClickAndDragSlice';
 import { positionCalc } from '../position/Positioner';
-import RoadAllTile from '../tiles/road/RoadAllTile';
-import RoadNoneTile from '../tiles/road/RoadNoneTile';
 import TileRenderer from './TileRenderer';
 
 function GameStateRenderer() {
