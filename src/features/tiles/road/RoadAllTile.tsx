@@ -2,8 +2,8 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-import { standardBaseCss, tileGCss } from "../../app/constants";
-import { ICartesianCoordinates } from "../../types/BoardTypes";
+import { standardBaseCss, tileGCss } from "../../../app/constants";
+import { ICartesianCoordinates } from "../../../types/BoardTypes";
 
 function RoadAllTile(cartProps: ICartesianCoordinates) {
    return (

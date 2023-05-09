@@ -7,7 +7,9 @@ import { IBoardStateTile, IBoardStateTopper, IIsometricCoordinates } from '../..
 import { sortIntoRenderOrder } from '../../app/utils';
 import { setMouseDownOn, setMouseMoveOn } from '../click-and-drag/ClickAndDragSlice';
 import { positionCalc } from '../position/Positioner';
-import RoadAllTile from '../tiles/RoadAllTile';
+import RoadAllTile from '../tiles/road/RoadAllTile';
+import RoadNoneTile from '../tiles/road/RoadNoneTile';
+import TileRenderer from './TileRenderer';
 
 function GameStateRenderer() {
    const boardTiles = useAppSelector(selectBoardTiles);
@@ -47,11 +49,7 @@ function GameStateRenderer() {
                   key={item.key}
                >
                   {/* //TODO obviously will need somethign smarter here */}
-                  {item.tileType === 'grass' ? (
-                     <GrassTile {...item} {...positionCalc(item)} />
-                  ) : (
-                     <RoadAllTile {...item} {...positionCalc(item)} />
-                  )}
+                  <TileRenderer {...item} />
                </div>
             );
          })}
