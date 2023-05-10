@@ -10,6 +10,7 @@ export const standardBaseCss = (cartProps: ICartesianCoordinates) => css`
    width: 95px;
    height: 97px;
    pointer-events: none;
+   cursor: pointer;
 `;
 
 export const customDimensions = (width: number, height: number) => css`

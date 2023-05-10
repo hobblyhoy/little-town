@@ -9,7 +9,7 @@ export interface ISelectionBarState {
 }
 
 const initialState: ISelectionBarState = {
-   selectableItems: ['tree', 'road'], //should actually be 'seed' instead of tree but we'll cross that bridge when we get to it 
+   selectableItems: ['tree', 'road', 'house'], //should actually be 'seed' instead of tree but we'll cross that bridge when we get to it 
    selectedItem: null,
 };
 

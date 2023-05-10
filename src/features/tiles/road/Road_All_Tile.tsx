@@ -5,7 +5,7 @@ import { jsx } from '@emotion/react';
 import { standardBaseCss, tileGCss } from "../../../app/constants";
 import { ICartesianCoordinates } from "../../../types/BoardTypes";
 
-function RoadAllTile(cartProps: ICartesianCoordinates) {
+function Road_All_Tile(cartProps: ICartesianCoordinates) {
    return (
       <svg
          x="0px"
@@ -58,4 +58,4 @@ function RoadAllTile(cartProps: ICartesianCoordinates) {
    );
 }
 
-export default RoadAllTile;
+export default Road_All_Tile;

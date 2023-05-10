@@ -7,6 +7,7 @@ import { sortIntoRenderOrder } from '../../app/utils';
 import { setMouseDownOn, setMouseMoveOn } from '../click-and-drag/ClickAndDragSlice';
 import { positionCalc } from '../position/Positioner';
 import TileRenderer from './TileRenderer';
+import TopperRenderer from './TopperRenderer';
 
 function GameStateRenderer() {
    const boardTiles = useAppSelector(selectBoardTiles);
@@ -51,7 +52,7 @@ function GameStateRenderer() {
          })}
 
          {sortIntoRenderOrder<IBoardStateTopper>(boardToppers).map(item => {
-            return <TreeTopper {...item} {...positionCalc(item)} />;
+            return <TopperRenderer {...item} />
          })}
       </div>
    );

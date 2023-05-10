@@ -56,6 +56,8 @@ const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffse
       } else {
          return { offsetX: 0, offsetY: -14 };
       }
+   } else if (boardTopper.topperType === 'house') {
+      return { offsetX: 19, offsetY: 29 };
    }
 
    throw 'Topper missing from getCustomTopperOffsets';

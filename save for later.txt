@@ -57,3 +57,24 @@ const tiles: { [key: string]: IBoardStateTile } = {
    '1-1-0': { isoX: 1, isoY: 1, isoZ: 0, type: 'tile', tileType: 'grass', key: '1-1-0' },
    '1-2-0': { isoX: 1, isoY: 2, isoZ: 0, type: 'tile', tileType: 'grass', key: '1-2-0' },
 };   
+
+
+Building a new tile from scratch
+         const key = generateInternalKey({isoX: action.payload.isoX, isoY: action.payload.isoY, isoZ: 0});
+         const newTile:IBoardStateTile = {
+            isoX: action.payload.isoX,
+            isoY: action.payload.isoY,
+            isoZ: 0,
+            type: 'tile',
+            tileType: action.payload.tileType,
+            key,
+            cellUpperLeft: null,
+            cellUpperRight: null,
+            cellLowerLeft: null,
+            cellLowerRight: null,
+            cellAbove: null,
+         }
+
+         updateBoardTileWithCellNeighborData(state.boardTiles, newTile);
+
+         state.boardTiles[key] = newTile;

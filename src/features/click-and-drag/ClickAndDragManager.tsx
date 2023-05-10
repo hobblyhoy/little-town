@@ -57,7 +57,14 @@ function ClickAndDragManager() {
             );
             break;
          case 'house':
-            //TODO
+            dispatch(addTopper({
+               isoX: mouseDownOn.isoX,
+               isoY: mouseDownOn.isoY,
+               isoZ: 1,
+               type: 'topper',
+               topperType: 'house',
+               topperSize: 'big'
+            }))
             break;
       }
    }, [mouseDownOn]);

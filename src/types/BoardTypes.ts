@@ -20,7 +20,17 @@ export interface ISizeable {
    topperSize: 'big' | 'small' | 'init';
 }
 
-export type TopperType = 'tree' | 'rock';
+// Direction
+export interface IMultiDirectional {
+   topLeft: boolean;
+   topRight: boolean;
+   bottomLeft: boolean;
+   bottomRight: boolean;
+}
+export type Directional = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+
+// Types
+export type TopperType = 'tree' | 'house';
 export type TileType = 'grass' | 'road';
 
 // Board Item setters (For use when setting or updating a board item)
