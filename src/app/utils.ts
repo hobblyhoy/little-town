@@ -73,3 +73,17 @@ export const updateBoardTileWithCellNeighborData = (
       ? tiles[relativeKeys.lowerRight].key
       : null;
 };
+
+//// Helpers \\\\
+export const dictionaryToArray = <T>(obj: Record<string, T>): T[] => Object.values(obj);
+
+//// Filters \\\\
+export const grassOnly = (x: IBoardStateTile) => x.tileType !== 'grass';
+export const treesOnly = (x: IBoardStateTopper) => x.topperType !== 'tree';
+
+//// Maps \\\\
+export const toIsometricCoords = (x: IIsometricCoordinates) => ({
+   isoX: x.isoX,
+   isoY: x.isoY,
+   isoZ: x.isoZ,
+});

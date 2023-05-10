@@ -11,7 +11,7 @@ export interface IClickAndDragState {
 
 const initialState: IClickAndDragState = {
    mouseDownOn: null,
-   mouseMoveOn: null
+   mouseMoveOn: null,
 };
 
 export const clickAndDragSlice = createSlice({
@@ -20,13 +20,11 @@ export const clickAndDragSlice = createSlice({
    reducers: {
       setMouseDownOn: (state, action: PayloadAction<IBoardStateTile | null>) => {
          state.mouseDownOn = action.payload;
-         if (action.payload === null) {
-            state.mouseMoveOn = null;
-         }
       },
       setMouseMoveOn: (state, action: PayloadAction<IBoardStateTile>) => {
+         console.log('mousemoveon', action.payload.key);
          state.mouseMoveOn = action.payload;
-      }
+      },
    },
 });
 

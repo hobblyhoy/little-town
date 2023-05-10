@@ -57,6 +57,7 @@ export interface IBoardStateTopperSetter extends IBoardStateBaseSetter, ISizeabl
 export interface IBoardStateBase extends IIsometricCoordinates {
    key: string;
    type: 'tile' | 'topper';
+   isInvalid: boolean;
 }
 
 export interface IBoardStateTile extends IBoardStateBase {

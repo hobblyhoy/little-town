@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import {
+   dictionaryToArray,
    generateInternalKey,
    keysForRelativeItem,
    updateBoardTileWithCellNeighborData,
@@ -10,7 +11,9 @@ import {
    IBoardStateTileSetter,
    IBoardStateTopper,
    IBoardStateTopperSetter,
+   IIsometricCoordinates,
 } from '../../types/BoardTypes';
+import { boardSize } from '../../app/constants';
 
 export interface IGameState {
    boardTiles: { [key: string]: IBoardStateTile };
@@ -28,12 +31,10 @@ export const gameStateSlice = createSlice({
    initialState,
    reducers: {
       initializeBoardTiles: state => {
-         const size = 3;
-
          const tiles: { [key: string]: IBoardStateTile } = {};
 
-         for (let row = size; row < size * 2 - 1; row++) {
-            for (let col = row - size + 1; col < size; col++) {
+         for (let row = boardSize; row < boardSize * 2 - 1; row++) {
+            for (let col = row - boardSize + 1; col < boardSize; col++) {
                const isoX = col;
                const isoY = row - col;
                const key = generateInternalKey({ isoX, isoY, isoZ: 0 });
@@ -49,10 +50,11 @@ export const gameStateSlice = createSlice({
                   cellLowerLeft: null,
                   cellLowerRight: null,
                   cellAbove: null,
+                  isInvalid: false,
                };
             }
          }
-         for (let row = 0; row < size; row++) {
+         for (let row = 0; row < boardSize; row++) {
             for (let col = 0; col <= row; col++) {
                const isoX = col;
                const isoY = row - col;
@@ -69,6 +71,7 @@ export const gameStateSlice = createSlice({
                   cellLowerLeft: null,
                   cellLowerRight: null,
                   cellAbove: null,
+                  isInvalid: false,
                };
             }
          }
@@ -82,11 +85,15 @@ export const gameStateSlice = createSlice({
       },
 
       addTopper: (state, action: PayloadAction<IBoardStateTopperSetter>) => {
-         const key = generateInternalKey(action.payload);
+         const tileKey = generateInternalKey({isoX: action.payload.isoX, isoY: action.payload.isoY, isoZ: 0});
+         if (state.boardTiles[tileKey].isInvalid) return;
+
+         const topperKey = generateInternalKey(action.payload);
          const newTopper: IBoardStateTopper = {
             ...action.payload,
-            key,
+            key: topperKey,
             cellBelow: null,
+            isInvalid: false,
          };
 
          let relativeKeys = keysForRelativeItem(newTopper);
@@ -94,7 +101,7 @@ export const gameStateSlice = createSlice({
          newTopper.cellBelow = baseTile.key;
          baseTile.cellAbove = newTopper.key;
 
-         state.boardToppers[key] = newTopper;
+         state.boardToppers[topperKey] = newTopper;
       },
 
       updateTile: (state, action: PayloadAction<IBoardStateTileSetter>) => {
@@ -103,13 +110,40 @@ export const gameStateSlice = createSlice({
             isoY: action.payload.isoY,
             isoZ: 0,
          });
+         if (state.boardTiles[key].isInvalid) return;
+
          state.boardTiles[key] = { ...state.boardTiles[key], tileType: action.payload.tileType };
       },
+
+      dimTiles: (state, action: PayloadAction<IIsometricCoordinates[]>) => {
+         // regardless of if a tile or a topper is passed in we always dim both
+
+         action.payload.forEach(isoCoords => {
+            var tileKey = generateInternalKey({
+               isoX: isoCoords.isoX,
+               isoY: isoCoords.isoY,
+               isoZ: 0
+            });
+            var topperKey = generateInternalKey({
+               isoX: isoCoords.isoX,
+               isoY: isoCoords.isoY,
+               isoZ: 1,
+            });
+
+            state.boardTiles[tileKey].isInvalid = true;
+            if (state.boardToppers[topperKey]) state.boardToppers[topperKey].isInvalid = true;
+         });
+      },
+
+      resetDimTiles: (state) => {
+         dictionaryToArray(state.boardTiles).forEach(x => x.isInvalid = false);
+         dictionaryToArray(state.boardToppers).forEach(x => x.isInvalid = false);
+      }
    },
 });
 
 // reducer export
-export const { initializeBoardTiles, addTopper, updateTile } = gameStateSlice.actions;
+export const { initializeBoardTiles, addTopper, updateTile, dimTiles, resetDimTiles } = gameStateSlice.actions;
 
 // selector export
 export const selectBoardTiles = (state: RootState) => state.gamestate.boardTiles;

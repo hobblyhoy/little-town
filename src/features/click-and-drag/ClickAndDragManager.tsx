@@ -24,6 +24,7 @@ function ClickAndDragManager() {
    const mouseMoveOn = useAppSelector(selectMouseMoveOn);
    const selectedItem = useAppSelector(selectSelectedItem);
 
+   //// Mouse Down \\\\
    useEffect(() => {
       // TODO need to add something where mouseDownOn doesnt fire if theres something already there or it's otherwise invalid
 
@@ -69,6 +70,7 @@ function ClickAndDragManager() {
       }
    }, [mouseDownOn]);
 
+   //// Click and drag \\\\
    useEffect(() => {
       if (!selectedItem || !mouseDownOn || !mouseMoveOn) return;
 
@@ -95,9 +97,6 @@ function ClickAndDragManager() {
                   isoZ: 0,
                })
             );
-            break;
-         case 'house':
-            //TODO
             break;
       }
    }, [mouseMoveOn]);

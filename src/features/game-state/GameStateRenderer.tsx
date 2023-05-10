@@ -1,4 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx, css } from '@emotion/react';
+
 import { selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useEffect, MouseEvent } from 'react';
 import TreeTopper from '../toppers/TreeTopper';
@@ -33,18 +37,26 @@ function GameStateRenderer() {
       dispatch(setMouseMoveOn(item));
    };
 
+   const dimCss = css`
+      opacity: 0.8;
+      filter: saturate(40%);
+      cursor: unset;
+   `;
+
+   const notDimCss = css`
+      cursor: pointer;
+   `;
+
    return (
       <div>
          {sortIntoRenderOrder<IBoardStateTile>(boardTiles).map(item => {
-            // TODO it is obviously much easier to handle the click events here...
-            // but if we want to support directional placing of houses we cant do it (womp womp)
-            // honestly though I think we might leave direction housing for a V2 since thats going to add so much work
             return (
                <div
                   onMouseDown={e => handleMouseDown(e, item)}
                   onMouseUp={e => handleMouseUp(e)}
                   onMouseMove={e => handleMouseMove(e, item)}
                   key={item.key}
+                  css={item.isInvalid ? dimCss : notDimCss}
                >
                   <TileRenderer {...item} />
                </div>
@@ -52,7 +64,11 @@ function GameStateRenderer() {
          })}
 
          {sortIntoRenderOrder<IBoardStateTopper>(boardToppers).map(item => {
-            return <TopperRenderer {...item} />
+            return (
+               <div key={item.key} css={item.isInvalid ? dimCss : null}>
+                  <TopperRenderer {...item} />
+               </div>
+            );
          })}
       </div>
    );

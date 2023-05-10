@@ -1,3 +1,4 @@
+import { boardSize } from '../../app/constants';
 import { isBoardStateTopper } from '../../app/utils';
 import {
    IBoardStateBase,
@@ -33,7 +34,7 @@ const applyPrimaryPositioningLogic = (boardItem: IBoardStateBase): ICartesianCoo
    const tileTopHeight = 51;
    const tileBottomHeight = 41;
 
-   const screenXBasePoint = 300; // TODO key off window.innerWidth (once!)
+   const screenXBasePoint = window.innerWidth / 2 - tileWidth / 2;
    const screenYBasePoint = 60;
 
    let cartX =
