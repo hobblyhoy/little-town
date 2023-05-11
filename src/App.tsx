@@ -8,6 +8,7 @@ import {
 import SelectionBar from './features/selection-bar/SelectionBar';
 import ClickAndDragManager from './features/click-and-drag/ClickAndDragManager';
 import InvalidManager from './features/game-state/InvalidManager';
+import TimeManager from './features/time/TimeManager';
 
 function App() {
    const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ function App() {
          <SelectionBar />
          <ClickAndDragManager />
          <InvalidManager />
+         <TimeManager />
       </div>
    );
 }

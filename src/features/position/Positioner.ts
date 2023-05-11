@@ -54,9 +54,9 @@ const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffse
             case 'init':
                return { offsetX: 39, offsetY: 60 };
             case 'small':
-               return { offsetX: 30, offsetY: 30 };
+               return { offsetX: 32, offsetY: 33 };
             case 'big':
-               return { offsetX: 0, offsetY: -14 };
+               return { offsetX: 24, offsetY: 10 };
             default: {
                throw new Error('invalid tree size');
             }

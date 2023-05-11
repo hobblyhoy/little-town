@@ -20,6 +20,8 @@ export const tileGCss = css`
    pointer-events: visiblePainted;
 `;
 
+export const growthTime = 15000;
+
 export const boardSize = 4;
 
 export const boardItemCost: Record<TopperType | TileType, number> = {

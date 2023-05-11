@@ -12,7 +12,7 @@ function Tree_Small_Topper(cartProps: ICartesianCoordinates) {
          viewBox="0 0 33.930001 47.049963"
          width="33.93"
          height="47.049961"
-         css={[standardBaseCss(cartProps), customDimensions(34, 48)]}
+         css={[standardBaseCss(cartProps), customDimensions(31, 42)]}
       >
          <g id="g8066" transform="translate(-304.79,-1376.42)">
             <g id="g6970">

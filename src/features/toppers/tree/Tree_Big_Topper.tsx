@@ -3,7 +3,7 @@
 import { jsx, css } from '@emotion/react';
 
 import { ICartesianCoordinates } from '../../../types/BoardTypes';
-import { standardBaseCss } from '../../../app/constants';
+import { customDimensions, standardBaseCss } from '../../../app/constants';
 
 function Tree_Big_Topper(cartProps: ICartesianCoordinates) {
    return (
@@ -11,7 +11,7 @@ function Tree_Big_Topper(cartProps: ICartesianCoordinates) {
          viewBox="0 0 52.970002 74.389994"
          width="52.970001"
          height="74.389992"
-         css={standardBaseCss(cartProps)}
+         css={[standardBaseCss(cartProps), customDimensions(48, 67)]}
       >
          <g id="g8066" transform="translate(-248.45,-1349.08)">
             <g id="g6950">

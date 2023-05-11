@@ -39,16 +39,16 @@ export const gameStateSlice = createSlice({
       initializeBoardTiles: state => {
          const tiles: { [key: string]: IBoardStateTile } = {};
 
-         for (let row = boardSize; row < boardSize * 2 - 1; row++) {
-            for (let col = row - boardSize + 1; col < boardSize; col++) {
+         for (let row = 0; row < boardSize; row++) {
+            for (let col = 0; col <= row; col++) {
                const isoX = col;
                const isoY = row - col;
                const key = generateInternalKey({ isoX, isoY, isoZ: 0 });
                tiles[key] = buildGrassTile({ isoX, isoY }, key);
             }
          }
-         for (let row = 0; row < boardSize; row++) {
-            for (let col = 0; col <= row; col++) {
+         for (let row = boardSize; row < boardSize * 2 - 1; row++) {
+            for (let col = row - boardSize + 1; col < boardSize; col++) {
                const isoX = col;
                const isoY = row - col;
                const key = generateInternalKey({ isoX, isoY, isoZ: 0 });
@@ -97,6 +97,12 @@ export const gameStateSlice = createSlice({
 
          // Gimme that money
          state.money -= boardItemCost[action.payload.topperType];
+      },
+
+      growTopper: (state, action: PayloadAction<string>) => {
+         const topper = state.boardToppers[action.payload];
+         topper.size = (topper.size === 'init') ? 'small' : 'big';
+         state.boardToppers[topper.key] = topper;
       },
 
       updateTile: (state, action: PayloadAction<IBoardStateTileSetter>) => {
@@ -155,7 +161,7 @@ export const gameStateSlice = createSlice({
 });
 
 // reducer export
-export const { initializeBoardTiles, addTopper, updateTile, dimTiles, resetDimTiles, resetTile } =
+export const { initializeBoardTiles, addTopper, growTopper, updateTile, dimTiles, resetDimTiles, resetTile } =
    gameStateSlice.actions;
 
 // selector export
