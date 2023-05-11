@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import { ICartesianCoordinates } from '../types/BoardTypes';
+import { ICartesianCoordinates, TileType, TopperType } from '../types/BoardTypes';
 
 export const standardBaseCss = (cartProps: ICartesianCoordinates) => css`
    position: fixed;
@@ -20,4 +20,12 @@ export const tileGCss = css`
    pointer-events: visiblePainted;
 `;
 
-export const boardSize = 3;
+export const boardSize = 4;
+
+export const boardItemCost: Record<TopperType | TileType, number> = {
+   grass: 0,
+   road: 2,
+   tree: 1,
+   house: 10,
+   wheat: 5,
+};

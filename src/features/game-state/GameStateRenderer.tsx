@@ -5,7 +5,7 @@ import { jsx, css } from '@emotion/react';
 
 import { selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useEffect, MouseEvent } from 'react';
-import TreeTopper from '../toppers/TreeTopper';
+import TreeTopper from '../toppers/tree/TreeTopper';
 import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import { sortIntoRenderOrder } from '../../app/utils';
 import { setMouseDownOn, setMouseMoveOn } from '../click-and-drag/ClickAndDragSlice';
@@ -25,15 +25,15 @@ function GameStateRenderer() {
       console.log({ boardToppers });
    }, [boardToppers]);
 
-   const handleMouseDown = (e: MouseEvent<HTMLDivElement>, item: IBoardStateTile) => {
+   const handleMouseDown = (item: IBoardStateTile) => {
       dispatch(setMouseDownOn(item));
    };
 
-   const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
+   const handleMouseUp = () => {
       dispatch(setMouseDownOn(null));
    };
 
-   const handleMouseMove = (e: MouseEvent<HTMLDivElement>, item: IBoardStateTile) => {
+   const handleMouseMove = (item: IBoardStateTile) => {
       dispatch(setMouseMoveOn(item));
    };
 
@@ -52,9 +52,11 @@ function GameStateRenderer() {
          {sortIntoRenderOrder<IBoardStateTile>(boardTiles).map(item => {
             return (
                <div
-                  onMouseDown={e => handleMouseDown(e, item)}
-                  onMouseUp={e => handleMouseUp(e)}
-                  onMouseMove={e => handleMouseMove(e, item)}
+                  onTouchStart={e => handleMouseDown(item)}
+                  onTouchEnd={e => handleMouseUp()}
+                  onMouseDown={e => handleMouseDown(item)}
+                  onMouseUp={e => handleMouseUp()}
+                  onMouseMove={e => handleMouseMove(item)}
                   key={item.key}
                   css={item.isInvalid ? dimCss : notDimCss}
                >

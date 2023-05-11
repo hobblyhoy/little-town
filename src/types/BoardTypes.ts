@@ -17,7 +17,7 @@ export interface ICartesianOffset {
 
 // Sizing
 export interface ISizeable {
-   topperSize: 'big' | 'small' | 'init';
+   size?: 'big' | 'small' | 'init';
 }
 
 // Direction
@@ -30,13 +30,19 @@ export interface IMultiDirectional {
 export type Directional = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
 // Types
-export type TopperType = 'tree' | 'house';
+export type TopperType = 'tree' | 'house' | 'wheat';
 export type TileType = 'grass' | 'road';
 
 // Board Item setters (For use when setting or updating a board item)
-export interface IBoardStateBaseSetter extends IIsometricCoordinates {
+export interface IIsometricCoordinatesSetter {
+   isoX: number;
+   isoY: number;
+   isoZ?: never;
+}
+
+export interface IBoardStateBaseSetter extends IIsometricCoordinatesSetter{
    key?: never;
-   type: 'tile' | 'topper';
+   type?: never;
    cellUpperLeft?: never;
    cellUpperRight?: never;
    cellLowerLeft?: never;

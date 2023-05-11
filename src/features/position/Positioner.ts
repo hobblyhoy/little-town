@@ -1,4 +1,3 @@
-import { boardSize } from '../../app/constants';
 import { isBoardStateTopper } from '../../app/utils';
 import {
    IBoardStateBase,
@@ -49,17 +48,35 @@ const applyPrimaryPositioningLogic = (boardItem: IBoardStateBase): ICartesianCoo
 };
 
 const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffset => {
-   if (boardTopper.topperType === 'tree') {
-      if (boardTopper.topperSize === 'init') {
-         throw 'unimplemented';
-      } else if (boardTopper.topperSize === 'small') {
-         return { offsetX: 30, offsetY: 30 };
-      } else {
-         return { offsetX: 0, offsetY: -14 };
-      }
-   } else if (boardTopper.topperType === 'house') {
-      return { offsetX: 19, offsetY: 29 };
-   }
+   switch (boardTopper.topperType) {
+      case 'tree':
+         switch (boardTopper.size) {
+            case 'init':
+               return { offsetX: 39, offsetY: 60 };
+            case 'small':
+               return { offsetX: 30, offsetY: 30 };
+            case 'big':
+               return { offsetX: 0, offsetY: -14 };
+            default: {
+               throw new Error('invalid tree size');
+            }
+         }
 
-   throw 'Topper missing from getCustomTopperOffsets';
+      case 'house':
+         return { offsetX: 19, offsetY: 29 };
+
+      case 'wheat':
+         switch (boardTopper.size) {
+            case 'small':
+               return { offsetX: 15, offsetY: 49 };
+            case 'big':
+               return { offsetX: 15, offsetY: 41 };
+            default: {
+               throw new Error('invalid wheat size');
+            }
+         }
+
+      default:
+         throw new Error('Topper missing from getCustomTopperOffsets');
+   }
 };

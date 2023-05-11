@@ -3,6 +3,7 @@ import {
    IBoardStateTile,
    IBoardStateTopper,
    IIsometricCoordinates,
+   IIsometricCoordinatesSetter,
 } from '../types/BoardTypes';
 
 //// Guard functions \\\\
@@ -31,10 +32,6 @@ export const sortIntoRenderOrder = <T extends IIsometricCoordinates>(inputDict: 
 };
 
 //// Game State Utils \\\\
-export const generateInternalKey = (obj: IIsometricCoordinates): string => {
-   return `${obj.isoX}-${obj.isoY}-${obj.isoZ}`;
-};
-
 export const keysForRelativeItem = (
    origin: IIsometricCoordinates
 ): {
@@ -74,12 +71,36 @@ export const updateBoardTileWithCellNeighborData = (
       : null;
 };
 
+export const buildGrassTile = (
+   isoCoords: IIsometricCoordinatesSetter,
+   key: string
+): IBoardStateTile => {
+   return {
+      isoX: isoCoords.isoX,
+      isoY: isoCoords.isoY,
+      isoZ: 0,
+      type: 'tile',
+      tileType: 'grass',
+      key,
+      cellUpperLeft: null,
+      cellUpperRight: null,
+      cellLowerLeft: null,
+      cellLowerRight: null,
+      cellAbove: null,
+      isInvalid: false,
+   };
+};
+
 //// Helpers \\\\
 export const dictionaryToArray = <T>(obj: Record<string, T>): T[] => Object.values(obj);
+export const generateInternalKey = (obj: IIsometricCoordinates): string => {
+   return `${obj.isoX}-${obj.isoY}-${obj.isoZ}`;
+};
 
 //// Filters \\\\
 export const grassOnly = (x: IBoardStateTile) => x.tileType !== 'grass';
 export const treesOnly = (x: IBoardStateTopper) => x.topperType !== 'tree';
+export const wheatOnly = (x: IBoardStateTopper) => x.topperType !== 'wheat';
 
 //// Maps \\\\
 export const toIsometricCoords = (x: IIsometricCoordinates) => ({

@@ -1,4 +1,3 @@
-import './App.css';
 import GameStateRenderer from './features/game-state/GameStateRenderer';
 import { useEffect } from 'react';
 import { useAppDispatch } from './app/hooks';
@@ -18,10 +17,8 @@ function App() {
          addTopper({
             isoX: 0,
             isoY: 0,
-            isoZ: 1,
-            type: 'topper',
             topperType: 'tree',
-            topperSize: 'small',
+            size: 'small',
          })
       );
    }, []);

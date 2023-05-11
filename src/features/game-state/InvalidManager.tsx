@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { dictionaryToArray, grassOnly, toIsometricCoords, treesOnly } from '../../app/utils';
+import { dictionaryToArray, grassOnly, toIsometricCoords, treesOnly, wheatOnly } from '../../app/utils';
 import { IIsometricCoordinates } from '../../types/BoardTypes';
 import { resetDimTiles, dimTiles, selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -19,23 +19,32 @@ function InvalidManager() {
       let invalidTiles: IIsometricCoordinates[] = [];
       let invalidToppers: IIsometricCoordinates[] = [];
       switch (selectedItem) {
+         case 'remove':
+            break;
+
          case 'tree':
             invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
-
             invalidToppers = dictionaryToArray(boardToppers)
                .filter(treesOnly)
                .map(toIsometricCoords);
             break;
+
          case 'road':
             invalidToppers = dictionaryToArray(boardToppers).map(toIsometricCoords);
             break;
+
          case 'house':
             invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
-
             invalidToppers = dictionaryToArray(boardToppers).map(toIsometricCoords);
             break;
+
+         case 'wheat':
+            invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
+            invalidToppers = dictionaryToArray(boardToppers).filter(wheatOnly).map(toIsometricCoords);
+            break;
+            
          default:
-            throw 'Unimplemented item in InvalidManager';
+            throw new Error('Unimplemented item in InvalidManager');
       }
 
       dispatch(dimTiles([...invalidTiles, ...invalidToppers]));

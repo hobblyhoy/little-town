@@ -1,15 +1,21 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-type SelectableItem = 'tree' | 'road' | 'house';
+type SelectableItem = 'remove' | 'tree' | 'road' | 'house' | 'wheat';
 
 export interface ISelectionBarState {
-   selectableItems: SelectableItem[];
+   selectableItems: { internalName: SelectableItem; uiName: string }[];
    selectedItem: SelectableItem | null;
 }
 
 const initialState: ISelectionBarState = {
-   selectableItems: ['tree', 'road', 'house'], //should actually be 'seed' instead of tree but we'll cross that bridge when we get to it 
+   selectableItems: [
+      { internalName: 'remove', uiName: 'Remove' },
+      { internalName: 'tree', uiName: 'Seed' },
+      { internalName: 'road', uiName: 'Road' },
+      { internalName: 'house', uiName: 'House' },
+      { internalName: 'wheat', uiName: 'Wheat' },
+   ],
    selectedItem: null,
 };
 
@@ -18,13 +24,13 @@ export const selectionBarSlice = createSlice({
    initialState,
    reducers: {
       setSelectedItem: (state, action: PayloadAction<SelectableItem>) => {
-         state.selectedItem = action.payload;
+         state.selectedItem = state.selectedItem !== action.payload ? action.payload : null;
       },
    },
 });
 
 // reducer export
-export const {setSelectedItem} = selectionBarSlice.actions;
+export const { setSelectedItem } = selectionBarSlice.actions;
 
 // selector export
 export const selectSelectedItem = (state: RootState) => state.selectionbar.selectedItem;
