@@ -1,15 +1,12 @@
 import { useAppSelector } from '../../app/hooks';
 import { IBoardStateTile } from '../../types/BoardTypes';
 import { positionCalc } from '../position/Positioner';
-import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
 import GrassTile from '../tiles/GrassTile';
 import RoadTile from '../tiles/road/RoadTile';
-import WheatTopper from '../toppers/wheat/WheatTopper';
 import { selectBoardTiles } from './GameStateSlice';
 
 function TileRenderer(boardTile: IBoardStateTile) {
    const boardTiles = useAppSelector(selectBoardTiles);
-   const selectedItem = useAppSelector(selectSelectedItem);
 
    switch (boardTile.tileType) {
       case 'grass':

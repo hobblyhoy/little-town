@@ -27,7 +27,7 @@ export interface IGameState {
 const initialState: IGameState = {
    boardTiles: {},
    boardToppers: {},
-   money: 20,
+   money: 200,
    lumber: 0,
    wheat: 0,
 };
