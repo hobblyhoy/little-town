@@ -1,4 +1,4 @@
-import { ICartesianCoordinates, IMultiDirectional } from '../../../types/BoardTypes';
+import { IBoardTileProps, ICartesianCoordinates, IMultiDirectional } from '../../../types/BoardTypes';
 import Road_All_Tile from './Road_All_Tile';
 import Road_None_Tile from './Road_None_Tile';
 import Road_TlTrBl_Tile from './Road_TlTrBl_Tile';
@@ -16,40 +16,41 @@ import Road_TrBl_Tile from './Road_TrBl_Tile';
 import Road_TrBr_Tile from './Road_TrBr_Tile';
 import Road_Tr_Tile from './Road_Tr_Tile';
 
-interface IProps extends ICartesianCoordinates, IMultiDirectional {}
-function RoadTile({ topLeft, topRight, bottomLeft, bottomRight, ...cartProps }: IProps) {
+//interface IProps extends ICartesianCoordinates, IMultiDirectional {}
+interface IProps extends IBoardTileProps, IMultiDirectional {}
+function RoadTile({ topLeft, topRight, bottomLeft, bottomRight, ...props }: IProps) {
    if (topLeft && topRight && bottomLeft && bottomRight) {
-      return <Road_All_Tile {...cartProps} />;
+      return <Road_All_Tile {...props} />;
    } else if (topLeft && topRight && bottomLeft && !bottomRight) {
-      return <Road_TlTrBl_Tile {...cartProps} />;
+      return <Road_TlTrBl_Tile {...props} />;
    } else if (topLeft && topRight && !bottomLeft && bottomRight) {
-      return <Road_TlTrBr_Tile {...cartProps} />;
+      return <Road_TlTrBr_Tile {...props} />;
    } else if (topLeft && topRight && !bottomLeft && !bottomRight) {
-      return <Road_TlTr_Tile {...cartProps} />;
+      return <Road_TlTr_Tile {...props} />;
    } else if (topLeft && !topRight && bottomLeft && bottomRight) {
-      return <Road_TlBlBr_Tile {...cartProps} />;
+      return <Road_TlBlBr_Tile {...props} />;
    } else if (topLeft && !topRight && bottomLeft && !bottomRight) {
-      return <Road_TlBl_Tile {...cartProps} />;
+      return <Road_TlBl_Tile {...props} />;
    } else if (topLeft && !topRight && !bottomLeft && bottomRight) {
-      return <Road_TlBr_Tile {...cartProps} />;
+      return <Road_TlBr_Tile {...props} />;
    } else if (topLeft && !topRight && !bottomLeft && !bottomRight) {
-      return <Road_Tl_Tile {...cartProps} />;
+      return <Road_Tl_Tile {...props} />;
    } else if (!topLeft && topRight && bottomLeft && bottomRight) {
-      return <Road_TrBlBr_Tile {...cartProps} />;
+      return <Road_TrBlBr_Tile {...props} />;
    } else if (!topLeft && topRight && bottomLeft && !bottomRight) {
-      return <Road_TrBl_Tile {...cartProps} />;
+      return <Road_TrBl_Tile {...props} />;
    } else if (!topLeft && topRight && !bottomLeft && bottomRight) {
-      return <Road_TrBr_Tile {...cartProps} />;
+      return <Road_TrBr_Tile {...props} />;
    } else if (!topLeft && topRight && !bottomLeft && !bottomRight) {
-      return <Road_Tr_Tile {...cartProps} />;
+      return <Road_Tr_Tile {...props} />;
    } else if (!topLeft && !topRight && bottomLeft && bottomRight) {
-      return <Road_BlBr_Tile {...cartProps} />;
+      return <Road_BlBr_Tile {...props} />;
    } else if (!topLeft && !topRight && bottomLeft && !bottomRight) {
-      return <Road_Bl_Tile {...cartProps} />;
+      return <Road_Bl_Tile {...props} />;
    } else if (!topLeft && !topRight && !bottomLeft && bottomRight) {
-      return <Road_Br_Tile {...cartProps} />;
+      return <Road_Br_Tile {...props} />;
    } else {
-      return <Road_None_Tile {...cartProps} />;
+      return <Road_None_Tile {...props} />;
    }
 }
 

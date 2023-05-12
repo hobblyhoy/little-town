@@ -9,7 +9,7 @@ import TreeTopper from '../toppers/tree/TreeTopper';
 import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import { sortIntoRenderOrder } from '../../app/utils';
 import { setMouseDownOn, setMouseMoveOn } from '../click-and-drag/ClickAndDragSlice';
-import { positionCalc } from '../position/Positioner';
+import { getBoardItemPosition } from '../position-and-size/Positioner';
 import TileRenderer from './TileRenderer';
 import TopperRenderer from './TopperRenderer';
 

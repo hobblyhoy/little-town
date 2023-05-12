@@ -9,6 +9,8 @@ import SelectionBar from './features/selection-bar/SelectionBar';
 import ClickAndDragManager from './features/click-and-drag/ClickAndDragManager';
 import InvalidManager from './features/game-state/InvalidManager';
 import TimeManager from './features/time/TimeManager';
+import ZoomBar from './features/zoom-and-scroll/ZoomBar';
+import ScrollWheelZoomManager from './features/zoom-and-scroll/ScrollWheelZoomManager';
 
 function App() {
    const dispatch = useAppDispatch();
@@ -26,11 +28,16 @@ function App() {
 
    return (
       <div className="App">
+         {/* UI */}
          <GameStateRenderer />
          <SelectionBar />
+         <ZoomBar />
+
+         {/* Managers */}
          <ClickAndDragManager />
          <InvalidManager />
          <TimeManager />
+         <ScrollWheelZoomManager />
       </div>
    );
 }

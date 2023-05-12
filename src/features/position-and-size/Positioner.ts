@@ -1,3 +1,4 @@
+import { boardSize } from '../../app/constants';
 import { isBoardStateTopper } from '../../app/utils';
 import {
    IBoardStateBase,
@@ -6,15 +7,18 @@ import {
    ICartesianOffset,
 } from '../../types/BoardTypes';
 
-export const positionCalc = (boardItem: IBoardStateBase) => {
+export const getBoardItemPosition = (
+   boardItem: IBoardStateBase,
+   zoom: number
+): ICartesianCoordinates => {
    guardClauses(boardItem);
 
-   let { cartX, cartY } = applyPrimaryPositioningLogic(boardItem);
+   let { cartX, cartY } = applyPrimaryPositioningLogic(boardItem, zoom);
 
    if (isBoardStateTopper(boardItem)) {
       const { offsetX, offsetY } = getCustomTopperOffsets(boardItem);
-      cartX += offsetX;
-      cartY += offsetY;
+      cartX += offsetX * zoom;
+      cartY += offsetY * zoom;
    }
 
    return { cartX, cartY };
@@ -28,13 +32,16 @@ const guardClauses = (boardItem: IBoardStateBase) => {
    if (boardItem.isoZ > 1) throw 'may change this later but rn only doing layers 0 and 1';
 };
 
-const applyPrimaryPositioningLogic = (boardItem: IBoardStateBase): ICartesianCoordinates => {
-   const tileWidth = 88;
-   const tileTopHeight = 51;
-   const tileBottomHeight = 41;
+const applyPrimaryPositioningLogic = (
+   boardItem: IBoardStateBase,
+   zoom: number
+): ICartesianCoordinates => {
+   const tileWidth = 88 * zoom;
+   const tileTopHeight = 51 * zoom;
+   const tileBottomHeight = 41 * zoom;
 
    const screenXBasePoint = window.innerWidth / 2 - tileWidth / 2;
-   const screenYBasePoint = 60;
+   const screenYBasePoint = window.innerHeight / 2 - (tileTopHeight + tileBottomHeight) * boardSize / 2;
 
    let cartX =
       screenXBasePoint + boardItem.isoX * tileWidth * 0.5 + -1 * boardItem.isoY * tileWidth * 0.5;

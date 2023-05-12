@@ -5,7 +5,6 @@ POC for clicking on directional pieces
                   id="polygon6060"
                   onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) => {
                      const svgElement = e.currentTarget as SVGGraphicsElement;
-                     // TODO will need to cache this somehow when this gets changed to a drag event
                      const boundingRect = svgElement.getBoundingClientRect();
 
                      const topLeft: { x: number; y: number } = {

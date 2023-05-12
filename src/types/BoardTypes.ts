@@ -20,6 +20,11 @@ export interface ISizeable {
    size?: 'big' | 'small' | 'init';
 }
 
+export interface IPixelSize {
+   width: number;
+   height: number;
+}
+
 // Direction
 export interface IMultiDirectional {
    topLeft: boolean;
@@ -78,4 +83,17 @@ export interface IBoardStateTile extends IBoardStateBase {
 export interface IBoardStateTopper extends IBoardStateBase, ISizeable {
    topperType: TopperType;
    cellBelow: string | null;
+}
+
+// Topper and Tile Rendered Component Props
+export interface IBoardTopperProps {
+   boardTopper: IBoardStateTopper;
+   cartCoords: ICartesianCoordinates;
+   pixelSize: IPixelSize
+}
+
+export interface IBoardTileProps {
+   boardTile: IBoardStateTile;
+   cartCoords: ICartesianCoordinates;
+   pixelSize: IPixelSize
 }

@@ -9,7 +9,7 @@ function SelectionBar() {
    const baseCss = css`
       background-color: black;
       position: fixed;
-      left: 20px; //TODO might set these to vw and vh so we can still zoom
+      left: 20px;
       bottom: 20px;
       right: 20px;
       height: 200px;

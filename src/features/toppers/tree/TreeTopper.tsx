@@ -2,28 +2,22 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-import { ICartesianCoordinates, ISizeable } from '../../../types/BoardTypes';
+import { IBoardTopperProps } from '../../../types/BoardTypes';
 import Tree_Seed_Topper from './Tree_Seed_Topper';
 import Tree_Small_Topper from './Tree_Small_Topper';
 import Tree_Big_Topper from './Tree_Big_Topper';
 
-
-interface IProps extends ICartesianCoordinates, ISizeable {}
-function TreeTopper({ size: topperSize, ...cartProps }: IProps) {
-   switch (topperSize) {
+function TreeTopper(props: IBoardTopperProps) {
+   switch (props.boardTopper.size) {
       case 'init':
-         return <Tree_Seed_Topper {...cartProps} />
+         return <Tree_Seed_Topper {...props} />;
       case 'small':
-         return <Tree_Small_Topper {...cartProps} />
+         return <Tree_Small_Topper {...props} />;
       case 'big':
-         return <Tree_Big_Topper {...cartProps} />
+         return <Tree_Big_Topper {...props} />;
       default:
          throw new Error('unimplemented size in TreeTopper');
    }
 }
 
 export default TreeTopper;
-
-
-
-

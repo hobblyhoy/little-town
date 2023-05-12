@@ -1,10 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import { ICartesianCoordinates } from '../../types/BoardTypes';
-import { standardBaseCss, tileGCss } from '../../app/constants';
+import { standardBaseCss, tileGCss, buildPositionCss, buildSizeCss } from '../../app/constants';
+import { IBoardTileProps } from '../../types/BoardTypes';
 
-function GrassTile(cartProps: ICartesianCoordinates) {
+function GrassTile({ cartCoords, pixelSize }: IBoardTileProps) {
    return (
       <svg
          x="0px"
@@ -13,7 +13,7 @@ function GrassTile(cartProps: ICartesianCoordinates) {
          xmlSpace="preserve"
          width="93.5"
          height="95.669823"
-         css={standardBaseCss(cartProps)}
+         css={[standardBaseCss, buildPositionCss(cartCoords), buildSizeCss(pixelSize)]}
       >
          <g
             css={tileGCss}

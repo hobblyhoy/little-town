@@ -2,17 +2,17 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 
-import { customDimensions, standardBaseCss, tileGCss } from '../../../app/constants';
-import { ICartesianCoordinates } from '../../../types/BoardTypes';
+import { buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
+import { IBoardTopperProps } from '../../../types/BoardTypes';
 
-function House_Tl_Topper(cartProps: ICartesianCoordinates) {
+function House_Tl_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 55.860001 57.389783"
          width="55.860001"
          height="57.389782"
-         css={[standardBaseCss(cartProps), customDimensions(56, 58) ]}
+         css={[standardBaseCss, buildPositionCss(cartCoords), buildSizeCss(pixelSize)]}
       >
          <g id="g8066" transform="translate(-1534.9,-263.99007)">
             <g id="g7452">

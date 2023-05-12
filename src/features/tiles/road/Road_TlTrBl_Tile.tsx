@@ -2,17 +2,17 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 
-import { standardBaseCss, tileGCss } from '../../../app/constants';
-import { ICartesianCoordinates } from '../../../types/BoardTypes';
+import { buildPositionCss, buildSizeCss, standardBaseCss, tileGCss } from '../../../app/constants';
+import { IBoardTileProps } from '../../../types/BoardTypes';
 
-function Road_TlTrBl_Tile(cartProps: ICartesianCoordinates) {
+function Road_TlTrBl_Tile({ cartCoords, pixelSize }: IBoardTileProps) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 93.500002 95.679829"
          width="93.5"
          height="95.679825"
-         css={standardBaseCss(cartProps)}
+         css={[standardBaseCss, buildPositionCss(cartCoords), buildSizeCss(pixelSize)]}
       >
          <g id="g6216" transform="translate(-363.2,-1651.26)" css={tileGCss}>
             <g id="g6206">

@@ -2,10 +2,10 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 
-import { standardBaseCss, tileGCss } from "../../../app/constants";
-import { ICartesianCoordinates } from "../../../types/BoardTypes";
+import { buildPositionCss, buildSizeCss, standardBaseCss, tileGCss } from "../../../app/constants";
+import { IBoardTileProps } from "../../../types/BoardTypes";
 
-function Road_All_Tile(cartProps: ICartesianCoordinates) {
+function Road_All_Tile({ cartCoords, pixelSize }: IBoardTileProps) {
    return (
       <svg
          x="0px"
@@ -14,7 +14,7 @@ function Road_All_Tile(cartProps: ICartesianCoordinates) {
          xmlSpace="preserve"
          width="93.5"
          height="95.669823"
-         css={standardBaseCss(cartProps)}
+         css={[standardBaseCss, buildPositionCss(cartCoords), buildSizeCss(pixelSize)]}
       >
          <g id="g8066" transform="translate(-363.2,-1547.48)" css={tileGCss}>
             <g id="g6108">

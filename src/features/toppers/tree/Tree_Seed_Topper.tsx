@@ -2,17 +2,17 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-import { ICartesianCoordinates } from '../../../types/BoardTypes';
-import { customDimensions, standardBaseCss } from '../../../app/constants';
+import { IBoardTopperProps } from '../../../types/BoardTypes';
+import { buildSizeCss, buildPositionCss, standardBaseCss } from '../../../app/constants';
 
-function Tree_Seed_Topper(cartProps: ICartesianCoordinates) {
+function Tree_Seed_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 15.938303 13.731171"
          width="15.938303"
          height="13.731171"
-         css={[standardBaseCss(cartProps), customDimensions(16, 14)]}
+         css={[standardBaseCss, buildPositionCss(cartCoords), buildSizeCss(pixelSize)]}
       >
          <g id="g8066" transform="translate(-215.84778,-1398.0366)">
             <path

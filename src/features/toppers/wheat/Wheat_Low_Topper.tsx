@@ -2,17 +2,17 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 
-import { customDimensions, standardBaseCss } from '../../../app/constants';
-import { ICartesianCoordinates } from '../../../types/BoardTypes';
+import { buildPositionCss, buildSizeCss, standardBaseCss } from "../../../app/constants";
+import { IBoardTopperProps } from "../../../types/BoardTypes";
 
-function Wheat_Low_Topper(cartProps: ICartesianCoordinates) {
+function Wheat_Low_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 64.419601 38.879938"
          width="64.419601"
          height="38.879936"
-         css={[standardBaseCss(cartProps), customDimensions(65, 39)]}
+         css={[standardBaseCss, buildPositionCss(cartCoords), buildSizeCss(pixelSize)]}
       >
          <g id="g8066" transform="translate(-2194.7071,-84.220476)">
             <g id="g8036">
