@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectSelectableItems, selectSelectedItem, setSelectedItem } from './SelectionBarSlice';
 import { selectInventory } from '../game-state/GameStateSlice';
+import { selectionBarHeight } from '../../app/constants';
 
 function SelectionBar() {
    const baseCss = css`
@@ -12,7 +13,7 @@ function SelectionBar() {
       left: 20px;
       bottom: 20px;
       right: 20px;
-      height: 200px;
+      height: ${selectionBarHeight}px;
       border-radius: 20px;
       opacity: 0.75;
    `;

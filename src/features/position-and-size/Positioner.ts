@@ -1,4 +1,4 @@
-import { boardSize } from '../../app/constants';
+import { boardSize, selectionBarHeight } from '../../app/constants';
 import { isBoardStateTopper } from '../../app/utils';
 import {
    IBoardStateBase,
@@ -41,7 +41,7 @@ const applyPrimaryPositioningLogic = (
    const tileBottomHeight = 41 * zoom;
 
    const screenXBasePoint = window.innerWidth / 2 - tileWidth / 2;
-   const screenYBasePoint = window.innerHeight / 2 - (tileTopHeight + tileBottomHeight) * boardSize / 2;
+   const screenYBasePoint = window.innerHeight / 2 - (tileTopHeight * boardSize / 2) - selectionBarHeight + tileBottomHeight;
 
    let cartX =
       screenXBasePoint + boardItem.isoX * tileWidth * 0.5 + -1 * boardItem.isoY * tileWidth * 0.5;

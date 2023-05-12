@@ -24,7 +24,7 @@ export const tileGCss = css`
 
 export const growthTime = 5000;
 
-export const boardSize = 4;
+export const boardSize = 10;
 
 export const boardItemCost: Record<TopperType | TileType, number> = {
    grass: 0,
@@ -33,3 +33,6 @@ export const boardItemCost: Record<TopperType | TileType, number> = {
    house: 10,
    wheat: 5,
 };
+
+
+export const selectionBarHeight = 200;
