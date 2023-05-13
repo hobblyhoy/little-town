@@ -65,6 +65,10 @@ export const gameStateSlice = createSlice({
          state.boardTiles = tiles;
       },
 
+      // TODO
+      // We cant dispatch sounds or influence other states directly from the reducer which
+      // creates problems for the likes of our "grow" function and if we want to play sound effects
+      // Will return to this...
       addTopper: (state, action: PayloadAction<IBoardStateTopperSetter>) => {
          // Early returns for cases where it's an invalid placement
          const tileKey = generateInternalKey({

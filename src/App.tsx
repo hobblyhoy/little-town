@@ -11,6 +11,7 @@ import InvalidManager from './features/game-state/InvalidManager';
 import TimeManager from './features/time/TimeManager';
 import ZoomBar from './features/zoom-and-scroll/ZoomBar';
 import ScrollWheelZoomManager from './features/zoom-and-scroll/ScrollWheelZoomManager';
+import SoundManager from './features/sound/SoundManager';
 
 function App() {
    const dispatch = useAppDispatch();
@@ -38,6 +39,7 @@ function App() {
          <InvalidManager />
          <TimeManager />
          <ScrollWheelZoomManager />
+         <SoundManager />
       </div>
    );
 }
