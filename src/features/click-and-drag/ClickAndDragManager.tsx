@@ -50,7 +50,7 @@ function ClickAndDragManager() {
                      isoX: mouseDownOn.isoX,
                      isoY: mouseDownOn.isoY,
                      topperType: 'house',
-                     size: 'big',
+                     size: 'big', // TODO shouldnt need to specify size here
                      direction: 'bottomRight',
                   })
                );
@@ -67,6 +67,18 @@ function ClickAndDragManager() {
                   size: 'small',
                })
             );
+            break;
+         case 'windmill':
+            dispatch(
+               addTopper({
+                  isoX: mouseDownOn.isoX,
+                  isoY: mouseDownOn.isoY,
+                  topperType: 'windmill',
+                  size: 'big', // TODO shouldnt need to specify size here
+                  direction: 'bottomLeft',
+               })
+            );
+            break;
       }
    }, [mouseDownOn]);
 

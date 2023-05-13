@@ -41,7 +41,11 @@ const applyPrimaryPositioningLogic = (
    const tileBottomHeight = 41 * zoom;
 
    const screenXBasePoint = window.innerWidth / 2 - tileWidth / 2;
-   const screenYBasePoint = window.innerHeight / 2 - (tileTopHeight * boardSize / 2) - selectionBarHeight + tileBottomHeight;
+   const screenYBasePoint =
+      window.innerHeight / 2 -
+      (tileTopHeight * boardSize) / 2 -
+      selectionBarHeight +
+      tileBottomHeight;
 
    let cartX =
       screenXBasePoint + boardItem.isoX * tileWidth * 0.5 + -1 * boardItem.isoY * tileWidth * 0.5;
@@ -82,6 +86,9 @@ const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffse
                throw new Error('invalid wheat size');
             }
          }
+
+      case 'windmill':
+         return { offsetX: 10, offsetY: -10 };
 
       default:
          throw new Error('Topper missing from getCustomTopperOffsets');

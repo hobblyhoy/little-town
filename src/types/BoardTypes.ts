@@ -38,7 +38,7 @@ export interface IDirectional {
 }
 
 // Types
-export type TopperType = 'tree' | 'house' | 'wheat';
+export type TopperType = 'tree' | 'house' | 'wheat' | 'windmill';
 export type TileType = 'grass' | 'road';
 
 // Board Item setters (For use when setting or updating a board item)

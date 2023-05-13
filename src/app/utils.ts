@@ -102,6 +102,7 @@ export const grassOnly = (x: IBoardStateTile) => x.tileType !== 'grass';
 export const treesOnly = (x: IBoardStateTopper) => x.topperType !== 'tree';
 export const wheatOnly = (x: IBoardStateTopper) => x.topperType !== 'wheat';
 export const housesOnly = (x: IBoardStateTopper) => x.topperType !== 'house';
+export const windmillOnly = (x: IBoardStateTopper) => x.topperType !== 'windmill';
 
 //// Maps \\\\
 export const toIsometricCoords = (x: IIsometricCoordinates) => ({

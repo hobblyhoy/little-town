@@ -32,6 +32,7 @@ export const boardItemCost: Record<TopperType | TileType, number> = {
    tree: 1,
    house: 10,
    wheat: 5,
+   windmill: 5
 };
 
 

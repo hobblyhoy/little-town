@@ -36,8 +36,10 @@ const getBoardItemSizeBase = (boardItem: IBoardStateBase): IPixelSize => {
                default:
                   throw new Error('invalid tree size');
             }
+         case 'windmill':
+            return { width: 62, height: 91 };
          default:
-            throw new Error('Topper missing from getCustomTopperSizes');
+            throw new Error('Topper missing from getBoardItemSizeBase');
       }
    }
 

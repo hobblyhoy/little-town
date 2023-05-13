@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { dictionaryToArray, grassOnly, housesOnly, toIsometricCoords, treesOnly, wheatOnly } from '../../app/utils';
+import { dictionaryToArray, grassOnly, housesOnly, toIsometricCoords, treesOnly, wheatOnly, windmillOnly } from '../../app/utils';
 import { IIsometricCoordinates } from '../../types/BoardTypes';
 import { resetDimTiles, dimTiles, selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -47,6 +47,10 @@ function InvalidManager() {
             invalidToppers = dictionaryToArray(boardToppers).filter(wheatOnly).map(toIsometricCoords);
             break;
             
+         case 'windmill':
+            invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
+            invalidToppers = dictionaryToArray(boardToppers).filter(windmillOnly).map(toIsometricCoords);         
+            break;
          default:
             throw new Error('Unimplemented item in InvalidManager');
       }
