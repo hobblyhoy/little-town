@@ -49,7 +49,6 @@ function TopperRendererInner(boardTopper: IBoardStateTopper) {
       case 'house':
          return (
             <HouseTopper
-               direction="bottomRight"
                boardTopper={boardTopper}
                cartCoords={cartCoords}
                pixelSize={pixelSize}

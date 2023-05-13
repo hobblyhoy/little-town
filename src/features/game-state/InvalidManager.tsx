@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { dictionaryToArray, grassOnly, toIsometricCoords, treesOnly, wheatOnly } from '../../app/utils';
+import { dictionaryToArray, grassOnly, housesOnly, toIsometricCoords, treesOnly, wheatOnly } from '../../app/utils';
 import { IIsometricCoordinates } from '../../types/BoardTypes';
 import { resetDimTiles, dimTiles, selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -20,6 +20,10 @@ function InvalidManager() {
       let invalidToppers: IIsometricCoordinates[] = [];
       switch (selectedItem) {
          case 'remove':
+            break;
+
+         case 'rotate':
+            invalidToppers = dictionaryToArray(boardToppers).filter(housesOnly).map(toIsometricCoords);
             break;
 
          case 'tree':

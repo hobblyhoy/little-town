@@ -8,6 +8,7 @@ import {
    updateBoardTileWithCellNeighborData,
 } from '../../app/utils';
 import {
+   Directional,
    IBoardStateTile,
    IBoardStateTileSetter,
    IBoardStateTopper,
@@ -101,8 +102,21 @@ export const gameStateSlice = createSlice({
 
       growTopper: (state, action: PayloadAction<string>) => {
          const topper = state.boardToppers[action.payload];
-         topper.size = (topper.size === 'init') ? 'small' : 'big';
+         topper.size = topper.size === 'init' ? 'small' : 'big';
          state.boardToppers[topper.key] = topper;
+      },
+
+      rotateTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
+         const topperKey = generateInternalKey(action.payload);
+         const topper = state.boardToppers[topperKey];
+         if (!topper || !topper.direction) return;
+
+         const directions: Directional[] = ['bottomLeft', 'topLeft', 'topRight', 'bottomRight'];
+         const currentIndex = directions.indexOf(topper.direction);
+         const newIndex = (currentIndex + 1) % directions.length;
+         const newDirection = directions[newIndex];
+
+         state.boardToppers[topper.key].direction = newDirection;
       },
 
       updateTile: (state, action: PayloadAction<IBoardStateTileSetter>) => {
@@ -161,8 +175,16 @@ export const gameStateSlice = createSlice({
 });
 
 // reducer export
-export const { initializeBoardTiles, addTopper, growTopper, updateTile, dimTiles, resetDimTiles, resetTile } =
-   gameStateSlice.actions;
+export const {
+   initializeBoardTiles,
+   addTopper,
+   growTopper,
+   rotateTopper,
+   updateTile,
+   dimTiles,
+   resetDimTiles,
+   resetTile,
+} = gameStateSlice.actions;
 
 // selector export
 export const selectBoardTiles = (state: RootState) => state.gamestate.boardTiles;

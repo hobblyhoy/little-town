@@ -101,6 +101,7 @@ export const generateInternalKey = (obj: IIsometricCoordinates): string => {
 export const grassOnly = (x: IBoardStateTile) => x.tileType !== 'grass';
 export const treesOnly = (x: IBoardStateTopper) => x.topperType !== 'tree';
 export const wheatOnly = (x: IBoardStateTopper) => x.topperType !== 'wheat';
+export const housesOnly = (x: IBoardStateTopper) => x.topperType !== 'house';
 
 //// Maps \\\\
 export const toIsometricCoords = (x: IIsometricCoordinates) => ({

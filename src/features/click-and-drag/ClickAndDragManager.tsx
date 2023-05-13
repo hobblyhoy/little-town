@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectMouseDownOn, selectMouseMoveOn } from './ClickAndDragSlice';
 import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
-import { addTopper, resetTile, updateTile } from '../game-state/GameStateSlice';
+import { addTopper, resetTile, rotateTopper, updateTile } from '../game-state/GameStateSlice';
 
 function ClickAndDragManager() {
    const dispatch = useAppDispatch();
@@ -20,6 +20,9 @@ function ClickAndDragManager() {
       switch (selectedItem) {
          case 'remove':
             dispatch(resetTile({ isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 0 }));
+            break;
+         case 'rotate':
+            dispatch(rotateTopper({ isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 1 }));
             break;
          case 'tree':
             dispatch(
@@ -41,14 +44,19 @@ function ClickAndDragManager() {
             );
             break;
          case 'house':
-            dispatch(
-               addTopper({
-                  isoX: mouseDownOn.isoX,
-                  isoY: mouseDownOn.isoY,
-                  topperType: 'house',
-                  size: 'big',
-               })
-            );
+            if (!mouseDownOn.cellAbove) {
+               dispatch(
+                  addTopper({
+                     isoX: mouseDownOn.isoX,
+                     isoY: mouseDownOn.isoY,
+                     topperType: 'house',
+                     size: 'big',
+                     direction: 'bottomRight',
+                  })
+               );
+            } else {
+               dispatch(rotateTopper({ isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 1 }));
+            }
             break;
          case 'wheat':
             dispatch(

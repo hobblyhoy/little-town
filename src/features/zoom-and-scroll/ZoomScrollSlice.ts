@@ -20,7 +20,7 @@ export const zoomScrollSlice = createSlice({
          }
       },
       zoomOut: state => {
-         if (state.zoom > 0.3) {
+         if (state.zoom > 0.5) {
             state.zoom -= 0.1;
          }
       },

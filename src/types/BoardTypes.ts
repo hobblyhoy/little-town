@@ -33,6 +33,9 @@ export interface IMultiDirectional {
    bottomRight: boolean;
 }
 export type Directional = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+export interface IDirectional {
+   direction?: Directional;
+}
 
 // Types
 export type TopperType = 'tree' | 'house' | 'wheat';
@@ -60,7 +63,7 @@ export interface IBoardStateTileSetter extends IBoardStateBaseSetter {
    tileType: TileType;
 }
 
-export interface IBoardStateTopperSetter extends IBoardStateBaseSetter, ISizeable {
+export interface IBoardStateTopperSetter extends IBoardStateBaseSetter, ISizeable, IDirectional {
    topperType: TopperType;
 }
 
@@ -80,7 +83,7 @@ export interface IBoardStateTile extends IBoardStateBase {
    cellAbove: string | null;
 }
 
-export interface IBoardStateTopper extends IBoardStateBase, ISizeable {
+export interface IBoardStateTopper extends IBoardStateBase, ISizeable, IDirectional {
    topperType: TopperType;
    cellBelow: string | null;
 }
