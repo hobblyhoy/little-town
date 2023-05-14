@@ -4,18 +4,18 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { jsx, css } from '@emotion/react';
 
 import { selectBoardTiles, selectBoardToppers } from './GameStateSlice';
-import { useEffect, MouseEvent } from 'react';
-import TreeTopper from '../toppers/tree/TreeTopper';
+import { useEffect } from 'react';
 import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import { sortIntoRenderOrder } from '../../app/utils';
 import { setMouseDownOn, setMouseMoveOn } from '../click-and-drag/ClickAndDragSlice';
-import { getBoardItemPosition } from '../position-and-size/Positioner';
 import TileRenderer from './TileRenderer';
 import TopperRenderer from './TopperRenderer';
+import { selectScrollOffset } from '../zoom-and-scroll/ZoomScrollSlice';
 
 function GameStateRenderer() {
    const boardTiles = useAppSelector(selectBoardTiles);
    const boardToppers = useAppSelector(selectBoardToppers);
+   const scrollOffset = useAppSelector(selectScrollOffset);
    const dispatch = useAppDispatch();
 
    useEffect(() => {
@@ -47,8 +47,12 @@ function GameStateRenderer() {
       cursor: pointer;
    `;
 
+   const gameBoardScrollOffsetCss = css`
+      transform: translate(${scrollOffset.offsetX}px, ${scrollOffset.offsetY}px);
+   `;
+
    return (
-      <div>
+      <div css={gameBoardScrollOffsetCss}>
          {sortIntoRenderOrder<IBoardStateTile>(boardTiles).map(item => {
             return (
                <div

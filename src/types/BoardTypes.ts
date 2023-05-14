@@ -36,6 +36,7 @@ export type Directional = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 export interface IDirectional {
    direction?: Directional;
 }
+export type CartesianDirectional = 'top' | 'left' | 'right' | 'bottom';
 
 // Types
 export type TopperType = 'tree' | 'house' | 'wheat' | 'windmill';

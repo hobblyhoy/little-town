@@ -25,6 +25,8 @@ export interface IGameState {
    money: number;
    lumber: number;
    wheat: number;
+   musicOn: boolean;
+   soundEffectsOn: boolean;
 }
 
 const initialState: IGameState = {
@@ -35,6 +37,8 @@ const initialState: IGameState = {
    money: 200,
    lumber: 0,
    wheat: 0,
+   musicOn: true,
+   soundEffectsOn: true,
 };
 
 export const gameStateSlice = createSlice({
@@ -188,6 +192,13 @@ export const gameStateSlice = createSlice({
          }
          state.boardTiles[tileKey].tileType = 'grass';
       },
+
+      toggleMusic: (state) => {
+         state.musicOn = !state.musicOn;
+      },
+      toggleSoundEffects: (state) => {
+         state.soundEffectsOn = !state.soundEffectsOn;
+      },
    },
 });
 
@@ -201,6 +212,8 @@ export const {
    dimTiles,
    resetDimTiles,
    resetTile,
+   toggleMusic,
+   toggleSoundEffects,
 } = gameStateSlice.actions;
 
 // selector export
@@ -217,5 +230,7 @@ export const selectRecentlyUpdatedTopper = (state: RootState) =>
    state.gamestate.recentlyUpdatedTopper;
 export const selectRecentlyDeletedTopper = (state: RootState) =>
    state.gamestate.recentlyDeletedTopper;
+export const selectMusicOn = (state: RootState) => state.gamestate.musicOn;
+export const selectSoundEffectsOn = (state: RootState) => state.gamestate.soundEffectsOn;
 
 export default gameStateSlice.reducer;

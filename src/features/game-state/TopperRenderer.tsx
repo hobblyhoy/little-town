@@ -49,11 +49,7 @@ function TopperRendererInner(boardTopper: IBoardStateTopper) {
          );
       case 'house':
          return (
-            <HouseTopper
-               boardTopper={boardTopper}
-               cartCoords={cartCoords}
-               pixelSize={pixelSize}
-            />
+            <HouseTopper boardTopper={boardTopper} cartCoords={cartCoords} pixelSize={pixelSize} />
          );
       case 'wheat':
          return (
@@ -61,8 +57,12 @@ function TopperRendererInner(boardTopper: IBoardStateTopper) {
          );
       case 'windmill':
          return (
-            <Windmill_Bl_Topper boardTopper={boardTopper} cartCoords={cartCoords} pixelSize={pixelSize} />
-         )
+            <Windmill_Bl_Topper
+               boardTopper={boardTopper}
+               cartCoords={cartCoords}
+               pixelSize={pixelSize}
+            />
+         );
       default:
          throw new Error('Invalid topperType in TopperRenderer: ' + boardTopper.topperType);
    }

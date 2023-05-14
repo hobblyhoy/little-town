@@ -9,7 +9,8 @@ import {
 
 export const getBoardItemPosition = (
    boardItem: IBoardStateBase,
-   zoom: number
+   zoom: number,
+   //scrollOffset: ICartesianOffset
 ): ICartesianCoordinates => {
    guardClauses(boardItem);
 
@@ -20,6 +21,9 @@ export const getBoardItemPosition = (
       cartX += offsetX * zoom;
       cartY += offsetY * zoom;
    }
+
+   // cartX += scrollOffset.offsetX;
+   // cartY += scrollOffset.offsetY;
 
    return { cartX, cartY };
 };

@@ -13,6 +13,7 @@ import ZoomBar from './features/zoom-and-scroll/ZoomBar';
 import ScrollWheelZoomManager from './features/zoom-and-scroll/ScrollWheelZoomManager';
 import SoundManager from './features/sound/SoundManager';
 import SoundBar from './features/sound/SoundBar';
+import ScrollBars from './features/zoom-and-scroll/ScrollBars';
 
 function App() {
    const dispatch = useAppDispatch();
@@ -29,12 +30,13 @@ function App() {
    }, []);
 
    return (
-      <div className="App">
+      <div className="App overflow-hidden">
          {/* UI */}
          <GameStateRenderer />
          <SelectionBar />
          <ZoomBar />
          <SoundBar />
+         <ScrollBars />
 
          {/* Managers */}
          <ClickAndDragManager />

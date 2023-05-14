@@ -5,11 +5,16 @@ import backgroundMusic from './assets/piano-music.m4a';
 import pop from './assets/pop.m4a';
 import shh from './assets/shh2.m4a';
 import {
+   selectMusicOn,
    selectRecentlyDeletedTopper,
    selectRecentlyUpdatedTopper,
+   selectSoundEffectsOn,
 } from '../game-state/GameStateSlice';
 
 function SoundManager() {
+   const musicOn = useAppSelector(selectMusicOn);
+   const soundEffectsOn = useAppSelector(selectSoundEffectsOn);
+
    //// Background Music \\\\
    const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
    const [isFirstPlay, setIsFirstPlay] = useState(true);
@@ -47,9 +52,20 @@ function SoundManager() {
       };
    }, [hasTouchedDom]);
 
+   useEffect(() => {
+      const audio = backgroundMusicRef.current;
+      if (musicOn && hasTouchedDom) {
+         audio?.play();
+      } else {
+         audio?.pause();
+      }
+   }, [musicOn]);
+
    //// Pops \\\\
    const newTopper = useAppSelector(selectRecentlyUpdatedTopper);
    useEffect(() => {
+      if (!soundEffectsOn) return;
+
       const audio = new Audio(pop);
       audio.play();
    }, [newTopper]);
@@ -57,6 +73,8 @@ function SoundManager() {
    //// Shh \\\\
    const deletedTopper = useAppSelector(selectRecentlyDeletedTopper);
    useEffect(() => {
+      if (!soundEffectsOn) return;
+
       const audio = new Audio(shh);
       audio.play();
    }, [deletedTopper]);

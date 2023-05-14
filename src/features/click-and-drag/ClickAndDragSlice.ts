@@ -25,7 +25,6 @@ export const clickAndDragSlice = createSlice({
          state.userHasInteractedWithDocument = true;
       },
       setMouseMoveOn: (state, action: PayloadAction<IBoardStateTile>) => {
-         console.log('mousemoveon', action.payload.key);
          state.mouseMoveOn = action.payload;
       },
    },
