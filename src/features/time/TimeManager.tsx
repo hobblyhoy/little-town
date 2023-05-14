@@ -1,15 +1,18 @@
 import { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { growTopper, selectBoardToppers } from '../game-state/GameStateSlice';
-import { dictionaryToArray } from '../../app/utils';
+import {
+   growTopper,
+   selectRecentlyDeletedTopper,
+   selectRecentlyUpdatedTopper,
+} from '../game-state/GameStateSlice';
 import { growthTime } from '../../app/constants';
 
 function TimeManager() {
-   const boardToppers = useAppSelector(selectBoardToppers);
+   const newTopper = useAppSelector(selectRecentlyUpdatedTopper);
+   const deletedTopper = useAppSelector(selectRecentlyDeletedTopper);
    const dispatch = useAppDispatch();
 
    const timeoutStoreRef = useRef<{ [key: string]: NodeJS.Timeout }>({});
-   //const timeoutStoreRef.current: { [key: string]: NodeJS.Timeout } = {};
 
    const grow = (key: string) => {
       delete timeoutStoreRef.current[key];
@@ -17,30 +20,21 @@ function TimeManager() {
    };
 
    useEffect(() => {
-      // Get all the trees and wheat that are not full grown
-      const growableToppers = dictionaryToArray(boardToppers)
-         .filter(x => x.topperType === 'tree' || x.topperType === 'wheat')
-         .filter(x => x.size !== 'big');
+      if (!newTopper) return;
+      if (newTopper.topperType !== 'tree' && newTopper.topperType !== 'wheat') return;
+      if (newTopper.size === 'big') return;
 
-      // search our timeoutStoreRef.current for any that no longer exist (deleted toppers), kill those timeouts
-      const growableToppersKeys = growableToppers.map(x => x.key);
-      Object.keys(timeoutStoreRef.current).forEach(refKey => {
-         if (!growableToppersKeys.includes(refKey)) {
-            clearTimeout(timeoutStoreRef.current[refKey]);
-            delete timeoutStoreRef.current[refKey];
-         }
-      });
+      timeoutStoreRef.current[newTopper.key] = setTimeout(() => grow(newTopper.key), growthTime);
+   }, [newTopper]);
 
-      // Everything new added this cycle we attach timeouts to trigger it to grow
-      growableToppers.forEach(growableTopper => {
-         if (!Object.keys(timeoutStoreRef.current).includes(growableTopper.key)) {
-            timeoutStoreRef.current[growableTopper.key] = setTimeout(
-               () => grow(growableTopper.key),
-               growthTime
-            );
-         }
-      });
-   }, [boardToppers]);
+   useEffect(() => {
+      if (!deletedTopper) return;
+
+      if (Object.keys(timeoutStoreRef.current).includes(deletedTopper.key)) {
+         clearTimeout(timeoutStoreRef.current[deletedTopper.key]);
+         delete timeoutStoreRef.current[deletedTopper.key];
+      }
+   }, [deletedTopper]);
 
    return <></>;
 }

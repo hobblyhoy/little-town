@@ -12,6 +12,7 @@ import TimeManager from './features/time/TimeManager';
 import ZoomBar from './features/zoom-and-scroll/ZoomBar';
 import ScrollWheelZoomManager from './features/zoom-and-scroll/ScrollWheelZoomManager';
 import SoundManager from './features/sound/SoundManager';
+import SoundBar from './features/sound/SoundBar';
 
 function App() {
    const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ function App() {
          <GameStateRenderer />
          <SelectionBar />
          <ZoomBar />
+         <SoundBar />
 
          {/* Managers */}
          <ClickAndDragManager />

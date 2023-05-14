@@ -20,6 +20,8 @@ import { boardItemCost, boardSize } from '../../app/constants';
 export interface IGameState {
    boardTiles: { [key: string]: IBoardStateTile };
    boardToppers: { [key: string]: IBoardStateTopper };
+   recentlyUpdatedTopper: IBoardStateTopper | null;
+   recentlyDeletedTopper: IBoardStateTopper | null;
    money: number;
    lumber: number;
    wheat: number;
@@ -28,6 +30,8 @@ export interface IGameState {
 const initialState: IGameState = {
    boardTiles: {},
    boardToppers: {},
+   recentlyUpdatedTopper: null,
+   recentlyDeletedTopper: null,
    money: 200,
    lumber: 0,
    wheat: 0,
@@ -102,12 +106,18 @@ export const gameStateSlice = createSlice({
 
          // Gimme that money
          state.money -= boardItemCost[action.payload.topperType];
+
+         // Update recently added
+         state.recentlyUpdatedTopper = newTopper;
       },
 
       growTopper: (state, action: PayloadAction<string>) => {
          const topper = state.boardToppers[action.payload];
          topper.size = topper.size === 'init' ? 'small' : 'big';
          state.boardToppers[topper.key] = topper;
+
+         // Update recently added
+         state.recentlyUpdatedTopper = topper;
       },
 
       rotateTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
@@ -172,7 +182,10 @@ export const gameStateSlice = createSlice({
          // Delete any toppers and reset the tile to grass
          var tileKey = generateInternalKey({ ...action.payload, isoZ: 0 });
          var topperKey = generateInternalKey({ ...action.payload, isoZ: 1 });
-         delete state.boardToppers[topperKey];
+         if (state.boardToppers[topperKey]) {
+            state.recentlyDeletedTopper = state.boardToppers[topperKey];
+            delete state.boardToppers[topperKey];
+         }
          state.boardTiles[tileKey].tileType = 'grass';
       },
    },
@@ -200,5 +213,9 @@ export const selectInventory = (state: RootState) => {
       wheat: state.gamestate.wheat,
    };
 };
+export const selectRecentlyUpdatedTopper = (state: RootState) =>
+   state.gamestate.recentlyUpdatedTopper;
+export const selectRecentlyDeletedTopper = (state: RootState) =>
+   state.gamestate.recentlyDeletedTopper;
 
 export default gameStateSlice.reducer;
