@@ -26,6 +26,8 @@ function ScrollBar({ position }: IScrollBarProps) {
       if (element && element.matches(':hover')) {
          dispatch(scroll(position));
          setTimer(setTimeout(startTimer, 20));
+      } else {
+         handleMouseLeave();
       }
    }, [position]);
 
