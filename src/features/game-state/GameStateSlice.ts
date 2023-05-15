@@ -105,6 +105,19 @@ export const gameStateSlice = createSlice({
          newTopper.cellBelow = baseTile.key;
          baseTile.cellAbove = newTopper.key;
 
+         // Special case - For Houses and windmills apply logic to face them towards the road, biased towers bottom right, bottom left
+         if (newTopper.topperType === 'house' || newTopper.topperType === 'windmill') {
+            let direction:Directional = 'bottomRight';
+            if (baseTile.cellLowerLeft && state.boardTiles[baseTile.cellLowerLeft].tileType === 'road') {
+               direction = 'bottomLeft';
+            } else if (baseTile.cellUpperRight && state.boardTiles[baseTile.cellUpperRight].tileType === 'road') {
+               direction = 'topRight';
+            } else if (baseTile.cellUpperLeft && state.boardTiles[baseTile.cellUpperLeft].tileType === 'road') {
+               direction = 'topLeft';
+            }
+            newTopper.direction = direction;
+         }
+
          // Place the item onto the board
          state.boardToppers[topperKey] = newTopper;
 

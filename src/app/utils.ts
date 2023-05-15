@@ -98,17 +98,30 @@ export const generateInternalKey = (obj: IIsometricCoordinates): string => {
 };
 export const getRandomInclusive = (start: number, end: number) => {
    return Math.floor(Math.random() * (end - start + 1)) + start;
-}
+};
 
 //// Filters \\\\
-export const grassOnly = (x: IBoardStateTile) => x.tileType !== 'grass';
-export const treesOnly = (x: IBoardStateTopper) => x.topperType !== 'tree';
-export const wheatOnly = (x: IBoardStateTopper) => x.topperType !== 'wheat';
-export const housesOnly = (x: IBoardStateTopper) => x.topperType !== 'house';
-export const windmillOnly = (x: IBoardStateTopper) => x.topperType !== 'windmill';
+export const isNotGrass = (x: IBoardStateTile) => x.tileType !== 'grass';
+export const isNotTree = (x: IBoardStateTopper) => x.topperType !== 'tree';
+export const isNotWheat = (x: IBoardStateTopper) => x.topperType !== 'wheat';
+export const isNotHouse = (x: IBoardStateTopper) => x.topperType !== 'house';
+export const isNotWindmill = (x: IBoardStateTopper) => x.topperType !== 'windmill';
 export const structuresOnly = (x: IBoardStateTopper) =>
-x.topperType !== 'house' && x.topperType !== 'windmill';
-export const everythingButRocks = (x: IBoardStateTopper) => x.topperType === 'rock';
+   x.topperType !== 'house' && x.topperType !== 'windmill';
+export const isRock = (x: IBoardStateTopper) => x.topperType === 'rock';
+export const isNotRoadAdjacent = (
+   coords: IIsometricCoordinates,
+   boardTiles: { [key: string]: IBoardStateTile }
+) => {
+   const tileKey = generateInternalKey({ ...coords, isoZ: 0 });
+   const tile = boardTiles[tileKey];
+   return !(
+      (tile.cellUpperLeft && boardTiles[tile.cellUpperLeft]?.tileType === 'road') ||
+      (tile.cellUpperRight && boardTiles[tile.cellUpperRight]?.tileType === 'road') ||
+      (tile.cellLowerLeft && boardTiles[tile.cellLowerLeft]?.tileType === 'road') ||
+      (tile.cellLowerRight && boardTiles[tile.cellLowerRight]?.tileType === 'road')
+   );
+};
 
 //// Maps \\\\
 export const toIsometricCoords = (x: IIsometricCoordinates) => ({

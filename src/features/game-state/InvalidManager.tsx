@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import {
    dictionaryToArray,
-   grassOnly,
-   everythingButRocks,
+   isNotGrass,
+   isRock,
    structuresOnly,
    toIsometricCoords,
-   treesOnly,
-   wheatOnly,
-   windmillOnly,
+   isNotTree,
+   isNotWheat,
+   isNotWindmill,
+   isNotRoadAdjacent,
 } from '../../app/utils';
 import { IIsometricCoordinates } from '../../types/BoardTypes';
 import { resetDimTiles, dimTiles, selectBoardTiles, selectBoardToppers } from './GameStateSlice';
@@ -29,9 +30,7 @@ function InvalidManager() {
       let invalidToppers: IIsometricCoordinates[] = [];
       switch (selectedItem) {
          case 'remove':
-            invalidToppers = dictionaryToArray(boardToppers)
-               .filter(everythingButRocks)
-               .map(toIsometricCoords);
+            invalidToppers = dictionaryToArray(boardToppers).filter(isRock).map(toIsometricCoords);
             break;
 
          case 'rotate':
@@ -41,9 +40,9 @@ function InvalidManager() {
             break;
 
          case 'tree':
-            invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
+            invalidTiles = dictionaryToArray(boardTiles).filter(isNotGrass).map(toIsometricCoords);
             invalidToppers = dictionaryToArray(boardToppers)
-               .filter(treesOnly)
+               .filter(isNotTree)
                .map(toIsometricCoords);
             break;
 
@@ -52,21 +51,25 @@ function InvalidManager() {
             break;
 
          case 'house':
-            invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
+            invalidTiles = dictionaryToArray(boardTiles)
+               .filter(x => isNotGrass(x) || isNotRoadAdjacent({ ...x }, boardTiles))
+               .map(toIsometricCoords);
             invalidToppers = dictionaryToArray(boardToppers).map(toIsometricCoords);
             break;
 
          case 'wheat':
-            invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
+            invalidTiles = dictionaryToArray(boardTiles).filter(isNotGrass).map(toIsometricCoords);
             invalidToppers = dictionaryToArray(boardToppers)
-               .filter(wheatOnly)
+               .filter(isNotWheat)
                .map(toIsometricCoords);
             break;
 
          case 'windmill':
-            invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
+            invalidTiles = dictionaryToArray(boardTiles)
+               .filter(x => isNotGrass(x) || isNotRoadAdjacent({ ...x }, boardTiles))
+               .map(toIsometricCoords);
             invalidToppers = dictionaryToArray(boardToppers)
-               .filter(windmillOnly)
+               .filter(isNotWindmill)
                .map(toIsometricCoords);
             break;
          default:
