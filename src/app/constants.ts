@@ -32,8 +32,8 @@ export const boardItemCost: Record<TopperType | TileType, number> = {
    tree: 1,
    house: 10,
    wheat: 5,
-   windmill: 5
+   windmill: 5,
+   rock: 0,
 };
-
 
 export const selectionBarHeight = 200;

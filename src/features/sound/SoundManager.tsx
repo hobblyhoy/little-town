@@ -4,11 +4,14 @@ import { selectUserHasInteractedWithDocument } from '../click-and-drag/ClickAndD
 import backgroundMusic from './assets/piano-music.m4a';
 import pop from './assets/pop.m4a';
 import shh from './assets/shh2.m4a';
+import jackhammer from './assets/jackhammer.m4a';
 import {
    selectMusicOn,
+   selectRecentlyResetTile,
    selectRecentlyDeletedTopper,
    selectRecentlyUpdatedTopper,
    selectSoundEffectsOn,
+   selectRecentlyUpdatedTile,
 } from '../game-state/GameStateSlice';
 
 function SoundManager() {
@@ -72,12 +75,22 @@ function SoundManager() {
 
    //// Shh \\\\
    const deletedTopper = useAppSelector(selectRecentlyDeletedTopper);
+   const resetTile = useAppSelector(selectRecentlyResetTile);
    useEffect(() => {
       if (!soundEffectsOn) return;
 
       const audio = new Audio(shh);
       audio.play();
-   }, [deletedTopper]);
+   }, [deletedTopper, resetTile]);
+
+   //// Jackhammer \\\\
+   const updatedTile = useAppSelector(selectRecentlyUpdatedTile);
+   useEffect(() => {
+      if (!soundEffectsOn) return;
+
+      const audio = new Audio(jackhammer);
+      audio.play();
+   }, [updatedTile]);
 
    return (
       <div>

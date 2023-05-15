@@ -9,7 +9,7 @@ import Tree_Big_Topper from './Tree_Big_Topper';
 
 function TreeTopper(props: IBoardTopperProps) {
    switch (props.boardTopper.size) {
-      case 'init':
+      case 'tiny':
          return <Tree_Seed_Topper {...props} />;
       case 'small':
          return <Tree_Small_Topper {...props} />;

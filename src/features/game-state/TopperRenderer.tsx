@@ -11,7 +11,8 @@ import TreeTopper from '../toppers/tree/TreeTopper';
 import WheatTopper from '../toppers/wheat/WheatTopper';
 import { useAppSelector } from '../../app/hooks';
 import { selectZoom } from '../zoom-and-scroll/ZoomScrollSlice';
-import Windmill_Bl_Topper from '../toppers/windmill/Windmill_Bl_Topper';
+import WindmillTopper from '../toppers/windmill/WindmillTopper';
+import RockTopper from '../toppers/rock/RockTopper';
 
 function TopperRenderer(boardTopper: IBoardStateTopper) {
    const fadeIn = keyframes`
@@ -57,11 +58,15 @@ function TopperRendererInner(boardTopper: IBoardStateTopper) {
          );
       case 'windmill':
          return (
-            <Windmill_Bl_Topper
+            <WindmillTopper
                boardTopper={boardTopper}
                cartCoords={cartCoords}
                pixelSize={pixelSize}
             />
+         );
+      case 'rock':
+         return (
+            <RockTopper boardTopper={boardTopper} cartCoords={cartCoords} pixelSize={pixelSize} />
          );
       default:
          throw new Error('Invalid topperType in TopperRenderer: ' + boardTopper.topperType);

@@ -14,20 +14,10 @@ import ScrollWheelZoomManager from './features/zoom-and-scroll/ScrollWheelZoomMa
 import SoundManager from './features/sound/SoundManager';
 import SoundBar from './features/sound/SoundBar';
 import ScrollBars from './features/zoom-and-scroll/ScrollBars';
+import GameStateInitializer from './features/game-state/GameStateInitializer';
 
 function App() {
-   const dispatch = useAppDispatch();
-   useEffect(() => {
-      dispatch(initializeBoardTiles());
-      dispatch(
-         addTopper({
-            isoX: 0,
-            isoY: 0,
-            topperType: 'tree',
-            size: 'small',
-         })
-      );
-   }, []);
+
 
    return (
       <div className="App overflow-hidden">
@@ -44,6 +34,9 @@ function App() {
          <TimeManager />
          <ScrollWheelZoomManager />
          <SoundManager />
+
+         {/* Initializers */}
+         <GameStateInitializer />
       </div>
    );
 }

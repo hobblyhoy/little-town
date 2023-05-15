@@ -30,7 +30,7 @@ function ClickAndDragManager() {
                   isoX: mouseDownOn.isoX,
                   isoY: mouseDownOn.isoY,
                   topperType: 'tree',
-                  size: 'init',
+                  size: 'tiny',
                })
             );
             break;
@@ -50,7 +50,6 @@ function ClickAndDragManager() {
                      isoX: mouseDownOn.isoX,
                      isoY: mouseDownOn.isoY,
                      topperType: 'house',
-                     size: 'big', // TODO shouldnt need to specify size here
                      direction: 'bottomRight',
                   })
                );
@@ -69,15 +68,18 @@ function ClickAndDragManager() {
             );
             break;
          case 'windmill':
-            dispatch(
-               addTopper({
-                  isoX: mouseDownOn.isoX,
-                  isoY: mouseDownOn.isoY,
-                  topperType: 'windmill',
-                  size: 'big', // TODO shouldnt need to specify size here
-                  direction: 'bottomLeft',
-               })
-            );
+            if (!mouseDownOn.cellAbove) {
+               dispatch(
+                  addTopper({
+                     isoX: mouseDownOn.isoX,
+                     isoY: mouseDownOn.isoY,
+                     topperType: 'windmill',
+                     direction: 'bottomLeft',
+                  })
+               );
+            } else {
+               dispatch(rotateTopper({ isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 1 }));
+            }
             break;
       }
    }, [mouseDownOn]);
@@ -87,13 +89,17 @@ function ClickAndDragManager() {
       if (!selectedItem || !mouseDownOn || !mouseMoveOn) return;
 
       switch (selectedItem) {
+         case 'remove':
+            console.log('removing ', { isoX: mouseMoveOn.isoX, isoY: mouseMoveOn.isoY, isoZ: 0 });
+            dispatch(resetTile({ isoX: mouseMoveOn.isoX, isoY: mouseMoveOn.isoY, isoZ: 0 }));
+            break;
          case 'tree':
             dispatch(
                addTopper({
                   isoX: mouseMoveOn.isoX,
                   isoY: mouseMoveOn.isoY,
                   topperType: 'tree',
-                  size: 'init',
+                  size: 'tiny',
                })
             );
             break;

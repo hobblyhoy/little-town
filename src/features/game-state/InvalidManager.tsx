@@ -1,5 +1,14 @@
 import { useEffect } from 'react';
-import { dictionaryToArray, grassOnly, housesOnly, toIsometricCoords, treesOnly, wheatOnly, windmillOnly } from '../../app/utils';
+import {
+   dictionaryToArray,
+   grassOnly,
+   everythingButRocks,
+   structuresOnly,
+   toIsometricCoords,
+   treesOnly,
+   wheatOnly,
+   windmillOnly,
+} from '../../app/utils';
 import { IIsometricCoordinates } from '../../types/BoardTypes';
 import { resetDimTiles, dimTiles, selectBoardTiles, selectBoardToppers } from './GameStateSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -20,10 +29,15 @@ function InvalidManager() {
       let invalidToppers: IIsometricCoordinates[] = [];
       switch (selectedItem) {
          case 'remove':
+            invalidToppers = dictionaryToArray(boardToppers)
+               .filter(everythingButRocks)
+               .map(toIsometricCoords);
             break;
 
          case 'rotate':
-            invalidToppers = dictionaryToArray(boardToppers).filter(housesOnly).map(toIsometricCoords);
+            invalidToppers = dictionaryToArray(boardToppers)
+               .filter(structuresOnly)
+               .map(toIsometricCoords);
             break;
 
          case 'tree':
@@ -44,12 +58,16 @@ function InvalidManager() {
 
          case 'wheat':
             invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
-            invalidToppers = dictionaryToArray(boardToppers).filter(wheatOnly).map(toIsometricCoords);
+            invalidToppers = dictionaryToArray(boardToppers)
+               .filter(wheatOnly)
+               .map(toIsometricCoords);
             break;
-            
+
          case 'windmill':
             invalidTiles = dictionaryToArray(boardTiles).filter(grassOnly).map(toIsometricCoords);
-            invalidToppers = dictionaryToArray(boardToppers).filter(windmillOnly).map(toIsometricCoords);         
+            invalidToppers = dictionaryToArray(boardToppers)
+               .filter(windmillOnly)
+               .map(toIsometricCoords);
             break;
          default:
             throw new Error('Unimplemented item in InvalidManager');

@@ -16,7 +16,7 @@ function SoundBar() {
    const [isHovered, setIsHovered] = useState(false);
    const dispatch = useAppDispatch();
    const musicOn = useAppSelector(selectMusicOn);
-   const soundEffects = useAppSelector(selectSoundEffectsOn);
+   const soundEffectsOn = useAppSelector(selectSoundEffectsOn);
 
    const twUiClasses =
       'fixed top-4 right-4 bg-white bg-opacity-40 rounded-full h-12 w-12 flex items-center justify-end overflow-hidden p-2';
@@ -33,16 +33,16 @@ function SoundBar() {
             {isHovered && (
                <div className="flex flex-grow justify-evenly">
                   <div
-                     className="cursor-pointer whitespace-nowrap"
+                     className={`cursor-pointer whitespace-nowrap ${musicOn ? '' : 'opacity-60'}`}
                      onClick={() => dispatch(toggleMusic())}
                   >
                      Music {musicOn ? 'ON' : 'OFF'}
                   </div>
                   <div
-                     className="cursor-pointer whitespace-nowrap"
+                     className={`cursor-pointer whitespace-nowrap ${soundEffectsOn ? '' : 'opacity-60'}`}
                      onClick={() => dispatch(toggleSoundEffects())}
                   >
-                     Effects {soundEffects ? 'ON' : 'OFF'}
+                     Effects {soundEffectsOn ? 'ON' : 'OFF'}
                   </div>
                </div>
             )}

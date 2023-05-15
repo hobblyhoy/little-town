@@ -96,6 +96,9 @@ export const dictionaryToArray = <T>(obj: Record<string, T>): T[] => Object.valu
 export const generateInternalKey = (obj: IIsometricCoordinates): string => {
    return `${obj.isoX}-${obj.isoY}-${obj.isoZ}`;
 };
+export const getRandomInclusive = (start: number, end: number) => {
+   return Math.floor(Math.random() * (end - start + 1)) + start;
+}
 
 //// Filters \\\\
 export const grassOnly = (x: IBoardStateTile) => x.tileType !== 'grass';
@@ -103,6 +106,9 @@ export const treesOnly = (x: IBoardStateTopper) => x.topperType !== 'tree';
 export const wheatOnly = (x: IBoardStateTopper) => x.topperType !== 'wheat';
 export const housesOnly = (x: IBoardStateTopper) => x.topperType !== 'house';
 export const windmillOnly = (x: IBoardStateTopper) => x.topperType !== 'windmill';
+export const structuresOnly = (x: IBoardStateTopper) =>
+x.topperType !== 'house' && x.topperType !== 'windmill';
+export const everythingButRocks = (x: IBoardStateTopper) => x.topperType === 'rock';
 
 //// Maps \\\\
 export const toIsometricCoords = (x: IIsometricCoordinates) => ({

@@ -16,8 +16,10 @@ export interface ICartesianOffset {
 }
 
 // Sizing
+export type TopperSize = 'big' | 'small' | 'tiny';
+
 export interface ISizeable {
-   size?: 'big' | 'small' | 'init';
+   size?: TopperSize;
 }
 
 export interface IPixelSize {
@@ -39,7 +41,7 @@ export interface IDirectional {
 export type CartesianDirectional = 'top' | 'left' | 'right' | 'bottom';
 
 // Types
-export type TopperType = 'tree' | 'house' | 'wheat' | 'windmill';
+export type TopperType = 'tree' | 'house' | 'wheat' | 'windmill' | 'rock';
 export type TileType = 'grass' | 'road';
 
 // Board Item setters (For use when setting or updating a board item)

@@ -25,7 +25,11 @@ function GameStateRenderer() {
       console.log({ boardToppers });
    }, [boardToppers]);
 
-   const handleMouseDown = (item: IBoardStateTile) => {
+   const handleMouseDown = (
+      event: React.MouseEvent<HTMLDivElement> | null,
+      item: IBoardStateTile
+   ) => {
+      if (event && event.button !== 0) return;
       dispatch(setMouseDownOn(item));
    };
 
@@ -33,7 +37,7 @@ function GameStateRenderer() {
       dispatch(setMouseDownOn(null));
    };
 
-   const handleMouseMove = (item: IBoardStateTile) => {
+   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>, item: IBoardStateTile) => {
       dispatch(setMouseMoveOn(item));
    };
 
@@ -56,11 +60,11 @@ function GameStateRenderer() {
          {sortIntoRenderOrder<IBoardStateTile>(boardTiles).map(item => {
             return (
                <div
-                  onTouchStart={e => handleMouseDown(item)}
-                  onTouchEnd={e => handleMouseUp()}
-                  onMouseDown={e => handleMouseDown(item)}
+                  //onTouchStart={e => handleMouseDown(null, item)}
+                  //onTouchEnd={e => handleMouseUp()}
+                  onMouseDown={e => handleMouseDown(e, item)}
                   onMouseUp={e => handleMouseUp()}
-                  onMouseMove={e => handleMouseMove(item)}
+                  onMouseMove={e => handleMouseMove(e, item)}
                   key={item.key}
                   css={item.isInvalid ? dimCss : notDimCss}
                >

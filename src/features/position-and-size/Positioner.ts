@@ -9,8 +9,7 @@ import {
 
 export const getBoardItemPosition = (
    boardItem: IBoardStateBase,
-   zoom: number,
-   //scrollOffset: ICartesianOffset
+   zoom: number
 ): ICartesianCoordinates => {
    guardClauses(boardItem);
 
@@ -21,9 +20,6 @@ export const getBoardItemPosition = (
       cartX += offsetX * zoom;
       cartY += offsetY * zoom;
    }
-
-   // cartX += scrollOffset.offsetX;
-   // cartY += scrollOffset.offsetY;
 
    return { cartX, cartY };
 };
@@ -66,7 +62,7 @@ const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffse
    switch (boardTopper.topperType) {
       case 'tree':
          switch (boardTopper.size) {
-            case 'init':
+            case 'tiny':
                return { offsetX: 39, offsetY: 60 };
             case 'small':
                return { offsetX: 32, offsetY: 33 };
@@ -92,7 +88,29 @@ const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffse
          }
 
       case 'windmill':
-         return { offsetX: 10, offsetY: -10 };
+         switch (boardTopper.direction) {
+            case 'bottomLeft':
+            case 'topLeft':
+               return { offsetX: 10, offsetY: -10 };
+            case 'bottomRight':
+            case 'topRight':
+               return { offsetX: 24, offsetY: -10 };
+            default:
+               throw new Error('invalid windmill direction');
+         }
+
+      case 'rock':
+         switch (boardTopper.size) {
+            case 'tiny':
+               return { offsetX: 28, offsetY: 50 };
+            case 'small':
+               return { offsetX: 28, offsetY: 46 };
+            case 'big':
+               return { offsetX: 22, offsetY: 40 };
+            default: {
+               throw new Error('invalid rock size');
+            }
+         }
 
       default:
          throw new Error('Topper missing from getCustomTopperOffsets');

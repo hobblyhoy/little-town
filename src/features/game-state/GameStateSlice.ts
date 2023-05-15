@@ -22,6 +22,8 @@ export interface IGameState {
    boardToppers: { [key: string]: IBoardStateTopper };
    recentlyUpdatedTopper: IBoardStateTopper | null;
    recentlyDeletedTopper: IBoardStateTopper | null;
+   recentlyUpdatedTile: IBoardStateTile | null;
+   recentlyResetTile: IBoardStateTile | null;
    money: number;
    lumber: number;
    wheat: number;
@@ -34,6 +36,8 @@ const initialState: IGameState = {
    boardToppers: {},
    recentlyUpdatedTopper: null,
    recentlyDeletedTopper: null,
+   recentlyUpdatedTile: null,
+   recentlyResetTile: null,
    money: 200,
    lumber: 0,
    wheat: 0,
@@ -73,10 +77,6 @@ export const gameStateSlice = createSlice({
          state.boardTiles = tiles;
       },
 
-      // TODO
-      // We cant dispatch sounds or influence other states directly from the reducer which
-      // creates problems for the likes of our "grow" function and if we want to play sound effects
-      // Will return to this...
       addTopper: (state, action: PayloadAction<IBoardStateTopperSetter>) => {
          // Early returns for cases where it's an invalid placement
          const tileKey = generateInternalKey({
@@ -117,7 +117,7 @@ export const gameStateSlice = createSlice({
 
       growTopper: (state, action: PayloadAction<string>) => {
          const topper = state.boardToppers[action.payload];
-         topper.size = topper.size === 'init' ? 'small' : 'big';
+         topper.size = topper.size === 'tiny' ? 'small' : 'big';
          state.boardToppers[topper.key] = topper;
 
          // Update recently added
@@ -156,6 +156,9 @@ export const gameStateSlice = createSlice({
 
          // Gimme that money
          state.money -= boardItemCost[action.payload.tileType];
+
+         // Update recently updated
+         state.recentlyUpdatedTile = state.boardTiles[key];
       },
 
       dimTiles: (state, action: PayloadAction<IIsometricCoordinates[]>) => {
@@ -183,20 +186,25 @@ export const gameStateSlice = createSlice({
       },
 
       resetTile: (state, action: PayloadAction<IIsometricCoordinates>) => {
-         // Delete any toppers and reset the tile to grass
          var tileKey = generateInternalKey({ ...action.payload, isoZ: 0 });
          var topperKey = generateInternalKey({ ...action.payload, isoZ: 1 });
+         if (state.boardToppers[topperKey]?.isInvalid) return;
+
+         // Delete any toppers and reset the tile to grass
          if (state.boardToppers[topperKey]) {
             state.recentlyDeletedTopper = state.boardToppers[topperKey];
             delete state.boardToppers[topperKey];
          }
-         state.boardTiles[tileKey].tileType = 'grass';
+         if (state.boardTiles[tileKey].tileType !== 'grass') {
+            state.boardTiles[tileKey].tileType = 'grass';
+            state.recentlyResetTile = state.boardTiles[tileKey];
+         }
       },
 
-      toggleMusic: (state) => {
+      toggleMusic: state => {
          state.musicOn = !state.musicOn;
       },
-      toggleSoundEffects: (state) => {
+      toggleSoundEffects: state => {
          state.soundEffectsOn = !state.soundEffectsOn;
       },
    },
@@ -230,6 +238,8 @@ export const selectRecentlyUpdatedTopper = (state: RootState) =>
    state.gamestate.recentlyUpdatedTopper;
 export const selectRecentlyDeletedTopper = (state: RootState) =>
    state.gamestate.recentlyDeletedTopper;
+export const selectRecentlyUpdatedTile = (state: RootState) => state.gamestate.recentlyUpdatedTile;
+export const selectRecentlyResetTile = (state: RootState) => state.gamestate.recentlyResetTile;
 export const selectMusicOn = (state: RootState) => state.gamestate.musicOn;
 export const selectSoundEffectsOn = (state: RootState) => state.gamestate.soundEffectsOn;
 
