@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/little-town/static/css/main.6a42a89a.css",
+    "main.js": "/little-town/static/js/main.94b7ca11.js",
+    "static/js/787.9c88f38f.chunk.js": "/little-town/static/js/787.9c88f38f.chunk.js",
+    "static/media/piano-music.m4a": "/little-town/static/media/piano-music.4ab9069d898fa972044a.m4a",
+    "static/media/jackhammer.m4a": "/little-town/static/media/jackhammer.522104acd563165b764a.m4a",
+    "static/media/pop.m4a": "/little-town/static/media/pop.8f6f4d5bf86fd8e2c670.m4a",
+    "static/media/shh2.m4a": "/little-town/static/media/shh2.8eb3c772a5a1c84b28ab.m4a",
+    "index.html": "/little-town/index.html",
+    "static/media/sound-icon.svg": "/little-town/static/media/sound-icon.8ad8993a106649be71c967c0f85d89c1.svg",
+    "static/media/plus.svg": "/little-town/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
+    "static/media/minus.svg": "/little-town/static/media/minus.125c14a22b7a368f145767524c8a40e8.svg",
+    "static/media/down.svg": "/little-town/static/media/down.1e26d56ec33b7755604e490ed0f87ee4.svg",
+    "static/media/left.svg": "/little-town/static/media/left.7c8510d5b9cd8f99715664eb1cf2a576.svg",
+    "static/media/right.svg": "/little-town/static/media/right.19ded080b6fcf8b13f07e868574a6cd4.svg",
+    "static/media/up.svg": "/little-town/static/media/up.ec6508df1caf65a16e116ac2434c4cad.svg",
+    "main.6a42a89a.css.map": "/little-town/static/css/main.6a42a89a.css.map",
+    "main.94b7ca11.js.map": "/little-town/static/js/main.94b7ca11.js.map",
+    "787.9c88f38f.chunk.js.map": "/little-town/static/js/787.9c88f38f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6a42a89a.css",
+    "static/js/main.94b7ca11.js"
+  ]
+}
