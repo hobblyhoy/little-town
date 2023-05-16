@@ -10,6 +10,7 @@ import upIcon from './assets/up.svg';
 import leftIcon from './assets/left.svg';
 import rightIcon from './assets/right.svg';
 import downIcon from './assets/down.svg';
+import useBreakpoint from '../../app/useBreakpoint';
 
 type IScrollBarProps = {
    position: CartesianDirectional;
@@ -80,19 +81,22 @@ function ScrollBar({ position }: IScrollBarProps) {
          onMouseEnter={handleMouseEnter}
          onMouseLeave={handleMouseLeave}
       >
-         {timer && <img src={getIcon()} className="h-16 w-16" alt={"Position mover " + position} /> }
+         {timer && <img src={getIcon()} className="h-16 w-16" alt={'Position mover ' + position} />}
       </div>
    );
 }
 
 function ScrollBars() {
-   return (
+   const { isDesktop } = useBreakpoint();
+   return isDesktop ? (
       <div className="h-screen w-screen">
          <ScrollBar position="top" />
          <ScrollBar position="bottom" />
          <ScrollBar position="left" />
          <ScrollBar position="right" />
       </div>
+   ) : (
+      <div className="h-screen w-screen">Mobile TODO</div>
    );
 }
 
