@@ -6,12 +6,16 @@ export interface IZoomScrollState {
    zoom: number;
    scrollOffsetX: number;
    scrollOffsetY: number;
+   scrollOffsetMobileX: number;
+   scrollOffsetMobileY: number;
 }
 
 const initialState: IZoomScrollState = {
    zoom: 1,
    scrollOffsetX: 0,
    scrollOffsetY: 0,
+   scrollOffsetMobileX: 0,
+   scrollOffsetMobileY: 0,
 };
 
 export const zoomScrollSlice = createSlice({
@@ -44,16 +48,32 @@ export const zoomScrollSlice = createSlice({
                break;
          }
       },
+      // Calculating a continuous delta is problematic so instead we keep a constantly updating value
+      // for the current mobile scroll position during the whole touch event. Only once the touch 
+      // event is over do we update the main scrollOffset and reset the mobile one to 0.
+      scrollMobile: (state, action: PayloadAction<ICartesianOffset>) => {
+         state.scrollOffsetMobileX = action.payload.offsetX;
+         state.scrollOffsetMobileY = action.payload.offsetY;
+      },
+      scrollMobileCommit: state => {
+         state.scrollOffsetX += state.scrollOffsetMobileX;
+         state.scrollOffsetY += state.scrollOffsetMobileY;
+         state.scrollOffsetMobileX = 0;
+         state.scrollOffsetMobileY = 0;
+      },
    },
 });
 
 // reducer export
-export const { zoomIn, zoomOut, scroll } = zoomScrollSlice.actions;
+export const { zoomIn, zoomOut, scroll, scrollMobile, scrollMobileCommit } = zoomScrollSlice.actions;
 
 // selector export
 export const selectZoom = (state: RootState) => state.zoomscroll.zoom;
 export const selectScrollOffset = (state: RootState): ICartesianOffset => {
-   return { offsetX: state.zoomscroll.scrollOffsetX, offsetY: state.zoomscroll.scrollOffsetY };
+   return {
+      offsetX: state.zoomscroll.scrollOffsetX + state.zoomscroll.scrollOffsetMobileX,
+      offsetY: state.zoomscroll.scrollOffsetY + state.zoomscroll.scrollOffsetMobileY,
+   };
 };
 
 export default zoomScrollSlice.reducer;
