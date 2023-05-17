@@ -234,7 +234,7 @@ export const gameStateSlice = createSlice({
       },
 
       harvestTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
-         let topper = state.boardToppers[generateInternalKey(action.payload)];
+         const topper = state.boardToppers[generateInternalKey(action.payload)];
          if (topper.size !== 'big') return;
 
          if (topper.topperType === 'tree') {
@@ -244,6 +244,9 @@ export const gameStateSlice = createSlice({
             state.wheat += 1;
             topper.size = 'small';
          }
+
+         // Update recently added
+         state.recentlyUpdatedTopper = topper;
       },
    },
 });
