@@ -1,7 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-type SelectableItem = 'remove' | 'rotate' | 'tree' | 'road' | 'house' | 'wheat' | 'windmill';
+type SelectableItem =
+   | 'remove'
+   | 'rotate'
+   | 'tree'
+   | 'road'
+   | 'house'
+   | 'wheat'
+   | 'windmill'
+   | 'harvest';
 
 export interface ISelectionBarState {
    selectableItems: { internalName: SelectableItem; uiName: string }[];
@@ -17,6 +25,7 @@ const initialState: ISelectionBarState = {
       { internalName: 'wheat', uiName: 'Wheat' },
       { internalName: 'rotate', uiName: 'Rotate' },
       { internalName: 'windmill', uiName: 'Windmill' },
+      { internalName: 'harvest', uiName: 'Harvest' },
    ],
    selectedItem: null,
 };

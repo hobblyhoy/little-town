@@ -107,12 +107,21 @@ export const gameStateSlice = createSlice({
 
          // Special case - For Houses and windmills apply logic to face them towards the road, biased towers bottom right, bottom left
          if (newTopper.topperType === 'house' || newTopper.topperType === 'windmill') {
-            let direction:Directional = 'bottomRight';
-            if (baseTile.cellLowerLeft && state.boardTiles[baseTile.cellLowerLeft].tileType === 'road') {
+            let direction: Directional = 'bottomRight';
+            if (
+               baseTile.cellLowerLeft &&
+               state.boardTiles[baseTile.cellLowerLeft].tileType === 'road'
+            ) {
                direction = 'bottomLeft';
-            } else if (baseTile.cellUpperRight && state.boardTiles[baseTile.cellUpperRight].tileType === 'road') {
+            } else if (
+               baseTile.cellUpperRight &&
+               state.boardTiles[baseTile.cellUpperRight].tileType === 'road'
+            ) {
                direction = 'topRight';
-            } else if (baseTile.cellUpperLeft && state.boardTiles[baseTile.cellUpperLeft].tileType === 'road') {
+            } else if (
+               baseTile.cellUpperLeft &&
+               state.boardTiles[baseTile.cellUpperLeft].tileType === 'road'
+            ) {
                direction = 'topLeft';
             }
             newTopper.direction = direction;
@@ -174,26 +183,29 @@ export const gameStateSlice = createSlice({
          state.recentlyUpdatedTile = state.boardTiles[key];
       },
 
-      dimTiles: (state, action: PayloadAction<IIsometricCoordinates[]>) => {
-         // set both the tile and any toppers to dim
-         action.payload.forEach(isoCoords => {
-            var tileKey = generateInternalKey({
-               isoX: isoCoords.isoX,
-               isoY: isoCoords.isoY,
-               isoZ: 0,
-            });
-            var topperKey = generateInternalKey({
-               isoX: isoCoords.isoX,
-               isoY: isoCoords.isoY,
-               isoZ: 1,
-            });
+      setValidBoardItems: (
+         state,
+         action: PayloadAction<{ validTiles: IBoardStateTile[]; validToppers: IBoardStateTopper[] }>
+      ) => {
+         // Start be disabling all board items
+         dictionaryToArray(state.boardTiles).forEach(x => (x.isInvalid = true));
+         dictionaryToArray(state.boardToppers).forEach(x => (x.isInvalid = true));
 
-            state.boardTiles[tileKey].isInvalid = true;
-            if (state.boardToppers[topperKey]) state.boardToppers[topperKey].isInvalid = true;
+         // selectively reenable valid board items where both tile and topper (if it exists) are valid
+         action.payload.validTiles.forEach(tile => {
+            if (!tile.cellAbove) {
+               state.boardTiles[tile.key].isInvalid = false;
+            } else {
+               let topper = state.boardToppers[tile.cellAbove];
+               if (action.payload.validToppers.some(x => x.key === topper.key)) {
+                  state.boardTiles[tile.key].isInvalid = false;
+                  state.boardToppers[topper.key].isInvalid = false;
+               }
+            }
          });
       },
 
-      resetDimTiles: state => {
+      resetValidBoardItems: state => {
          dictionaryToArray(state.boardTiles).forEach(x => (x.isInvalid = false));
          dictionaryToArray(state.boardToppers).forEach(x => (x.isInvalid = false));
       },
@@ -220,6 +232,19 @@ export const gameStateSlice = createSlice({
       toggleSoundEffects: state => {
          state.soundEffectsOn = !state.soundEffectsOn;
       },
+
+      harvestTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
+         let topper = state.boardToppers[generateInternalKey(action.payload)];
+         if (topper.size !== 'big') return;
+
+         if (topper.topperType === 'tree') {
+            state.lumber += 1;
+            topper.size = 'tiny';
+         } else {
+            state.wheat += 1;
+            topper.size = 'small';
+         }
+      },
    },
 });
 
@@ -230,11 +255,12 @@ export const {
    growTopper,
    rotateTopper,
    updateTile,
-   dimTiles,
-   resetDimTiles,
+   setValidBoardItems,
+   resetValidBoardItems,
    resetTile,
    toggleMusic,
    toggleSoundEffects,
+   harvestTopper,
 } = gameStateSlice.actions;
 
 // selector export

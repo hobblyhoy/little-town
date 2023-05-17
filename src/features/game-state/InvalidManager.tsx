@@ -1,17 +1,22 @@
 import { useEffect } from 'react';
 import {
    dictionaryToArray,
-   isNotGrass,
-   isRock,
-   structuresOnly,
-   toIsometricCoords,
-   isNotTree,
-   isNotWheat,
-   isNotWindmill,
-   isNotRoadAdjacent,
+   isStructure,
+   isRoadAdjacent,
+   isNotRock,
+   hasATopper,
+   doesntHaveATopper,
+   isNotRoad,
+   isBig,
+   isHarvestable,
 } from '../../app/utils';
-import { IIsometricCoordinates } from '../../types/BoardTypes';
-import { resetDimTiles, dimTiles, selectBoardTiles, selectBoardToppers } from './GameStateSlice';
+import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
+import {
+   resetValidBoardItems,
+   setValidBoardItems,
+   selectBoardTiles,
+   selectBoardToppers,
+} from './GameStateSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
 
@@ -23,60 +28,58 @@ function InvalidManager() {
    const boardToppers = useAppSelector(selectBoardToppers);
 
    useEffect(() => {
-      dispatch(resetDimTiles());
+      dispatch(resetValidBoardItems());
       if (!selectedItem) return;
 
-      let invalidTiles: IIsometricCoordinates[] = [];
-      let invalidToppers: IIsometricCoordinates[] = [];
+      let validTiles: IBoardStateTile[] = dictionaryToArray(boardTiles);
+      let validToppers: IBoardStateTopper[] = dictionaryToArray(boardToppers);
       switch (selectedItem) {
          case 'remove':
-            invalidToppers = dictionaryToArray(boardToppers).filter(isRock).map(toIsometricCoords);
+            validTiles = validTiles.filter(hasATopper);
+            validToppers = validToppers.filter(isNotRock);
             break;
 
          case 'rotate':
-            invalidToppers = dictionaryToArray(boardToppers)
-               .filter(structuresOnly)
-               .map(toIsometricCoords);
+            validTiles = validTiles.filter(hasATopper);
+            validToppers = validToppers.filter(isStructure);
             break;
 
          case 'tree':
-            invalidTiles = dictionaryToArray(boardTiles).filter(isNotGrass).map(toIsometricCoords);
-            invalidToppers = dictionaryToArray(boardToppers)
-               .filter(isNotTree)
-               .map(toIsometricCoords);
-            break;
-
-         case 'road':
-            invalidToppers = dictionaryToArray(boardToppers).map(toIsometricCoords);
-            break;
-
-         case 'house':
-            invalidTiles = dictionaryToArray(boardTiles)
-               .filter(x => isNotGrass(x) || isNotRoadAdjacent({ ...x }, boardTiles))
-               .map(toIsometricCoords);
-            invalidToppers = dictionaryToArray(boardToppers).map(toIsometricCoords);
+            validTiles = validTiles.filter(doesntHaveATopper).filter(isNotRoad);
             break;
 
          case 'wheat':
-            invalidTiles = dictionaryToArray(boardTiles).filter(isNotGrass).map(toIsometricCoords);
-            invalidToppers = dictionaryToArray(boardToppers)
-               .filter(isNotWheat)
-               .map(toIsometricCoords);
+            validTiles = validTiles.filter(doesntHaveATopper).filter(isNotRoad);
+            break;
+
+         case 'road':
+            validTiles = validTiles.filter(doesntHaveATopper);
+            break;
+
+         case 'house':
+            validTiles = validTiles
+               .filter(doesntHaveATopper)
+               .filter(isNotRoad)
+               .filter(x => isRoadAdjacent(x, boardTiles));
             break;
 
          case 'windmill':
-            invalidTiles = dictionaryToArray(boardTiles)
-               .filter(x => isNotGrass(x) || isNotRoadAdjacent({ ...x }, boardTiles))
-               .map(toIsometricCoords);
-            invalidToppers = dictionaryToArray(boardToppers)
-               .filter(isNotWindmill)
-               .map(toIsometricCoords);
+            validTiles = validTiles
+               .filter(doesntHaveATopper)
+               .filter(isNotRoad)
+               .filter(x => isRoadAdjacent(x, boardTiles));
             break;
+
+         case 'harvest':
+            validTiles = validTiles.filter(hasATopper);
+            validToppers = validToppers.filter(isHarvestable).filter(isBig);
+            break;
+
          default:
             throw new Error('Unimplemented item in InvalidManager');
       }
 
-      dispatch(dimTiles([...invalidTiles, ...invalidToppers]));
+      dispatch(setValidBoardItems({ validTiles, validToppers }));
    }, [selectedItem]);
    return <></>;
 }

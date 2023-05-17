@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectMouseDownOn, selectMouseMoveOn } from './ClickAndDragSlice';
 import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
-import { addTopper, resetTile, rotateTopper, updateTile } from '../game-state/GameStateSlice';
+import { addTopper, harvestTopper, resetTile, rotateTopper, updateTile } from '../game-state/GameStateSlice';
 
 function ClickAndDragManager() {
    const dispatch = useAppDispatch();
@@ -80,6 +80,13 @@ function ClickAndDragManager() {
             } else {
                dispatch(rotateTopper({ isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 1 }));
             }
+            break;
+         case 'harvest':
+            dispatch(harvestTopper({
+               isoX: mouseDownOn.isoX,
+               isoY: mouseDownOn.isoY,
+               isoZ: 1
+            }));
             break;
       }
    }, [mouseDownOn]);
