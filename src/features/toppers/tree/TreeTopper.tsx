@@ -8,6 +8,8 @@ import Tree_Small_Topper from './Tree_Small_Topper';
 import Tree_Big_Topper from './Tree_Big_Topper';
 
 function TreeTopper(props: IBoardTopperProps) {
+   //console.log('tree topper rerender');
+
    switch (props.boardTopper.size) {
       case 'tiny':
          return <Tree_Seed_Topper {...props} />;

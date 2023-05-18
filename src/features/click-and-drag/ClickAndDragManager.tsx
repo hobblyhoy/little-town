@@ -1,14 +1,31 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectMouseDownOn, selectMouseMoveOn } from './ClickAndDragSlice';
+import {
+   selectMouseDownOn,
+   selectMouseMoveOn,
+   selectTouchEnd,
+   selectTouchMove,
+   selectTouchStart,
+} from './ClickAndDragSlice';
 import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
-import { addTopper, harvestTopper, resetTile, rotateTopper, updateTile } from '../game-state/GameStateSlice';
+import {
+   addTopper,
+   harvestTopper,
+   resetTile,
+   rotateTopper,
+   updateTile,
+} from '../game-state/GameStateSlice';
+import { throttle } from 'lodash';
+import { scrollMobile, scrollMobileCommit } from '../zoom-and-scroll/ZoomScrollSlice';
 
 function ClickAndDragManager() {
    const dispatch = useAppDispatch();
    const mouseDownOn = useAppSelector(selectMouseDownOn);
    const mouseMoveOn = useAppSelector(selectMouseMoveOn);
    const selectedItem = useAppSelector(selectSelectedItem);
+   const touchStart = useAppSelector(selectTouchStart);
+   const touchMove = useAppSelector(selectTouchMove);
+   const touchEnd = useAppSelector(selectTouchEnd);
 
    //// Mouse Down \\\\
    useEffect(() => {
@@ -82,11 +99,13 @@ function ClickAndDragManager() {
             }
             break;
          case 'harvest':
-            dispatch(harvestTopper({
-               isoX: mouseDownOn.isoX,
-               isoY: mouseDownOn.isoY,
-               isoZ: 1
-            }));
+            dispatch(
+               harvestTopper({
+                  isoX: mouseDownOn.isoX,
+                  isoY: mouseDownOn.isoY,
+                  isoZ: 1,
+               })
+            );
             break;
       }
    }, [mouseDownOn]);
@@ -121,6 +140,22 @@ function ClickAndDragManager() {
             break;
       }
    }, [mouseMoveOn]);
+
+   //// Mobile Touch \\\\
+   useEffect(() => {
+      if (selectedItem !== null || touchStart === null || touchMove === null) return;
+      
+      const currentOffsetX = touchMove.cartX - touchStart.cartX;
+      const currentOffsetY = touchMove.cartY - touchStart.cartY;
+
+      dispatch(scrollMobile({ offsetX: currentOffsetX, offsetY: currentOffsetY }));
+   }, [touchMove]);
+
+   useEffect(() => {
+      if (touchEnd === false || selectedItem !== null) return;
+
+      dispatch(scrollMobileCommit());
+   }, [touchEnd]);
 
    return <></>;
 }
