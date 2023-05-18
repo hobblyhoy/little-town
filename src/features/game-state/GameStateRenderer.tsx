@@ -27,6 +27,7 @@ function GameStateRenderer() {
    const boardToppers = useAppSelector(selectBoardToppers);
    const scrollOffsetX = useAppSelector(selectScrollOffsetX);
    const scrollOffsetY = useAppSelector(selectScrollOffsetY);
+
    const dispatch = useAppDispatch();
 
    useEffect(() => {
@@ -96,8 +97,15 @@ function GameStateRenderer() {
       dispatch(signalTouchEnd());
    };
 
+   //css={gameBoardScrollOffsetCss}
+
+   useEffect(() => {
+      console.log('scrollOffset - ' + scrollOffsetX);
+   }, [scrollOffsetX]);
+
    return (
-      <div css={gameBoardScrollOffsetCss}>
+      // <div>
+         <div css={gameBoardScrollOffsetCss}>
          {sortIntoRenderOrder<IBoardStateTile>(boardTiles).map(item => {
             return (
                <div

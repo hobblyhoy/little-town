@@ -15,7 +15,6 @@ import {
    rotateTopper,
    updateTile,
 } from '../game-state/GameStateSlice';
-import { throttle } from 'lodash';
 import { scrollMobile, scrollMobileCommit } from '../zoom-and-scroll/ZoomScrollSlice';
 
 function ClickAndDragManager() {
@@ -142,11 +141,13 @@ function ClickAndDragManager() {
    }, [mouseMoveOn]);
 
    //// Mobile Touch \\\\
+
    useEffect(() => {
       if (selectedItem !== null || touchStart === null || touchMove === null) return;
       
       const currentOffsetX = touchMove.cartX - touchStart.cartX;
       const currentOffsetY = touchMove.cartY - touchStart.cartY;
+
 
       dispatch(scrollMobile({ offsetX: currentOffsetX, offsetY: currentOffsetY }));
    }, [touchMove]);
