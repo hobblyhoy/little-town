@@ -23,16 +23,19 @@ export const zoomScrollSlice = createSlice({
    initialState,
    reducers: {
       zoomIn: state => {
+         console.log('in zoomIn');
          if (state.zoom < 3.4) {
             state.zoom += 0.1;
          }
       },
       zoomOut: state => {
+         console.log('in zoomOut');
          if (state.zoom > 0.5) {
             state.zoom -= 0.1;
          }
       },
       scroll: (state, action: PayloadAction<CartesianDirectional>) => {
+         console.log('in scroll');
          switch (action.payload) {
             case 'top':
                state.scrollOffsetY = Math.round(state.scrollOffsetY + 5 * state.zoom);
@@ -49,13 +52,18 @@ export const zoomScrollSlice = createSlice({
          }
       },
       // Calculating a continuous delta is problematic so instead we keep a constantly updating value
-      // for the current mobile scroll position during the whole touch event. Only once the touch 
+      // for the current mobile scroll position during the whole touch event. Only once the touch
       // event is over do we update the main scrollOffset and reset the mobile one to 0.
       scrollMobile: (state, action: PayloadAction<ICartesianOffset>) => {
+         console.log('in scrollMobile');
          state.scrollOffsetMobileX = action.payload.offsetX;
          state.scrollOffsetMobileY = action.payload.offsetY;
+         // state.scrollOffsetMobileX = 20;
+         // state.scrollOffsetMobileY = 20;
       },
       scrollMobileCommit: state => {
+         console.log('in scrollMobileCommit');
+
          state.scrollOffsetX += state.scrollOffsetMobileX;
          state.scrollOffsetY += state.scrollOffsetMobileY;
          state.scrollOffsetMobileX = 0;
@@ -65,15 +73,20 @@ export const zoomScrollSlice = createSlice({
 });
 
 // reducer export
-export const { zoomIn, zoomOut, scroll, scrollMobile, scrollMobileCommit } = zoomScrollSlice.actions;
+export const { zoomIn, zoomOut, scroll, scrollMobile, scrollMobileCommit } =
+   zoomScrollSlice.actions;
 
 // selector export
 export const selectZoom = (state: RootState) => state.zoomscroll.zoom;
-export const selectScrollOffset = (state: RootState): ICartesianOffset => {
-   return {
-      offsetX: state.zoomscroll.scrollOffsetX + state.zoomscroll.scrollOffsetMobileX,
-      offsetY: state.zoomscroll.scrollOffsetY + state.zoomscroll.scrollOffsetMobileY,
-   };
-};
+// export const selectScrollOffset = (state: RootState): ICartesianOffset => {
+//    console.log('in selectScrollOffset')
+//    return {
+//       offsetX: state.zoomscroll.scrollOffsetX + state.zoomscroll.scrollOffsetMobileX,
+//       offsetY: state.zoomscroll.scrollOffsetY + state.zoomscroll.scrollOffsetMobileY,
+//    };
+// };
+export const selectScrollOffsetX = (state: RootState): number => state.zoomscroll.scrollOffsetX + state.zoomscroll.scrollOffsetMobileX; // TODO would need the mobile one too, just testing
+export const selectScrollOffsetY = (state: RootState): number => state.zoomscroll.scrollOffsetY + state.zoomscroll.scrollOffsetMobileY; // TODO would need the mobile one too, just testing
+
 
 export default zoomScrollSlice.reducer;
