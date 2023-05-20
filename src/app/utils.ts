@@ -103,6 +103,7 @@ export const getRandomInclusive = (start: number, end: number) => {
 //// Filters - Tiles \\\\
 export const hasATopper = (x: IBoardStateTile) => x.cellAbove !== null;
 export const doesntHaveATopper = (x: IBoardStateTile) => x.cellAbove === null;
+export const isRoad = (x: IBoardStateTile) => x.tileType === 'road';
 export const isNotRoad = (x: IBoardStateTile) => x.tileType !== 'road';
 export const isRoadAdjacent = (
    tile: IBoardStateTile,

@@ -9,6 +9,7 @@ import {
    isNotRoad,
    isBig,
    isHarvestable,
+   isRoad,
 } from '../../app/utils';
 import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import {
@@ -35,7 +36,7 @@ function InvalidManager() {
       let validToppers: IBoardStateTopper[] = dictionaryToArray(boardToppers);
       switch (selectedItem) {
          case 'remove':
-            validTiles = validTiles.filter(hasATopper);
+            validTiles = validTiles.filter(x => hasATopper(x) || isRoad(x));
             validToppers = validToppers.filter(isNotRock);
             break;
 

@@ -219,6 +219,7 @@ export const gameStateSlice = createSlice({
          if (state.boardToppers[topperKey]) {
             state.recentlyDeletedTopper = state.boardToppers[topperKey];
             delete state.boardToppers[topperKey];
+            state.boardTiles[tileKey].cellAbove = null;
          }
          if (state.boardTiles[tileKey].tileType !== 'grass') {
             state.boardTiles[tileKey].tileType = 'grass';

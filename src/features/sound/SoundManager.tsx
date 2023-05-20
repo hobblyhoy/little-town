@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectUserHasInteractedWithDocument } from '../click-and-drag/ClickAndDragSlice';
-import backgroundMusic from './assets/piano-music.m4a';
-import pop from './assets/pop.m4a';
-import shh from './assets/shh2.m4a';
-import jackhammer from './assets/jackhammer.m4a';
+import BackgroundMusic from './assets/piano-music.m4a';
+import Pop from './assets/pop.m4a';
+import Shh from './assets/shh2.m4a';
+import Click from './assets/click.m4a'
 import {
    selectMusicOn,
    selectRecentlyResetTile,
@@ -69,7 +69,7 @@ function SoundManager() {
    useEffect(() => {
       if (!soundEffectsOn) return;
 
-      const audio = new Audio(pop);
+      const audio = new Audio(Pop);
       audio.play();
    }, [newTopper]);
 
@@ -79,22 +79,22 @@ function SoundManager() {
    useEffect(() => {
       if (!soundEffectsOn) return;
 
-      const audio = new Audio(shh);
+      const audio = new Audio(Shh);
       audio.play();
    }, [deletedTopper, resetTile]);
 
-   //// Jackhammer \\\\
+   //// Click \\\\
    const updatedTile = useAppSelector(selectRecentlyUpdatedTile);
    useEffect(() => {
       if (!soundEffectsOn) return;
 
-      const audio = new Audio(jackhammer);
+      const audio = new Audio(Click);
       audio.play();
    }, [updatedTile]);
 
    return (
       <div>
-         <audio ref={backgroundMusicRef} src={backgroundMusic} />
+         <audio ref={backgroundMusicRef} src={BackgroundMusic} />
       </div>
    );
 }
