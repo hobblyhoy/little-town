@@ -7,7 +7,7 @@ import { selectInventory } from '../game-state/GameStateSlice';
 import { selectionBarHeight } from '../../app/constants';
 
 function SelectionBar() {
-   const baseCss = css`
+   const baseCss = css` 
       background-color: black;
       position: fixed;
       left: 20px;

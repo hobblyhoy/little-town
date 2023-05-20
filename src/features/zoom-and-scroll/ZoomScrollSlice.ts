@@ -35,7 +35,6 @@ export const zoomScrollSlice = createSlice({
          }
       },
       scroll: (state, action: PayloadAction<CartesianDirectional>) => {
-         console.log('in scroll');
          switch (action.payload) {
             case 'top':
                state.scrollOffsetY = Math.round(state.scrollOffsetY + 5 * state.zoom);
@@ -58,8 +57,6 @@ export const zoomScrollSlice = createSlice({
          console.log('in scrollMobile');
          state.scrollOffsetMobileX = action.payload.offsetX;
          state.scrollOffsetMobileY = action.payload.offsetY;
-         // state.scrollOffsetMobileX = 20;
-         // state.scrollOffsetMobileY = 20;
       },
       scrollMobileCommit: state => {
          console.log('in scrollMobileCommit');
@@ -78,15 +75,9 @@ export const { zoomIn, zoomOut, scroll, scrollMobile, scrollMobileCommit } =
 
 // selector export
 export const selectZoom = (state: RootState) => state.zoomscroll.zoom;
-// export const selectScrollOffset = (state: RootState): ICartesianOffset => {
-//    console.log('in selectScrollOffset')
-//    return {
-//       offsetX: state.zoomscroll.scrollOffsetX + state.zoomscroll.scrollOffsetMobileX,
-//       offsetY: state.zoomscroll.scrollOffsetY + state.zoomscroll.scrollOffsetMobileY,
-//    };
-// };
-export const selectScrollOffsetX = (state: RootState): number => state.zoomscroll.scrollOffsetX + state.zoomscroll.scrollOffsetMobileX; // TODO would need the mobile one too, just testing
-export const selectScrollOffsetY = (state: RootState): number => state.zoomscroll.scrollOffsetY + state.zoomscroll.scrollOffsetMobileY; // TODO would need the mobile one too, just testing
-
+export const selectScrollOffsetX = (state: RootState): number =>
+   state.zoomscroll.scrollOffsetX + state.zoomscroll.scrollOffsetMobileX;
+export const selectScrollOffsetY = (state: RootState): number =>
+   state.zoomscroll.scrollOffsetY + state.zoomscroll.scrollOffsetMobileY;
 
 export default zoomScrollSlice.reducer;

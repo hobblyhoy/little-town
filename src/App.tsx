@@ -15,6 +15,7 @@ import SoundManager from './features/sound/SoundManager';
 import SoundBar from './features/sound/SoundBar';
 import ScrollBars from './features/zoom-and-scroll/ScrollBars';
 import GameStateInitializer from './features/game-state/GameStateInitializer';
+import SelectionBars from './features/selection-bar/SelectionBars';
 
 function App() {
 
@@ -23,10 +24,11 @@ function App() {
       <div className="App overflow-hidden">
          {/* UI */}
          <GameStateRenderer />
-         <SelectionBar />
+         {/* <SelectionBar /> */}
          <ZoomBar />
          <SoundBar />
          <ScrollBars />
+         <SelectionBars />
 
          {/* Managers */}
          <ClickAndDragManager />

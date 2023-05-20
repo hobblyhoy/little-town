@@ -16,11 +16,8 @@ import {
 } from '../click-and-drag/ClickAndDragSlice';
 import TileRenderer from './TileRenderer';
 import TopperRenderer from './TopperRenderer';
-import {
-   selectScrollOffsetX,
-   selectScrollOffsetY,
-} from '../zoom-and-scroll/ZoomScrollSlice';
-import {  throttle } from 'lodash';
+import { selectScrollOffsetX, selectScrollOffsetY } from '../zoom-and-scroll/ZoomScrollSlice';
+import { throttle } from 'lodash';
 
 function GameStateRenderer() {
    const boardTiles = useAppSelector(selectBoardTiles);
@@ -97,15 +94,8 @@ function GameStateRenderer() {
       dispatch(signalTouchEnd());
    };
 
-   //css={gameBoardScrollOffsetCss}
-
-   useEffect(() => {
-      console.log('scrollOffset - ' + scrollOffsetX);
-   }, [scrollOffsetX]);
-
    return (
-      // <div>
-         <div css={gameBoardScrollOffsetCss}>
+      <div css={gameBoardScrollOffsetCss}>
          {sortIntoRenderOrder<IBoardStateTile>(boardTiles).map(item => {
             return (
                <div

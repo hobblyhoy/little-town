@@ -2,6 +2,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 import { ICartesianCoordinates, IPixelSize, TileType, TopperType } from '../types/BoardTypes';
+import { IBarElement, SelectableItem } from '../types/BarTypes';
 
 export const standardBaseCss = () => css`
    position: fixed;
@@ -37,3 +38,15 @@ export const boardItemCost: Record<TopperType | TileType, number> = {
 };
 
 export const selectionBarHeight = 200;
+
+export const selectionBarUiNameMap: { [key in SelectableItem]: string } = {
+   tree: 'Seed',
+   house: 'House',
+   wheat: 'Wheat',
+   windmill: 'Windmill',
+   road: 'Road',
+   remove: 'Remove',
+   rotate: 'Rotate',
+   harvest: 'Harvest'
+}
+
