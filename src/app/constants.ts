@@ -37,8 +37,6 @@ export const boardItemCost: Record<TopperType | TileType, number> = {
    rock: 0,
 };
 
-export const selectionBarHeight = 200;
-
 export const selectionBarUiNameMap: { [key in SelectableItem]: string } = {
    tree: 'Seed',
    house: 'House',
