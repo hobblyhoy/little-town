@@ -23,17 +23,17 @@ export const tileGCss = css`
    pointer-events: visiblePainted;
 `;
 
-export const growthTime = 5000;
+export const growthTime = 30 * 1000;
 
-export const boardSize = 10;
+export const boardSize = 15;
 
 export const boardItemCost: Record<TopperType | TileType, number> = {
    grass: 0,
-   road: 2,
+   road: 1,
    tree: 1,
-   house: 10,
-   wheat: 5,
-   windmill: 5,
+   house: 4,
+   wheat: 4,
+   windmill: 4,
    rock: 0,
 };
 

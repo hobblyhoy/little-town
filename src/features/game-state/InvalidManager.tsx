@@ -10,6 +10,7 @@ import {
    isBig,
    isHarvestable,
    isRoad,
+   isWindmillAdjacent,
 } from '../../app/utils';
 import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import {
@@ -50,7 +51,10 @@ function InvalidManager() {
             break;
 
          case 'wheat':
-            validTiles = validTiles.filter(doesntHaveATopper).filter(isNotRoad);
+            validTiles = validTiles
+               .filter(doesntHaveATopper)
+               .filter(isNotRoad)
+               .filter(x => isWindmillAdjacent(x, boardToppers));
             break;
 
          case 'road':

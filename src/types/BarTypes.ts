@@ -14,6 +14,7 @@ export type SelectableItem =
 export interface IBarElement {
    internalName: SelectableItem;
    icon: ReactNode;
+   isDisabled: boolean;
 }
 
 export interface ISlideOutBar {

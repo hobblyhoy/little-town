@@ -7,12 +7,18 @@ import useBreakpoint from '../../app/useBreakpoint';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectSelectedItem, setSelectedItem } from './SelectionBarSlice';
 import { selectionBarUiNameMap } from '../../app/constants';
+import { useEffect } from 'react';
 
-function BarElement({ internalName, icon }: IBarElement) {
+function BarElement({ internalName, icon, isDisabled }: IBarElement) {
    const { isDesktop } = useBreakpoint();
    const dispatch = useAppDispatch();
    const selectedItem = useAppSelector(selectSelectedItem);
 
+   useEffect(() => {
+      if (selectedItem === internalName && isDisabled) {
+         dispatch(setSelectedItem(null))
+      }
+   }, [selectedItem, isDisabled]);
    const baseCss = css`
       padding: 10px;
    `;
@@ -32,15 +38,20 @@ function BarElement({ internalName, icon }: IBarElement) {
    };
 
    let whiteHoverClasses = '';
-   if (selectedItem === internalName) {
+   if (isDisabled) {
+      // No hover styles
+   }
+   else if (selectedItem === internalName) {
       whiteHoverClasses = 'bg-white bg-opacity-30';
    } else if (isDesktop) {
       whiteHoverClasses = 'hover:bg-white hover:bg-opacity-30';
    }
 
+   const disableClasses = isDisabled ? 'saturate-0 opacity-50 cursor-default' : '';
+
    return (
       <div
-         className={`flex flex-col items-center ${whiteHoverClasses}`}
+         className={`flex flex-col items-center ${whiteHoverClasses} ${disableClasses}`}
          css={baseCss}
          onClick={handleClick}
       >

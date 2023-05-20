@@ -7,7 +7,7 @@ import { getRandomInclusive } from '../../app/utils';
 
 // TODO this could use with a tidy-up. Extract out the initializer for both types into their own functions
 // and have this just being responsible for calling both of them
-// or the other way around and create an intializeBoardToppers in the GameStateSlice (though that makes complexity with the 
+// or the other way around and create an intializeBoardToppers in the GameStateSlice (though that makes complexity with the
 // whole addTopper situation)
 function GameStateInitializer() {
    const dispatch = useAppDispatch();
@@ -15,12 +15,12 @@ function GameStateInitializer() {
       dispatch(initializeBoardTiles());
 
       // Generate Toppers
-      const minTrees = 3;
-      const maxTrees = 5;
+      const minTrees = 5;
+      const maxTrees = 10;
       let treeCount = getRandomInclusive(minTrees, maxTrees);
 
-      const minRocks = 5;
-      const maxRocks = 8;
+      const minRocks = 8;
+      const maxRocks = 15;
       let rockCount = getRandomInclusive(minRocks, maxRocks);
 
       // Build a list of random unique coordinates on the board
@@ -48,6 +48,7 @@ function GameStateInitializer() {
                   isoY: isoCoords.isoY,
                   topperType: 'tree',
                   size: randomSize,
+                  isInitial: true,
                })
             );
          }, 0);
@@ -64,6 +65,7 @@ function GameStateInitializer() {
                isoY: isoCoords.isoY,
                topperType: 'rock',
                size: randomSize,
+               isInitial: true,
             })
          );
 

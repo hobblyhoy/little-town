@@ -25,8 +25,6 @@ export interface IGameState {
    recentlyUpdatedTile: IBoardStateTile | null;
    recentlyResetTile: IBoardStateTile | null;
    money: number;
-   lumber: number;
-   wheat: number;
    musicOn: boolean;
    soundEffectsOn: boolean;
 }
@@ -39,8 +37,6 @@ const initialState: IGameState = {
    recentlyUpdatedTile: null,
    recentlyResetTile: null,
    money: 200,
-   lumber: 0,
-   wheat: 0,
    musicOn: true,
    soundEffectsOn: true,
 };
@@ -131,7 +127,9 @@ export const gameStateSlice = createSlice({
          state.boardToppers[topperKey] = newTopper;
 
          // Gimme that money
-         state.money -= boardItemCost[action.payload.topperType];
+         if (!action.payload.isInitial) {
+            state.money -= boardItemCost[action.payload.topperType];
+         }
 
          // Update recently added
          state.recentlyUpdatedTopper = newTopper;
@@ -149,7 +147,7 @@ export const gameStateSlice = createSlice({
       rotateTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
          const topperKey = generateInternalKey(action.payload);
          const topper = state.boardToppers[topperKey];
-         if (!topper || !topper.direction) return;
+         if (!topper || topper.isInvalid || !topper.direction) return;
 
          const directions: Directional[] = ['bottomLeft', 'topLeft', 'topRight', 'bottomRight'];
          const currentIndex = directions.indexOf(topper.direction);
@@ -236,13 +234,13 @@ export const gameStateSlice = createSlice({
 
       harvestTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
          const topper = state.boardToppers[generateInternalKey(action.payload)];
-         if (topper.size !== 'big') return;
+         if (!topper || topper.isInvalid) return;
 
          if (topper.topperType === 'tree') {
-            state.lumber += 1;
+            state.money += 1;
             topper.size = 'tiny';
          } else {
-            state.wheat += 1;
+            state.money += 2;
             topper.size = 'small';
          }
 
@@ -270,13 +268,7 @@ export const {
 // selector export
 export const selectBoardTiles = (state: RootState) => state.gamestate.boardTiles;
 export const selectBoardToppers = (state: RootState) => state.gamestate.boardToppers;
-export const selectInventory = (state: RootState) => {
-   return {
-      money: state.gamestate.money,
-      lumber: state.gamestate.lumber,
-      wheat: state.gamestate.wheat,
-   };
-};
+export const selectMoney = (state: RootState) => state.gamestate.money;
 export const selectRecentlyUpdatedTopper = (state: RootState) =>
    state.gamestate.recentlyUpdatedTopper;
 export const selectRecentlyDeletedTopper = (state: RootState) =>

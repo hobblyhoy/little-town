@@ -68,6 +68,7 @@ export interface IBoardStateTileSetter extends IBoardStateBaseSetter {
 
 export interface IBoardStateTopperSetter extends IBoardStateBaseSetter, ISizeable, IDirectional {
    topperType: TopperType;
+   isInitial?: boolean;
 }
 
 // Board Items (For use after the GameStateSlice has decorated with these fields)

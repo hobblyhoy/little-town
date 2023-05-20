@@ -27,8 +27,12 @@ export const selectionBarSlice = createSlice({
    name: 'selectionbar',
    initialState,
    reducers: {
-      setSelectedItem: (state, action: PayloadAction<SelectableItem>) => {
-         state.selectedItem = state.selectedItem !== action.payload ? action.payload : null;
+      setSelectedItem: (state, action: PayloadAction<SelectableItem | null>) => {
+         if (action.payload === null) {
+            state.selectedItem = null;
+         } else {
+            state.selectedItem = state.selectedItem !== action.payload ? action.payload : null;
+         }
       },
    },
 });

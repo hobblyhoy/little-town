@@ -124,6 +124,22 @@ export const isHarvestable = (x: IBoardStateTopper) =>
    x.topperType === 'wheat' || x.topperType === 'tree';
 export const isNotRock = (x: IBoardStateTopper) => x.topperType !== 'rock';
 export const isBig = (x: IBoardStateTopper) => x.size === 'big';
+export const isWindmill = (x: IBoardStateTopper) => x.topperType === 'windmill';
+export const isWindmillAdjacent = (
+   tile: IBoardStateTile,
+   boardToppers: { [key: string]: IBoardStateTopper }
+) => {
+   // A little more complex than the roads, we want to check any of the squares in
+   // the 3x3 grid around this tile for a windmill
+   for (let isoX = tile.isoX - 1; isoX < tile.isoX + 2; isoX++) {
+      for (let isoY = tile.isoY - 1; isoY < tile.isoY + 2; isoY++) {
+         let key = generateInternalKey({ isoX, isoY, isoZ: 1 });
+         if (!boardToppers[key]) continue;
+         if (isWindmill(boardToppers[key])) return true;
+      }
+   }
+   return false;
+};
 
 //// Maps \\\\
 export const toIsometricCoords = (x: IIsometricCoordinates) => ({

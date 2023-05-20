@@ -2,7 +2,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Fragment } from 'react';
 import { CartesianDirectional } from '../../types/BoardTypes';
 import { useAppDispatch } from '../../app/hooks';
 import { scroll } from './ZoomScrollSlice';
@@ -96,7 +96,7 @@ function ScrollBars() {
          <ScrollBar position="right" />
       </div>
    ) : (
-      <div className="h-screen w-screen">TEST E</div>
+      <Fragment></Fragment>
    );
 }
 

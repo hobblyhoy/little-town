@@ -37,16 +37,16 @@ export const zoomScrollSlice = createSlice({
       scroll: (state, action: PayloadAction<CartesianDirectional>) => {
          switch (action.payload) {
             case 'top':
-               state.scrollOffsetY = Math.round(state.scrollOffsetY + 5 * state.zoom);
+               state.scrollOffsetY = Math.round(state.scrollOffsetY + 10 * state.zoom);
                break;
             case 'left':
-               state.scrollOffsetX = Math.round(state.scrollOffsetX + 5 * state.zoom);
+               state.scrollOffsetX = Math.round(state.scrollOffsetX + 10 * state.zoom);
                break;
             case 'right':
-               state.scrollOffsetX = Math.round(state.scrollOffsetX - 5 * state.zoom);
+               state.scrollOffsetX = Math.round(state.scrollOffsetX - 10 * state.zoom);
                break;
             case 'bottom':
-               state.scrollOffsetY = Math.round(state.scrollOffsetY - 5 * state.zoom);
+               state.scrollOffsetY = Math.round(state.scrollOffsetY - 10 * state.zoom);
                break;
          }
       },
