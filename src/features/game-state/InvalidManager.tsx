@@ -75,11 +75,6 @@ function InvalidManager() {
                .filter(x => isRoadAdjacent(x, boardTiles));
             break;
 
-         case 'harvest':
-            validTiles = validTiles.filter(hasATopper);
-            validToppers = validToppers.filter(isHarvestable).filter(isBig);
-            break;
-
          default:
             throw new Error('Unimplemented item in InvalidManager');
       }

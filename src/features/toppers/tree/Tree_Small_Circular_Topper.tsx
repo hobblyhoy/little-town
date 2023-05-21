@@ -5,7 +5,7 @@ import { jsx, css } from '@emotion/react';
 import { IBoardTopperProps, } from '../../../types/BoardTypes';
 import { buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
 
-function Tree_Small_Topper({cartCoords, pixelSize}: IBoardTopperProps) {
+function Tree_Small_Circular_Topper({cartCoords, pixelSize}: IBoardTopperProps) {
 
    return (
       <svg
@@ -41,4 +41,4 @@ function Tree_Small_Topper({cartCoords, pixelSize}: IBoardTopperProps) {
    );
 }
 
-export default Tree_Small_Topper;
+export default Tree_Small_Circular_Topper;

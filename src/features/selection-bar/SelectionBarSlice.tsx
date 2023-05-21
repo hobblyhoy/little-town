@@ -2,8 +2,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { SelectableItem } from '../../types/BarTypes';
 
-
-
 export interface ISelectionBarState {
    selectableItems: { internalName: SelectableItem; uiName: string }[];
    selectedItem: SelectableItem | null;

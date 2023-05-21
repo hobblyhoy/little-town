@@ -8,13 +8,7 @@ import {
    selectTouchStart,
 } from './ClickAndDragSlice';
 import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
-import {
-   addTopper,
-   harvestTopper,
-   resetTile,
-   rotateTopper,
-   updateTile,
-} from '../game-state/GameStateSlice';
+import { addTopper, resetTile, rotateTopper, updateTile } from '../game-state/GameStateSlice';
 import { scrollMobile, scrollMobileCommit } from '../zoom-and-scroll/ZoomScrollSlice';
 
 function ClickAndDragManager() {
@@ -97,15 +91,6 @@ function ClickAndDragManager() {
                dispatch(rotateTopper({ isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 1 }));
             }
             break;
-         case 'harvest':
-            dispatch(
-               harvestTopper({
-                  isoX: mouseDownOn.isoX,
-                  isoY: mouseDownOn.isoY,
-                  isoZ: 1,
-               })
-            );
-            break;
       }
    }, [mouseDownOn]);
 
@@ -144,10 +129,9 @@ function ClickAndDragManager() {
 
    useEffect(() => {
       if (selectedItem !== null || touchStart === null || touchMove === null) return;
-      
+
       const currentOffsetX = touchMove.cartX - touchStart.cartX;
       const currentOffsetY = touchMove.cartY - touchStart.cartY;
-
 
       dispatch(scrollMobile({ offsetX: currentOffsetX, offsetY: currentOffsetY }));
    }, [touchMove]);

@@ -12,7 +12,7 @@ function SlideOutBar({ barElements, icon }: ISlideOutBar) {
 
    const baseCss = css`
       background-color: black;
-      opacity: 0.6;
+      opacity: 0.7;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
       transform: translateX(${isExpanded ? '0' : 'calc(-100% + 60px)'});

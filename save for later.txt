@@ -77,3 +77,11 @@ Building a new tile from scratch
          updateBoardTileWithCellNeighborData(state.boardTiles, newTile);
 
          state.boardTiles[key] = newTile;
+		 
+   const gameBoardScrollOffsetCss = css`
+      transform: translate(${scrollOffset.offsetX}px, ${scrollOffset.offsetY}px);
+   `;		 
+   
+   useEffect(() => {
+      console.log('scrollOffset - ' + scrollOffset.offsetX + ' ' + scrollOffset.offsetY);
+   }, [scrollOffset]);

@@ -1,18 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectUserHasInteractedWithDocument } from '../click-and-drag/ClickAndDragSlice';
 import BackgroundMusic from './assets/piano-music.m4a';
 import Pop from './assets/pop.m4a';
 import Shh from './assets/shh2.m4a';
-import Click from './assets/click.m4a'
+import Click from './assets/click.m4a';
 import {
    selectMusicOn,
    selectRecentlyResetTile,
    selectRecentlyDeletedTopper,
-   selectRecentlyUpdatedTopper,
+   selectRecentlyUpdatedToppers,
    selectSoundEffectsOn,
    selectRecentlyUpdatedTile,
 } from '../game-state/GameStateSlice';
+import { throttle } from 'lodash';
 
 function SoundManager() {
    const musicOn = useAppSelector(selectMusicOn);
@@ -65,13 +66,19 @@ function SoundManager() {
    }, [musicOn]);
 
    //// Pops \\\\
-   const newTopper = useAppSelector(selectRecentlyUpdatedTopper);
+   const newToppers = useAppSelector(selectRecentlyUpdatedToppers);
+   const playPopThrottled = useCallback(
+      throttle(() => {
+         const audio = new Audio(Pop);
+         audio.play();
+      }, 250),
+      []
+   );
    useEffect(() => {
       if (!soundEffectsOn) return;
 
-      const audio = new Audio(Pop);
-      audio.play();
-   }, [newTopper]);
+      playPopThrottled();
+   }, [newToppers]);
 
    //// Shh \\\\
    const deletedTopper = useAppSelector(selectRecentlyDeletedTopper);

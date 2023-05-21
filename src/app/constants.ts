@@ -1,8 +1,15 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import { ICartesianCoordinates, IPixelSize, TileType, TopperType } from '../types/BoardTypes';
-import { IBarElement, SelectableItem } from '../types/BarTypes';
+import {
+   Colors,
+   ICartesianCoordinates,
+   IPixelSize,
+   TileType,
+   TopperType,
+   TreeVariations,
+} from '../types/BoardTypes';
+import { SelectableItem } from '../types/BarTypes';
 
 export const standardBaseCss = () => css`
    position: fixed;
@@ -23,9 +30,13 @@ export const tileGCss = css`
    pointer-events: visiblePainted;
 `;
 
-export const growthTime = 30 * 1000;
+export const buildColorCss = (color: Colors) => css`
+   fill: ${color};
+`;
 
-export const boardSize = 15;
+export const growthTime = 5 * 1000;
+
+export const boardSize = 16;
 
 export const boardItemCost: Record<TopperType | TileType, number> = {
    grass: 0,
@@ -45,6 +56,8 @@ export const selectionBarUiNameMap: { [key in SelectableItem]: string } = {
    road: 'Road',
    remove: 'Remove',
    rotate: 'Rotate',
-   harvest: 'Harvest'
-}
+   harvest: 'Harvest',
+};
 
+export const colors:Colors[] = ['#4D9BE6', '#E64D4D', '#8B4DE6', '#E9DE36'];
+export const treeVariations: TreeVariations[] = ['christmas', 'circular'];

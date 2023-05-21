@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectSelectedItem, setSelectedItem } from './SelectionBarSlice';
 import { selectionBarUiNameMap } from '../../app/constants';
 import { useEffect } from 'react';
+import { harvestToppers } from '../game-state/GameStateSlice';
 
 function BarElement({ internalName, icon, isDisabled }: IBarElement) {
    const { isDesktop } = useBreakpoint();
@@ -16,7 +17,7 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
 
    useEffect(() => {
       if (selectedItem === internalName && isDisabled) {
-         dispatch(setSelectedItem(null))
+         dispatch(setSelectedItem(null));
       }
    }, [selectedItem, isDisabled]);
    const baseCss = css`
@@ -34,14 +35,17 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
    `;
 
    const handleClick = () => {
-      dispatch(setSelectedItem(internalName));
+      if (internalName === 'harvest') {
+         dispatch(harvestToppers());
+      } else {
+         dispatch(setSelectedItem(internalName));
+      }
    };
 
    let whiteHoverClasses = '';
    if (isDisabled) {
       // No hover styles
-   }
-   else if (selectedItem === internalName) {
+   } else if (selectedItem === internalName) {
       whiteHoverClasses = 'bg-white bg-opacity-30';
    } else if (isDesktop) {
       whiteHoverClasses = 'hover:bg-white hover:bg-opacity-30';

@@ -2,10 +2,10 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 
-import { buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
+import { buildColorCss, buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
 import { IBoardTopperProps } from '../../../types/BoardTypes';
 
-function Windmill_Bl_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
+function Windmill_Bl_Topper({ cartCoords, pixelSize, boardTopper }: IBoardTopperProps) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,8 @@ function Windmill_Bl_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
                   </g>
                </g>
                <path
-                  className="st57"
+                  className="st57-no-fill"
+                  css={buildColorCss(boardTopper.color!)}
                   d="m 1594.11,492.38 v 0 0 c -0.38,-0.69 -0.87,-1.36 -1.45,-2.01 l -19.61,-27.15 -19.61,27.15 c -0.58,0.65 -1.07,1.32 -1.44,2 l -0.01,0.01 v 0 c -2.43,4.4 -0.62,9.41 5.43,12.91 v 0 c 8.63,4.98 22.63,4.98 31.26,0 v 0 c 6.05,-3.49 7.86,-8.51 5.43,-12.91 z"
                   id="path7238-2"
                />

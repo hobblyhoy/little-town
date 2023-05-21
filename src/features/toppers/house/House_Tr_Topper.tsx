@@ -2,10 +2,10 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 
-import { buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
+import { buildColorCss, buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
 import { IBoardTopperProps } from '../../../types/BoardTypes';
 
-function House_Tr_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
+function House_Tr_Topper({ cartCoords, pixelSize, boardTopper }: IBoardTopperProps) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,8 @@ function House_Tr_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
                   id="polygon7434"
                />
                <polygon
-                  className="st57"
+                  className="st57-no-fill"
+                  css={buildColorCss(boardTopper.color!)}
                   points="1502.76,299.65 1528.69,284.72 1515.72,265.24 1489.8,280.16 "
                   id="polygon7436"
                />

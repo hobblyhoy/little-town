@@ -3,12 +3,12 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
    growTopper,
    selectRecentlyDeletedTopper,
-   selectRecentlyUpdatedTopper,
+   selectRecentlyUpdatedToppers,
 } from '../game-state/GameStateSlice';
 import { growthTime } from '../../app/constants';
 
 function TimeManager() {
-   const newTopper = useAppSelector(selectRecentlyUpdatedTopper);
+   const newToppers = useAppSelector(selectRecentlyUpdatedToppers);
    const deletedTopper = useAppSelector(selectRecentlyDeletedTopper);
    const dispatch = useAppDispatch();
 
@@ -20,12 +20,14 @@ function TimeManager() {
    };
 
    useEffect(() => {
-      if (!newTopper) return;
-      if (newTopper.topperType !== 'tree' && newTopper.topperType !== 'wheat') return;
-      if (newTopper.size === 'big') return;
-
-      timeoutStoreRef.current[newTopper.key] = setTimeout(() => grow(newTopper.key), growthTime);
-   }, [newTopper]);
+      if (newToppers.length === 0) return;
+      newToppers.forEach(newTopper => {
+         if (newTopper.topperType !== 'tree' && newTopper.topperType !== 'wheat') return;
+         if (newTopper.size === 'big') return;
+   
+         timeoutStoreRef.current[newTopper.key] = setTimeout(() => grow(newTopper.key), growthTime);
+      })
+   }, [newToppers]);
 
    useEffect(() => {
       if (!deletedTopper) return;

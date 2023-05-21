@@ -4,6 +4,8 @@ import {
    buildGrassTile,
    dictionaryToArray,
    generateInternalKey,
+   isBig,
+   isHarvestable,
    keysForRelativeItem,
    updateBoardTileWithCellNeighborData,
 } from '../../app/utils';
@@ -15,12 +17,13 @@ import {
    IBoardStateTopperSetter,
    IIsometricCoordinates,
 } from '../../types/BoardTypes';
-import { boardItemCost, boardSize } from '../../app/constants';
+import { boardItemCost, boardSize, colors, treeVariations } from '../../app/constants';
+import { sample } from 'lodash';
 
 export interface IGameState {
    boardTiles: { [key: string]: IBoardStateTile };
    boardToppers: { [key: string]: IBoardStateTopper };
-   recentlyUpdatedTopper: IBoardStateTopper | null;
+   recentlyUpdatedToppers: IBoardStateTopper[];
    recentlyDeletedTopper: IBoardStateTopper | null;
    recentlyUpdatedTile: IBoardStateTile | null;
    recentlyResetTile: IBoardStateTile | null;
@@ -32,7 +35,7 @@ export interface IGameState {
 const initialState: IGameState = {
    boardTiles: {},
    boardToppers: {},
-   recentlyUpdatedTopper: null,
+   recentlyUpdatedToppers: [],
    recentlyDeletedTopper: null,
    recentlyUpdatedTile: null,
    recentlyResetTile: null,
@@ -101,7 +104,9 @@ export const gameStateSlice = createSlice({
          newTopper.cellBelow = baseTile.key;
          baseTile.cellAbove = newTopper.key;
 
-         // Special case - For Houses and windmills apply logic to face them towards the road, biased towers bottom right, bottom left
+         // Special case - For Houses and windmills 
+         // apply logic to face them towards the road, biased towers bottom right, bottom left
+         // and apply colors
          if (newTopper.topperType === 'house' || newTopper.topperType === 'windmill') {
             let direction: Directional = 'bottomRight';
             if (
@@ -121,6 +126,12 @@ export const gameStateSlice = createSlice({
                direction = 'topLeft';
             }
             newTopper.direction = direction;
+            newTopper.color = sample(colors);
+         }
+
+         // Special case - Tree variations
+         if (newTopper.topperType === 'tree') {
+            newTopper.variation = sample(treeVariations);
          }
 
          // Place the item onto the board
@@ -132,7 +143,7 @@ export const gameStateSlice = createSlice({
          }
 
          // Update recently added
-         state.recentlyUpdatedTopper = newTopper;
+         state.recentlyUpdatedToppers = [newTopper];
       },
 
       growTopper: (state, action: PayloadAction<string>) => {
@@ -141,7 +152,7 @@ export const gameStateSlice = createSlice({
          state.boardToppers[topper.key] = topper;
 
          // Update recently added
-         state.recentlyUpdatedTopper = topper;
+         state.recentlyUpdatedToppers = [topper];
       },
 
       rotateTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
@@ -232,20 +243,23 @@ export const gameStateSlice = createSlice({
          state.soundEffectsOn = !state.soundEffectsOn;
       },
 
-      harvestTopper: (state, action: PayloadAction<IIsometricCoordinates>) => {
-         const topper = state.boardToppers[generateInternalKey(action.payload)];
-         if (!topper || topper.isInvalid) return;
+      harvestToppers: state => {
+         const toppers = dictionaryToArray(state.boardToppers).filter(isHarvestable).filter(isBig);
 
-         if (topper.topperType === 'tree') {
-            state.money += 1;
-            topper.size = 'tiny';
-         } else {
-            state.money += 2;
-            topper.size = 'small';
-         }
+         if (toppers.length === 0) return;
 
-         // Update recently added
-         state.recentlyUpdatedTopper = topper;
+         toppers.forEach(topper => {
+            if (topper.topperType === 'tree') {
+               state.money += 1;
+               topper.size = 'tiny';
+            } else {
+               state.money += 2;
+               topper.size = 'small';
+            }
+         });
+
+         // Push a topper updated to trigger sound effects
+         state.recentlyUpdatedToppers = toppers;
       },
    },
 });
@@ -262,15 +276,15 @@ export const {
    resetTile,
    toggleMusic,
    toggleSoundEffects,
-   harvestTopper,
+   harvestToppers,
 } = gameStateSlice.actions;
 
 // selector export
 export const selectBoardTiles = (state: RootState) => state.gamestate.boardTiles;
 export const selectBoardToppers = (state: RootState) => state.gamestate.boardToppers;
 export const selectMoney = (state: RootState) => state.gamestate.money;
-export const selectRecentlyUpdatedTopper = (state: RootState) =>
-   state.gamestate.recentlyUpdatedTopper;
+export const selectRecentlyUpdatedToppers = (state: RootState) =>
+   state.gamestate.recentlyUpdatedToppers;
 export const selectRecentlyDeletedTopper = (state: RootState) =>
    state.gamestate.recentlyDeletedTopper;
 export const selectRecentlyUpdatedTile = (state: RootState) => state.gamestate.recentlyUpdatedTile;

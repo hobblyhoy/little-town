@@ -64,7 +64,7 @@ const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffse
             case 'tiny':
                return { offsetX: 39, offsetY: 60 };
             case 'small':
-               return { offsetX: 32, offsetY: 33 };
+               return { offsetX: 32, offsetY: 31 };
             case 'big':
                return { offsetX: 24, offsetY: 10 };
             default: {

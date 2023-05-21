@@ -5,7 +5,7 @@ import { jsx, css } from '@emotion/react';
 import { IBoardTopperProps } from '../../../types/BoardTypes';
 import { buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
 
-function Tree_Big_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
+function Tree_Big_Circular_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
    return (
       <svg
          viewBox="0 0 52.970002 74.389994"
@@ -39,4 +39,4 @@ function Tree_Big_Topper({ cartCoords, pixelSize }: IBoardTopperProps) {
    );
 }
 
-export default Tree_Big_Topper;
+export default Tree_Big_Circular_Topper;
