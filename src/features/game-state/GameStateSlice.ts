@@ -156,7 +156,7 @@ export const gameStateSlice = createSlice({
 
       increaseTopperSize: (state, action: PayloadAction<string>) => {
          const topper = state.boardToppers[action.payload];
-         if (topper.size === 'big') return;
+         if (!topper || topper.size === 'big') return;
          if (topper.topperType === 'house' && state.money < boardUpgradeCost[topper.topperType]) {
             return;
          }
