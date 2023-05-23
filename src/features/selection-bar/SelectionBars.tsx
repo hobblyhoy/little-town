@@ -29,12 +29,14 @@ import {
    isStructure,
    isWindmill,
 } from '../../app/utils';
+import useBreakpoint from '../../app/useBreakpoint';
 
 function SelectionBars() {
+   const { isDesktop } = useBreakpoint();
    const barLocationCss = (bottomUpOrder: number) => css`
       position: fixed;
       left: 0;
-      bottom: ${bottomUpOrder * 100 + 20}px;
+      bottom: ${bottomUpOrder * (isDesktop ? 100 : 70) + 20}px;
    `;
 
    const boardTiles = dictionaryToArray(useAppSelector(selectBoardTiles));
