@@ -47,7 +47,7 @@ const initialState: IGameState = {
    recentlyDeletedTopper: null,
    recentlyUpdatedTile: null,
    recentlyResetTile: null,
-   money: 100,
+   money: 200,
    musicOn: true,
    soundEffectsOn: true,
 };

@@ -18,6 +18,11 @@ function MoneyBar() {
       cursor: default;
    `;
 
+   const moneyIconCss = css`
+      height: 34px;
+      width: 34px;
+   `;
+
    return (
       <div
          css={baseCss}
@@ -26,13 +31,14 @@ function MoneyBar() {
          onMouseLeave={() => setShowInfo(false)}
       >
          <div className="flex items-center">
-            <img src={DollarCoin} />
-            <div className="pl-2 ">{currentMoney}</div>
+            <img src={DollarCoin} css={moneyIconCss} />
+            <div className="pl-2">{currentMoney}</div>
          </div>
          {showInfo && (
             <div className="bg-black rounded-lg p-4 mt-2">
-               <div>Use your cash to purchase roads, houses, etc</div>
+               <div>Use your cash to build roads, houses, etc</div>
                <div>Harvest wheat and trees to sell them for a profit</div>
+               <div>Build houses to generate rental income</div>
             </div>
          )}
       </div>
