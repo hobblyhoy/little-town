@@ -34,7 +34,7 @@ export const buildColorCss = (color: Colors) => css`
    fill: ${color};
 `;
 
-export const growthTime = 5 * 1000;
+export const growthTime = 60 * 1000;
 
 export const boardSize = 16;
 
@@ -42,16 +42,24 @@ export const boardItemCost: Record<TopperType | TileType, number> = {
    grass: 0,
    road: 1,
    tree: 1,
-   house: 4,
-   wheat: 4,
-   windmill: 4,
+   house: 10,
+   wheat: 3,
+   windmill: 10,
    rock: 0,
 };
 
 export const boardUpgradeCost: Record<TopperType, number> = {
-   house: 10,
+   house: 20,
    tree: 0,
    wheat: 0,
+   windmill: 0,
+   rock: 0,
+};
+
+export const boardProfit: Record<TopperType, number> = {
+   tree: 2,
+   house: 1,
+   wheat: 4,
    windmill: 0,
    rock: 0,
 };

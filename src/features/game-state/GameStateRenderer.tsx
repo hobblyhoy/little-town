@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { jsx, css } from '@emotion/react';
 
 import { selectBoardTiles, selectBoardToppers } from './GameStateSlice';
-import { useCallback, useEffect, useState } from 'react';
-import { IBoardStateTile, IBoardStateTopper, ICartesianCoordinates } from '../../types/BoardTypes';
+import { useCallback, useEffect } from 'react';
+import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import { sortIntoRenderOrder } from '../../app/utils';
 import {
    setMouseDownOn,

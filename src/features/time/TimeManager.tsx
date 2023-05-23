@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-   growTopper,
+   generateHouseIncome,
+   increaseTopperSize,
    selectRecentlyDeletedTopper,
    selectRecentlyUpdatedToppers,
 } from '../game-state/GameStateSlice';
@@ -12,11 +13,12 @@ function TimeManager() {
    const deletedTopper = useAppSelector(selectRecentlyDeletedTopper);
    const dispatch = useAppDispatch();
 
+   //// Tree and wheat growth \\\\
    const timeoutStoreRef = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
    const grow = (key: string) => {
       delete timeoutStoreRef.current[key];
-      dispatch(growTopper(key));
+      dispatch(increaseTopperSize(key));
    };
 
    useEffect(() => {
@@ -24,9 +26,9 @@ function TimeManager() {
       newToppers.forEach(newTopper => {
          if (newTopper.topperType !== 'tree' && newTopper.topperType !== 'wheat') return;
          if (newTopper.size === 'big') return;
-   
+
          timeoutStoreRef.current[newTopper.key] = setTimeout(() => grow(newTopper.key), growthTime);
-      })
+      });
    }, [newToppers]);
 
    useEffect(() => {
@@ -37,6 +39,13 @@ function TimeManager() {
          delete timeoutStoreRef.current[deletedTopper.key];
       }
    }, [deletedTopper]);
+
+   //// House income \\\\
+   useEffect(() => {
+      setInterval(() => {
+         dispatch(generateHouseIncome());
+      }, 15000);
+   }, []);
 
    return <></>;
 }

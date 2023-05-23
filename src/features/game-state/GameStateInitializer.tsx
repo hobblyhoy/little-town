@@ -15,11 +15,11 @@ function GameStateInitializer() {
       dispatch(initializeBoardTiles());
 
       // Generate Toppers
-      const minTrees = 5;
-      const maxTrees = 10;
+      const minTrees = 8;
+      const maxTrees = 13;
       let treeCount = getRandomInclusive(minTrees, maxTrees);
 
-      const minRocks = 8;
+      const minRocks = 12;
       const maxRocks = 15;
       let rockCount = getRandomInclusive(minRocks, maxRocks);
 

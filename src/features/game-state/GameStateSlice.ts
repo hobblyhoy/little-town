@@ -6,6 +6,7 @@ import {
    generateInternalKey,
    isBig,
    isHarvestable,
+   isHouse,
    keysForRelativeItem,
    updateBoardTileWithCellNeighborData,
 } from '../../app/utils';
@@ -19,6 +20,7 @@ import {
 } from '../../types/BoardTypes';
 import {
    boardItemCost,
+   boardProfit,
    boardSize,
    boardUpgradeCost,
    colors,
@@ -45,7 +47,7 @@ const initialState: IGameState = {
    recentlyDeletedTopper: null,
    recentlyUpdatedTile: null,
    recentlyResetTile: null,
-   money: 200,
+   money: 100,
    musicOn: true,
    soundEffectsOn: true,
 };
@@ -92,7 +94,7 @@ export const gameStateSlice = createSlice({
          if (state.boardTiles[tileKey].isInvalid) return;
          const topperKey = generateInternalKey({ ...action.payload, isoZ: 1 });
          if (state.boardToppers[topperKey]?.topperType === action.payload.topperType) return;
-         if (boardItemCost[action.payload.topperType] > state.money) return;
+         if (state.money < boardItemCost[action.payload.topperType]) return;
 
          // Construct the topper object
          const newTopper: IBoardStateTopper = {
@@ -152,9 +154,12 @@ export const gameStateSlice = createSlice({
          state.recentlyUpdatedToppers = [newTopper];
       },
 
-      growTopper: (state, action: PayloadAction<string>) => {
+      increaseTopperSize: (state, action: PayloadAction<string>) => {
          const topper = state.boardToppers[action.payload];
          if (topper.size === 'big') return;
+         if (topper.topperType === 'house' && state.money < boardUpgradeCost[topper.topperType]) {
+            return;
+         }
 
          topper.size = topper.size === 'tiny' ? 'small' : 'big';
          state.boardToppers[topper.key] = topper;
@@ -263,16 +268,27 @@ export const gameStateSlice = createSlice({
 
          toppers.forEach(topper => {
             if (topper.topperType === 'tree') {
-               state.money += 1;
+               state.money += boardProfit[topper.topperType];
                topper.size = 'tiny';
             } else {
-               state.money += 2;
+               state.money += boardProfit[topper.topperType];
                topper.size = 'small';
             }
          });
 
          // Push a topper updated to trigger sound effects
          state.recentlyUpdatedToppers = toppers;
+      },
+
+      generateHouseIncome: state => {
+         const houses = dictionaryToArray(state.boardToppers).filter(isHouse);
+         houses.forEach(house => {
+            let creditAmount = boardProfit[house.topperType];
+            if (house.size === 'big') {
+               creditAmount *= 2;
+            }
+            state.money += creditAmount;
+         });
       },
    },
 });
@@ -281,7 +297,7 @@ export const gameStateSlice = createSlice({
 export const {
    initializeBoardTiles,
    addTopper,
-   growTopper,
+   increaseTopperSize,
    rotateTopper,
    updateTile,
    setValidBoardItems,
@@ -290,6 +306,7 @@ export const {
    toggleMusic,
    toggleSoundEffects,
    harvestToppers,
+   generateHouseIncome,
 } = gameStateSlice.actions;
 
 // selector export
