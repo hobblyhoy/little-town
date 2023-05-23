@@ -17,7 +17,13 @@ import {
    IBoardStateTopperSetter,
    IIsometricCoordinates,
 } from '../../types/BoardTypes';
-import { boardItemCost, boardSize, colors, treeVariations } from '../../app/constants';
+import {
+   boardItemCost,
+   boardSize,
+   boardUpgradeCost,
+   colors,
+   treeVariations,
+} from '../../app/constants';
 import { sample } from 'lodash';
 
 export interface IGameState {
@@ -104,7 +110,7 @@ export const gameStateSlice = createSlice({
          newTopper.cellBelow = baseTile.key;
          baseTile.cellAbove = newTopper.key;
 
-         // Special case - For Houses and windmills 
+         // Special case - For Houses and windmills
          // apply logic to face them towards the road, biased towers bottom right, bottom left
          // and apply colors
          if (newTopper.topperType === 'house' || newTopper.topperType === 'windmill') {
@@ -148,8 +154,15 @@ export const gameStateSlice = createSlice({
 
       growTopper: (state, action: PayloadAction<string>) => {
          const topper = state.boardToppers[action.payload];
+         if (topper.size === 'big') return;
+
          topper.size = topper.size === 'tiny' ? 'small' : 'big';
          state.boardToppers[topper.key] = topper;
+
+         // Gimme that money
+         if (topper.topperType === 'house') {
+            state.money -= boardUpgradeCost[topper.topperType];
+         }
 
          // Update recently added
          state.recentlyUpdatedToppers = [topper];

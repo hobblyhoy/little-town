@@ -48,6 +48,14 @@ export const boardItemCost: Record<TopperType | TileType, number> = {
    rock: 0,
 };
 
+export const boardUpgradeCost: Record<TopperType, number> = {
+   house: 10,
+   tree: 0,
+   wheat: 0,
+   windmill: 0,
+   rock: 0,
+};
+
 export const selectionBarUiNameMap: { [key in SelectableItem]: string } = {
    tree: 'Seed',
    house: 'House',
@@ -57,7 +65,8 @@ export const selectionBarUiNameMap: { [key in SelectableItem]: string } = {
    remove: 'Remove',
    rotate: 'Rotate',
    harvest: 'Harvest',
+   upgrade: 'Upgrade',
 };
 
-export const colors:Colors[] = ['#4D9BE6', '#E64D4D', '#8B4DE6', '#E9DE36'];
+export const colors: Colors[] = ['#4D9BE6', '#E64D4D', '#8B4DE6', '#E9DE36'];
 export const treeVariations: TreeVariations[] = ['christmas', 'circular'];

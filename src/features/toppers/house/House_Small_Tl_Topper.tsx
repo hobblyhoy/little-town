@@ -5,7 +5,7 @@ import { jsx } from '@emotion/react';
 import { buildColorCss, buildPositionCss, buildSizeCss, standardBaseCss } from '../../../app/constants';
 import { IBoardTopperProps } from '../../../types/BoardTypes';
 
-function House_Tl_Topper({ cartCoords, pixelSize, boardTopper }: IBoardTopperProps) {
+function House_Small_Tl_Topper({ cartCoords, pixelSize, boardTopper }: IBoardTopperProps) {
    return (
       <svg
          xmlns="http://www.w3.org/2000/svg"
@@ -50,4 +50,4 @@ function House_Tl_Topper({ cartCoords, pixelSize, boardTopper }: IBoardTopperPro
    );
 }
 
-export default House_Tl_Topper;
+export default House_Small_Tl_Topper;

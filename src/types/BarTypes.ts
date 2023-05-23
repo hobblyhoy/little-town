@@ -8,7 +8,8 @@ export type SelectableItem =
 | 'road'
 | 'remove'
 | 'rotate'
-| 'harvest';
+| 'harvest'
+| 'upgrade';
 
 
 export interface IBarElement {

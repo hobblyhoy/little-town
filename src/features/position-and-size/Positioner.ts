@@ -42,9 +42,7 @@ const applyPrimaryPositioningLogic = (
 
    const screenXBasePoint = window.innerWidth / 2 - tileWidth / 2;
    const screenYBasePoint =
-      window.innerHeight / 2 -
-      (tileTopHeight * boardSize) / 2 -
-      tileBottomHeight;
+      window.innerHeight / 2 - (tileTopHeight * boardSize) / 2 - tileBottomHeight;
 
    let cartX =
       screenXBasePoint + boardItem.isoX * tileWidth * 0.5 + -1 * boardItem.isoY * tileWidth * 0.5;
@@ -73,7 +71,15 @@ const getCustomTopperOffsets = (boardTopper: IBoardStateTopper): ICartesianOffse
          }
 
       case 'house':
-         return { offsetX: 19, offsetY: 29 };
+         switch (boardTopper.size) {
+            case 'small':
+               return { offsetX: 19, offsetY: 29 };
+            case 'big':
+               return { offsetX: 19, offsetY: 11 };
+            default: {
+               throw new Error('invalid house size');
+            }
+         }
 
       case 'wheat':
          switch (boardTopper.size) {

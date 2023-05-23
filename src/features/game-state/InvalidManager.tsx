@@ -11,6 +11,8 @@ import {
    isHarvestable,
    isRoad,
    isWindmillAdjacent,
+   isHouse,
+   isNotBig,
 } from '../../app/utils';
 import { IBoardStateTile, IBoardStateTopper } from '../../types/BoardTypes';
 import {
@@ -44,6 +46,11 @@ function InvalidManager() {
          case 'rotate':
             validTiles = validTiles.filter(hasATopper);
             validToppers = validToppers.filter(isStructure);
+            break;
+
+         case 'upgrade':
+            validTiles = validTiles.filter(hasATopper);
+            validToppers = validToppers.filter(isHouse).filter(isNotBig);
             break;
 
          case 'tree':

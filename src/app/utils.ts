@@ -124,6 +124,7 @@ export const isHarvestable = (x: IBoardStateTopper) =>
    x.topperType === 'wheat' || x.topperType === 'tree';
 export const isNotRock = (x: IBoardStateTopper) => x.topperType !== 'rock';
 export const isBig = (x: IBoardStateTopper) => x.size === 'big';
+export const isNotBig = (x: IBoardStateTopper) => x.size !== 'big';
 export const isWindmill = (x: IBoardStateTopper) => x.topperType === 'windmill';
 export const isWindmillAdjacent = (
    tile: IBoardStateTile,
@@ -140,6 +141,7 @@ export const isWindmillAdjacent = (
    }
    return false;
 };
+export const isHouse = (x: IBoardStateTopper) => x.topperType === 'house';
 
 //// Maps \\\\
 export const toIsometricCoords = (x: IIsometricCoordinates) => ({

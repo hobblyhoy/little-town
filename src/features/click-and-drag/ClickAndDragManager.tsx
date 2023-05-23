@@ -8,8 +8,9 @@ import {
    selectTouchStart,
 } from './ClickAndDragSlice';
 import { selectSelectedItem } from '../selection-bar/SelectionBarSlice';
-import { addTopper, resetTile, rotateTopper, updateTile } from '../game-state/GameStateSlice';
+import { addTopper, growTopper, resetTile, rotateTopper, updateTile } from '../game-state/GameStateSlice';
 import { scrollMobile, scrollMobileCommit } from '../zoom-and-scroll/ZoomScrollSlice';
+import { generateInternalKey } from '../../app/utils';
 
 function ClickAndDragManager() {
    const dispatch = useAppDispatch();
@@ -33,6 +34,9 @@ function ClickAndDragManager() {
             break;
          case 'rotate':
             dispatch(rotateTopper({ isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 1 }));
+            break;
+         case 'upgrade':
+            dispatch(growTopper(generateInternalKey({isoX: mouseDownOn.isoX, isoY: mouseDownOn.isoY, isoZ: 1})));
             break;
          case 'tree':
             dispatch(
@@ -61,6 +65,7 @@ function ClickAndDragManager() {
                      isoY: mouseDownOn.isoY,
                      topperType: 'house',
                      direction: 'bottomRight',
+                     size: 'small',
                   })
                );
             } else {

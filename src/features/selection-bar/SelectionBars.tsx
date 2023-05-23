@@ -15,12 +15,15 @@ import Harvest from './assets/harvest.svg';
 import Wheat from './assets/wheat2.svg';
 import Windmill from './assets/windmill.svg';
 import House from './assets/house.svg';
+import Upgrade from './assets/upgrade.svg';
 import { useAppSelector } from '../../app/hooks';
 import { selectBoardTiles, selectBoardToppers } from '../game-state/GameStateSlice';
 import {
    dictionaryToArray,
    isBig,
    isHarvestable,
+   isHouse,
+   isNotBig,
    isNotRock,
    isRoad,
    isStructure,
@@ -55,6 +58,11 @@ function SelectionBars() {
          internalName: 'harvest',
          icon: <img src={Harvest} alt="Harvest" />,
          isDisabled: boardToppers.filter(isHarvestable).filter(isBig).length === 0,
+      },
+      {
+         internalName: 'upgrade',
+         icon: <img src={Upgrade} alt="Upgrade" />,
+         isDisabled: boardToppers.filter(isHouse).filter(isNotBig).length === 0,
       },
    ];
 

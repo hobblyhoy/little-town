@@ -26,7 +26,15 @@ const getBoardItemSizeBase = (boardItem: IBoardStateBase): IPixelSize => {
                }
             }
          case 'house':
-            return { width: 56, height: 58 };
+            switch (boardItem.size) {
+               case 'small':
+                  return { width: 56, height: 58 };
+               case 'big':
+                  return { width: 56, height: 76 };
+               default: {
+                  throw new Error('invalid house size');
+               }
+            }
          case 'wheat':
             switch (boardItem.size) {
                case 'small':
@@ -39,18 +47,18 @@ const getBoardItemSizeBase = (boardItem: IBoardStateBase): IPixelSize => {
          case 'windmill':
             return { width: 62, height: 91 };
 
-            case 'rock':
-               switch (boardItem.size) {
-                  case 'tiny':
-                     return { width: 44, height: 32 };
-                  case 'small':
-                     return { width: 43, height: 37 };
-                  case 'big':
-                     return { width: 53, height: 38 };
-                  default: {
-                     throw new Error('invalid tree size');
-                  }
+         case 'rock':
+            switch (boardItem.size) {
+               case 'tiny':
+                  return { width: 44, height: 32 };
+               case 'small':
+                  return { width: 43, height: 37 };
+               case 'big':
+                  return { width: 53, height: 38 };
+               default: {
+                  throw new Error('invalid tree size');
                }
+            }
          default:
             throw new Error('Topper missing from getBoardItemSizeBase');
       }
