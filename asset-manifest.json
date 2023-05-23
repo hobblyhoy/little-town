@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/little-town/static/css/main.f07a83ae.css",
-    "main.js": "/little-town/static/js/main.f31bf05c.js",
+    "main.css": "/little-town/static/css/main.49bfba3a.css",
+    "main.js": "/little-town/static/js/main.042b793d.js",
     "static/js/787.9c88f38f.chunk.js": "/little-town/static/js/787.9c88f38f.chunk.js",
     "static/media/piano-music.m4a": "/little-town/static/media/piano-music.4ab9069d898fa972044a.m4a",
     "static/media/harvest.svg": "/little-town/static/media/harvest.3cd59386dec9bd27b10d9f279b5ca642.svg",
@@ -17,6 +17,7 @@
     "static/media/tools.svg": "/little-town/static/media/tools.6419ecd52c93dfacf8baaf78d768a143.svg",
     "static/media/click.m4a": "/little-town/static/media/click.65425e006ac07a750cd0.m4a",
     "static/media/road.svg": "/little-town/static/media/road.cbb93059e2f2d62420ae5819f09faa4e.svg",
+    "static/media/upgrade.svg": "/little-town/static/media/upgrade.6f41256bd6a035daf11490e0e43f740f.svg",
     "index.html": "/little-town/index.html",
     "static/media/sound-icon.svg": "/little-town/static/media/sound-icon.8ad8993a106649be71c967c0f85d89c1.svg",
     "static/media/plus.svg": "/little-town/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
@@ -26,12 +27,12 @@
     "static/media/left.svg": "/little-town/static/media/left.7c8510d5b9cd8f99715664eb1cf2a576.svg",
     "static/media/right.svg": "/little-town/static/media/right.19ded080b6fcf8b13f07e868574a6cd4.svg",
     "static/media/up.svg": "/little-town/static/media/up.ec6508df1caf65a16e116ac2434c4cad.svg",
-    "main.f07a83ae.css.map": "/little-town/static/css/main.f07a83ae.css.map",
-    "main.f31bf05c.js.map": "/little-town/static/js/main.f31bf05c.js.map",
+    "main.49bfba3a.css.map": "/little-town/static/css/main.49bfba3a.css.map",
+    "main.042b793d.js.map": "/little-town/static/js/main.042b793d.js.map",
     "787.9c88f38f.chunk.js.map": "/little-town/static/js/787.9c88f38f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f07a83ae.css",
-    "static/js/main.f31bf05c.js"
+    "static/css/main.49bfba3a.css",
+    "static/js/main.042b793d.js"
   ]
 }
