@@ -85,3 +85,21 @@ Building a new tile from scratch
    useEffect(() => {
       console.log('scrollOffset - ' + scrollOffset.offsetX + ' ' + scrollOffset.offsetY);
    }, [scrollOffset]);
+   
+Random exapnding the game mechanics ideas:
+food, electricity, population
+
+need food, resources to feed the city. 
+collect taxes base don population or 
+
+cutsey catan
+contestable stuff like wheat that you grow they can steal
+
+
+differnt starting boards, differnt satring goals
+
+randomness tow aht could happen. earthwquakes, 
+
+more resources- water?
+
+trees and wheat grow faster next to water.

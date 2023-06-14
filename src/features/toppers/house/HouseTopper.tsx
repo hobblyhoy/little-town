@@ -7,8 +7,18 @@ import House_Small_Bl_Topper from './House_Small_Bl_Topper';
 import House_Small_Br_Topper from './House_Small_Br_Topper';
 import House_Small_Tl_Topper from './House_Small_Tl_Topper';
 import House_Small_Tr_Topper from './House_Small_Tr_Topper';
+import Smoke from './Smoke';
 
 function HouseTopper(props: IBoardTopperProps) {
+   return (
+      <>
+         <HouseTopperAssetOnly {...props} />
+         <Smoke {...props} />
+      </>
+   );
+}
+
+function HouseTopperAssetOnly(props: IBoardTopperProps) {
    switch (props.boardTopper.size) {
       case 'small':
          switch (props.boardTopper.direction) {
