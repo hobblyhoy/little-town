@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/little-town/static/css/main.49bfba3a.css",
-    "main.js": "/little-town/static/js/main.8eb09408.js",
+    "main.css": "/little-town/static/css/main.4a8b342a.css",
+    "main.js": "/little-town/static/js/main.338d9eca.js",
     "static/js/787.9c88f38f.chunk.js": "/little-town/static/js/787.9c88f38f.chunk.js",
     "static/media/piano-music.m4a": "/little-town/static/media/piano-music.4ab9069d898fa972044a.m4a",
     "static/media/harvest.svg": "/little-town/static/media/harvest.3cd59386dec9bd27b10d9f279b5ca642.svg",
@@ -27,12 +27,12 @@
     "static/media/left.svg": "/little-town/static/media/left.7c8510d5b9cd8f99715664eb1cf2a576.svg",
     "static/media/right.svg": "/little-town/static/media/right.19ded080b6fcf8b13f07e868574a6cd4.svg",
     "static/media/up.svg": "/little-town/static/media/up.ec6508df1caf65a16e116ac2434c4cad.svg",
-    "main.49bfba3a.css.map": "/little-town/static/css/main.49bfba3a.css.map",
-    "main.8eb09408.js.map": "/little-town/static/js/main.8eb09408.js.map",
+    "main.4a8b342a.css.map": "/little-town/static/css/main.4a8b342a.css.map",
+    "main.338d9eca.js.map": "/little-town/static/js/main.338d9eca.js.map",
     "787.9c88f38f.chunk.js.map": "/little-town/static/js/787.9c88f38f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.49bfba3a.css",
-    "static/js/main.8eb09408.js"
+    "static/css/main.4a8b342a.css",
+    "static/js/main.338d9eca.js"
   ]
 }
