@@ -27,6 +27,7 @@ import {
    treeVariations,
 } from '../../app/constants';
 import { sample } from 'lodash';
+import { userWarningFactory, IUserWarning } from '../click-and-drag/UserWarning';
 
 export interface IGameState {
    boardTiles: { [key: string]: IBoardStateTile };
@@ -38,6 +39,7 @@ export interface IGameState {
    money: number;
    musicOn: boolean;
    soundEffectsOn: boolean;
+   userWarning: IUserWarning | null;
 }
 
 const initialState: IGameState = {
@@ -50,6 +52,7 @@ const initialState: IGameState = {
    money: 200,
    musicOn: true,
    soundEffectsOn: true,
+   userWarning: null,
 };
 
 export const gameStateSlice = createSlice({
@@ -93,8 +96,12 @@ export const gameStateSlice = createSlice({
          });
          if (state.boardTiles[tileKey].isInvalid) return;
          const topperKey = generateInternalKey({ ...action.payload, isoZ: 1 });
-         if (state.boardToppers[topperKey]?.topperType === action.payload.topperType) return;
-         if (state.money < boardItemCost[action.payload.topperType]) return;
+         if (state.boardToppers[topperKey]?.topperType === action.payload.topperType)
+            return;
+         if (state.money < boardItemCost[action.payload.topperType]) {
+            state.userWarning = userWarningFactory('Not enough money!');
+            return;
+         }
 
          // Construct the topper object
          const newTopper: IBoardStateTopper = {
@@ -157,7 +164,11 @@ export const gameStateSlice = createSlice({
       increaseTopperSize: (state, action: PayloadAction<string>) => {
          const topper = state.boardToppers[action.payload];
          if (!topper || topper.size === 'big' || topper.isInvalid) return;
-         if (topper.topperType === 'house' && state.money < boardUpgradeCost[topper.topperType]) {
+         if (
+            topper.topperType === 'house' &&
+            state.money < boardUpgradeCost[topper.topperType]
+         ) {
+            state.userWarning = userWarningFactory('Not enough money!');
             return;
          }
 
@@ -178,7 +189,12 @@ export const gameStateSlice = createSlice({
          const topper = state.boardToppers[topperKey];
          if (!topper || topper.isInvalid || !topper.direction) return;
 
-         const directions: Directional[] = ['bottomLeft', 'topLeft', 'topRight', 'bottomRight'];
+         const directions: Directional[] = [
+            'bottomLeft',
+            'topLeft',
+            'topRight',
+            'bottomRight',
+         ];
          const currentIndex = directions.indexOf(topper.direction);
          const newIndex = (currentIndex + 1) % directions.length;
          const newDirection = directions[newIndex];
@@ -195,7 +211,10 @@ export const gameStateSlice = createSlice({
          });
          if (state.boardTiles[key].isInvalid) return;
          if (state.boardTiles[key].tileType === action.payload.tileType) return;
-         if (boardItemCost[action.payload.tileType] > state.money) return;
+         if (boardItemCost[action.payload.tileType] > state.money) {
+            state.userWarning = userWarningFactory('Not enough money!');
+            return;
+         }
 
          // update the tile
          state.boardTiles[key] = {
@@ -212,7 +231,10 @@ export const gameStateSlice = createSlice({
 
       setValidBoardItems: (
          state,
-         action: PayloadAction<{ validTiles: IBoardStateTile[]; validToppers: IBoardStateTopper[] }>
+         action: PayloadAction<{
+            validTiles: IBoardStateTile[];
+            validToppers: IBoardStateTopper[];
+         }>
       ) => {
          // Start be disabling all board items
          dictionaryToArray(state.boardTiles).forEach(x => (x.isInvalid = true));
@@ -262,7 +284,9 @@ export const gameStateSlice = createSlice({
       },
 
       harvestToppers: state => {
-         const toppers = dictionaryToArray(state.boardToppers).filter(isHarvestable).filter(isBig);
+         const toppers = dictionaryToArray(state.boardToppers)
+            .filter(isHarvestable)
+            .filter(isBig);
 
          if (toppers.length === 0) return;
 
@@ -290,6 +314,14 @@ export const gameStateSlice = createSlice({
             state.money += creditAmount;
          });
       },
+
+      addUserWarning: (state, action: PayloadAction<IUserWarning>) => {
+         state.userWarning = action.payload;
+      },
+
+      clearUserWarning: state => {
+         state.userWarning = null;
+      },
    },
 });
 
@@ -307,6 +339,8 @@ export const {
    toggleSoundEffects,
    harvestToppers,
    generateHouseIncome,
+   addUserWarning,
+   clearUserWarning,
 } = gameStateSlice.actions;
 
 // selector export
@@ -317,9 +351,12 @@ export const selectRecentlyUpdatedToppers = (state: RootState) =>
    state.gamestate.recentlyUpdatedToppers;
 export const selectRecentlyDeletedTopper = (state: RootState) =>
    state.gamestate.recentlyDeletedTopper;
-export const selectRecentlyUpdatedTile = (state: RootState) => state.gamestate.recentlyUpdatedTile;
-export const selectRecentlyResetTile = (state: RootState) => state.gamestate.recentlyResetTile;
+export const selectRecentlyUpdatedTile = (state: RootState) =>
+   state.gamestate.recentlyUpdatedTile;
+export const selectRecentlyResetTile = (state: RootState) =>
+   state.gamestate.recentlyResetTile;
 export const selectMusicOn = (state: RootState) => state.gamestate.musicOn;
 export const selectSoundEffectsOn = (state: RootState) => state.gamestate.soundEffectsOn;
+export const selectUserWarning = (state: RootState) => state.gamestate.userWarning;
 
 export default gameStateSlice.reducer;

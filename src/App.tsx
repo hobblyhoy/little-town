@@ -10,6 +10,7 @@ import ScrollBars from './features/zoom-and-scroll/ScrollBars';
 import GameStateInitializer from './features/game-state/GameStateInitializer';
 import SelectionBars from './features/selection-bar/SelectionBars';
 import MoneyBar from './features/inventory/MoneyBar';
+import UserWarning from './features/click-and-drag/UserWarning';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
          <ScrollBars />
          <SelectionBars />
          <MoneyBar />
+         <UserWarning />
 
          {/* Managers */}
          <ClickAndDragManager />
