@@ -47,7 +47,7 @@ function UserWarning() {
          {activeWarning && (
             <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
                <div
-                  className="bg-black rounded-lg p-4 mt-2 cursor-default"
+                  className="bg-black rounded-lg p-4 mt-2 cursor-default opacity-80"
                   key={activeWarning.id}
                >
                   {activeWarning.text}
