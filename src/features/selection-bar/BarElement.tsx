@@ -21,7 +21,7 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
       }
    }, [selectedItem, isDisabled]);
    const baseCss = css`
-      padding: ${isDesktop ? '10px' : '7px'};
+      padding: 10px;
    `;
 
    const iconCss = css`
@@ -30,7 +30,7 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
    `;
 
    const nameCss = css`
-      width: 60px;
+      width: ${isDesktop ? '60px' : '40px'};
       height: 20px;
       font-size: ${isDesktop ? '1rem' : '0.8rem'};
    `;
