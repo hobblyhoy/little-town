@@ -17,7 +17,10 @@ import Windmill from './assets/windmill.svg';
 import House from './assets/house.svg';
 import Upgrade from './assets/upgrade.svg';
 import { useAppSelector } from '../../app/hooks';
-import { selectBoardTiles, selectBoardToppers } from '../game-state/GameStateSlice';
+import {
+   selectBoardTiles,
+   selectBoardToppers,
+} from '../game-state/GameStateSlice';
 import {
    dictionaryToArray,
    isBig,
@@ -31,6 +34,10 @@ import {
 } from '../../app/utils';
 
 function SelectionBars() {
+   const baseCss = css`
+      pointer-events: none;
+   `;
+
    const barLocationCss = (bottomUpOrder: number) => css`
       position: fixed;
       left: 0;
@@ -57,7 +64,8 @@ function SelectionBars() {
       {
          internalName: 'harvest',
          icon: <img src={Harvest} alt="Harvest" />,
-         isDisabled: boardToppers.filter(isHarvestable).filter(isBig).length === 0,
+         isDisabled:
+            boardToppers.filter(isHarvestable).filter(isBig).length === 0,
       },
       {
          internalName: 'upgrade',
@@ -95,7 +103,7 @@ function SelectionBars() {
    ];
 
    return (
-      <div className="cursor-pointer">
+      <div css={baseCss} className="cursor-pointer">
          <div css={barLocationCss(1)}>
             <SlideOutBar barElements={toolBarElements} icon={toolsIcon} />
          </div>

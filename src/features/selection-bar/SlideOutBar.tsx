@@ -17,6 +17,7 @@ function SlideOutBar({ barElements, icon }: ISlideOutBar) {
       border-bottom-right-radius: 10px;
       transform: translateX(${isExpanded ? '0' : 'calc(-100% + 60px)'});
       transition: transform 0.3s ease-out;
+      pointer-events: auto;
    `;
 
    const primaryBarIconWrapperCss = css`
