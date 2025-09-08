@@ -21,7 +21,7 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
       }
    }, [selectedItem, isDisabled]);
    const baseCss = css`
-      padding: 10px;
+      padding: ${isDesktop ? '10px' : '7px'};
    `;
 
    const iconCss = css`
@@ -32,6 +32,7 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
    const nameCss = css`
       width: 60px;
       height: 20px;
+      font-size: ${isDesktop ? '1rem' : '0.8rem'};
    `;
 
    const handleClick = () => {
@@ -51,7 +52,9 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
       whiteHoverClasses = 'hover:bg-white hover:bg-opacity-30';
    }
 
-   const disableClasses = isDisabled ? 'saturate-0 opacity-50 cursor-default' : '';
+   const disableClasses = isDisabled
+      ? 'saturate-0 opacity-50 cursor-default'
+      : '';
 
    return (
       <div
@@ -60,11 +63,9 @@ function BarElement({ internalName, icon, isDisabled }: IBarElement) {
          onClick={handleClick}
       >
          <div css={iconCss}>{icon}</div>
-         {isDesktop && (
-            <div css={nameCss} className="flex justify-center items-center">
-               {selectionBarUiNameMap[internalName]}
-            </div>
-         )}
+         <div css={nameCss} className="flex justify-center items-center">
+            {selectionBarUiNameMap[internalName]}
+         </div>
       </div>
    );
 }
